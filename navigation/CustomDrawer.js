@@ -5,8 +5,7 @@ import {
   DrawerContentScrollView,
 } from '@react-navigation/drawer';
 import Animated from 'react-native-reanimated';
-import { connect } from 'react-redux';
-import { setSelectedTab } from '../stores/tab/tabActions';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { MainLayout } from '../screens';
 import {
@@ -17,6 +16,9 @@ import {
   icons,
   dummyData,
 } from '../constants';
+
+
+import { setSelectedTab } from '../redux/tabSlice';
 
 const Drawer = createDrawerNavigator();
 
@@ -56,7 +58,10 @@ const CustomDrawerItem = ({ label, icon, isFocused, onPress }) => {
   );
 };
 
-const CustomDrawerContent = ({ navigation, selectedTab, setSelectedTab }) => {
+const CustomDrawerContent = ({ navigation }) => {
+  const selectedTab = useSelector((state) => state.store.selectedTab);
+  const dispatch = useDispatch();
+
   return (
     <DrawerContentScrollView
       scrollEnabled={true}
@@ -137,7 +142,7 @@ const CustomDrawerContent = ({ navigation, selectedTab, setSelectedTab }) => {
             icon={icons.home}
             isFocused={selectedTab == constants.screens.home}
             onPress={() => {
-              setSelectedTab(constants.screens.home);
+              dispatch(setSelectedTab(constants.screens.home));
               navigation.navigate('MainLayout');
             }}
           />
@@ -152,7 +157,7 @@ const CustomDrawerContent = ({ navigation, selectedTab, setSelectedTab }) => {
             icon={icons.notification}
             isFocused={selectedTab == constants.screens.notification}
             onPress={() => {
-              setSelectedTab(constants.screens.notification);
+              dispatch(setSelectedTab(constants.screens.notification));
               navigation.navigate('MainLayout');
             }}
           />
@@ -162,7 +167,7 @@ const CustomDrawerContent = ({ navigation, selectedTab, setSelectedTab }) => {
             icon={icons.favorite}
             isFocused={selectedTab == constants.screens.favorite}
             onPress={() => {
-              setSelectedTab(constants.screens.favorite);
+              dispatch(setSelectedTab(constants.screens.favorite));
               navigation.navigate('MainLayout');
             }}
           />
@@ -259,18 +264,4 @@ const CustomDrawer = ({ selectedTab, setSelectedTab }) => {
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    selectedTab: state.tabReducer.selectedTab,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    setSelectedTab: (selectedTab) => {
-      return dispatch(setSelectedTab(selectedTab));
-    },
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CustomDrawer);
+export default CustomDrawer;
