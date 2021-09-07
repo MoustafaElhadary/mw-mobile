@@ -18,6 +18,4 @@
     "jsx": "preserve",
     "emitDecoratorMetadata": true,
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.jsx"],
-  "exclude": ["node_modules"]
 }

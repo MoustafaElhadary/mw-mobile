@@ -1,10 +1,10 @@
-export const myProfile = {
+const myProfile = {
     name: "ByProgrammers",
     profile_image: require("../assets/images/profile.png"),
     address: "No. 88, Jln Padungan, Kuching"
 }
 
-export const categories = [
+const categories = [
     {
         id: 1,
         name: "Fast Food",
@@ -22,7 +22,7 @@ export const categories = [
     }
 ]
 
-export const hamburger = {
+const hamburger = {
     id: 1,
     name: "Hamburger",
     description: "Chicken patty hamburger",
@@ -33,7 +33,7 @@ export const hamburger = {
     image: require("../assets/dummyData/hamburger.png")
 }
 
-export const hotTacos = {
+const hotTacos = {
     id: 2,
     name: "Hot Tacos",
     description: "Mexican tortilla & tacos",
@@ -44,7 +44,7 @@ export const hotTacos = {
     image: require("../assets/dummyData/hot_tacos.png")
 }
 
-export const vegBiryani = {
+const vegBiryani = {
     id: 3,
     name: "Veg Biryani",
     description: "Indian Vegetable Biryani",
@@ -55,7 +55,7 @@ export const vegBiryani = {
     image: require("../assets/dummyData/veg_biryani.png")
 }
 
-export const wrapSandwich = {
+const wrapSandwich = {
     id: 4,
     name: "Wrap Sandwich",
     description: "Grilled vegetables sandwich",
@@ -66,7 +66,7 @@ export const wrapSandwich = {
     image: require("../assets/dummyData/wrap_sandwich.png")
 }
 
-export const menu = [
+const menu = [
     {
         id: 1,
         name: "Featured",
@@ -111,3 +111,10 @@ export const menu = [
     },
 
 ]
+
+
+export default {
+    myProfile,
+    categories,
+    menu,
+}

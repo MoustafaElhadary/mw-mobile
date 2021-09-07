@@ -1,4 +1,4 @@
-export const onboarding_screens = [
+const onboarding_screens = [
     {
         id: 1,
         backgroundImage: require("../assets/images/background_01.png"),
@@ -11,7 +11,7 @@ export const onboarding_screens = [
         backgroundImage: require("../assets/images/background_02.png"),
         bannerImage: require("../assets/images/hot_delivery.png"),
         title: "Hot Delivery to Home",
-        description: "We make food ordering faster, simple and free-no matter if you order online or cash"
+        description: "We make food ordering fasr, simple and free-no matter if you order online or cash"
     },
     {
         id: 3,
@@ -22,17 +22,17 @@ export const onboarding_screens = [
     }
 ]
 
-export const screens = {
+const screens = {
     main_layout: "MainLayout",
     home: "Home",
     search: "Search",
     cart: "Cart",
-    favorite_food: "favorite_food",
+    favorite: "Favorite",
     notification: "Notification",
     my_wallet: "My Wallet",
 }
 
-export const bottom_tabs = [
+const bottom_tabs = [
     {
         id: 0,
         label: screens.home,
@@ -47,7 +47,7 @@ export const bottom_tabs = [
     },
     {
         id: 3,
-        label: screens.favorite_food,
+        label: screens.favorite,
     },
     {
         id: 4,
@@ -55,7 +55,7 @@ export const bottom_tabs = [
     },
 ]
 
-export const delivery_time = [
+const delivery_time = [
     {
         id: 1,
         label: "10 Mins",
@@ -70,7 +70,7 @@ export const delivery_time = [
     }
 ]
 
-export const ratings = [
+const ratings = [
     {
         id: 1,
         label: 1,
@@ -93,7 +93,7 @@ export const ratings = [
     }
 ]
 
-export const tags = [
+const tags = [
     {
         id: 1,
         label: "Burger"
@@ -124,6 +124,15 @@ export const tags = [
     },
     {
         id: 8,
-        label: "Tacos"
+        label: "Taccos"
     }
 ]
+
+export default {
+    onboarding_screens,
+    screens,
+    bottom_tabs,
+    delivery_time,
+    ratings,
+    tags
+}
