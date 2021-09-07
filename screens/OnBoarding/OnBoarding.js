@@ -80,8 +80,8 @@ const OnBoarding = ({ navigation }) => {
                     source={images.logo_02}
                     resizeMode="contain"
                     style={{
-                        width: SIZES.width * 0.5,
-                        height: 100
+                        width: SIZES.width * 1,
+                        height: 200
                     }}
                 />
             </View>

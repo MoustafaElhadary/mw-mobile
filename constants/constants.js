@@ -2,23 +2,23 @@ const onboarding_screens = [
     {
         id: 1,
         backgroundImage: require("../assets/images/background_01.png"),
-        bannerImage: require("../assets/images/favorite_food.png"),
-        title: "Choose a Favorite Food",
-        description: "When you oder Eat Steet, we’ll hook you up with exclusive coupon, specials and rewards"
+        bannerImage: require("../assets/images/p1.png"),
+        title: "Simple. Sweet. Intros",
+        description: "Moved to a new city? let your friends know so they can connect you with their favorite people that also live there!"
     },
     {
         id: 2,
         backgroundImage: require("../assets/images/background_02.png"),
-        bannerImage: require("../assets/images/hot_delivery.png"),
-        title: "Hot Delivery to Home",
-        description: "We make food ordering fasr, simple and free-no matter if you order online or cash"
+        bannerImage: require("../assets/images/p3.png"),
+        title: "Craving something new?",
+        description: "tired of ordering chinese for the 7th time this month? Ask your friends for recommendations for the best spots in town"
     },
     {
         id: 3,
         backgroundImage: require("../assets/images/background_01.png"),
-        bannerImage: require("../assets/images/great_food.png"),
-        title: "Receive the Great Food",
-        description: "You’ll receive the great food within a hour. And get free delivery credits for every order."
+        bannerImage: require("../assets/images/p2.png"),
+        title: "You are the expert!",
+        description: "Whether you know the best spots in town for food, or are the local \"tech\" expert, get acknowledged for it!"
     }
 ]
 
