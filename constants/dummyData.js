@@ -1,7 +1,7 @@
 const myProfile = {
-    name: "ByProgrammers",
-    profile_image: require("../assets/images/profile.png"),
-    address: "No. 88, Jln Padungan, Kuching"
+    name: "Moustafa Elhadary",
+    profile_image: require("../assets/images/profile.jpeg"),
+    address: "2771 Oakbrook Manor, Weston, FL, 33332"
 }
 
 const categories = [

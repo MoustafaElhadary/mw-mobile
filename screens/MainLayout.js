@@ -28,6 +28,9 @@ import {
   dummyData,
 } from '../constants';
 
+import Firebase from '../utils/firebase';
+
+
 const TabButton = ({
   label,
   icon,
@@ -91,13 +94,13 @@ const TabButton = ({
 const MainLayout = ({ drawerAnimationStyle, navigation }) => {
   const flatListRef = React.useRef();
 
-  const hola = useSelector((state) => state);
   const selectedTab = useSelector((state) => state.store.selectedTab);
   const dispatch = useDispatch();
-
-  console.log({hola})
   // Reanimated Shared Value
 
+  const auth = Firebase.auth();
+
+  console.log({auth})
   const homeTabFlex = useSharedValue(1);
   const homeTabColor = useSharedValue(COLORS.white);
   const searchTabFlex = useSharedValue(1);

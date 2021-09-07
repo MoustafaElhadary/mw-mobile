@@ -12,7 +12,7 @@ const firebaseConfig = {
   appId: Constants.manifest.extra.appId
 };
 
-let Firebase;
+let Firebase: firebase.app.App;
 
 if (firebase.apps.length === 0) {
   Firebase = firebase.initializeApp(firebaseConfig);

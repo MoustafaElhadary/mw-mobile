@@ -27,6 +27,10 @@ const App = () => {
 
   const auth = Firebase.auth();
 
+  console.log({auth})
+  
+
+
   return (
     <Provider store={store}>
       <NavigationContainer>

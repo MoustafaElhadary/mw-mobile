@@ -9,6 +9,7 @@ import {
   TextIconButton,
 } from '../../components';
 import { utils } from '../../utils';
+import Firebase from '../../utils/firebase';
 
 const SignIn = ({ navigation }) => {
   const [email, setEmail] = React.useState('');
@@ -18,9 +19,26 @@ const SignIn = ({ navigation }) => {
   const [showPass, setShowPass] = React.useState(false);
   const [saveMe, setSaveMe] = React.useState(false);
 
+  const [errorMsg, setErrorMsg] = React.useState();
+
   function isEnableSignIn() {
     return email != '' && password != '' && emailError == '';
   }
+
+  const auth = Firebase.auth();
+
+  const onLogin = async () => {
+    try {
+      setErrorMsg();
+      if (email !== '' && password !== '') {
+        await auth.signInWithEmailAndPassword(email, password);
+
+        await navigation.replace('Home');
+      }
+    } catch (error) {
+      setErrorMsg(error.message);
+    }
+  };
 
   return (
     <AuthLayout
@@ -139,9 +157,12 @@ const SignIn = ({ navigation }) => {
               ? COLORS.primary
               : COLORS.transparentPrimary,
           }}
-          onPress={() => navigation.replace('Home')}
+          onPress={() => onLogin()}
         />
 
+        {errorMsg && (
+          <Text style={{ color: COLORS.red, ...FONTS.body4 }}>{errorMsg || " "}</Text>
+        )}
         {/* Sign Up */}
         <View
           style={{
