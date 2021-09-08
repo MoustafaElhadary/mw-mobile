@@ -13,6 +13,7 @@ export type TextButtonProps = {
   labelStyle?: TextStyle;
   buttonContainerStyle?: ViewStyle;
   onPress: (event: GestureResponderEvent) => void;
+  disabled?: boolean;
 };
 
 const TextButton = ({
@@ -20,6 +21,7 @@ const TextButton = ({
   labelStyle,
   buttonContainerStyle,
   onPress,
+  disabled = false,
 }: TextButtonProps) => {
   return (
     <TouchableOpacity
@@ -29,6 +31,7 @@ const TextButton = ({
         backgroundColor: COLORS.primary,
         ...buttonContainerStyle,
       }}
+      disabled={disabled}
       onPress={onPress}
     >
       <Text style={{ color: COLORS.white, ...FONTS.h3, ...labelStyle }}>

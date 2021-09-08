@@ -4,6 +4,15 @@ import MultiSlider from '@ptomasroos/react-native-multi-slider';
 
 import { COLORS, FONTS, SIZES } from '../constants';
 
+export type TwoPointSliderProps = {
+  values: number[];
+  min: number;
+  max: number;
+  prefix?: string;
+  postfix?: string;
+  onValuesChange?: (values: number[]) => void;
+};
+
 const TwoPointSlider = ({
   values,
   min,
@@ -11,7 +20,7 @@ const TwoPointSlider = ({
   prefix,
   postfix,
   onValuesChange,
-}) => {
+}: TwoPointSliderProps) => {
   return (
     <MultiSlider
       values={values}

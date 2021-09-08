@@ -6,7 +6,7 @@ import AuthLayout from "./Authentication/AuthLayout"
 import SignIn from "./Authentication/SignIn"
 import SignUp from "./Authentication/SignUp"
 import ForgotPassword from "./Authentication/ForgotPassword"
-import Otp from "./Authentication/Otp"
+import Otp from "./Authentication/Otp.tsx"
 
 import MainLayout from "./MainLayout";
 

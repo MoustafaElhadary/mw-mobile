@@ -3,11 +3,19 @@ import {
     View,
     Text,
     Image,
+    ViewStyle,
 } from "react-native";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { images, FONTS, SIZES, COLORS } from "../../constants"
 
-const AuthLayout = ({ title, subtitle, titleContainerStyle, children }) => {
+
+export type authLayoutProps = {
+    title: string;
+    subtitle: string;
+    titleContainerStyle?: ViewStyle;
+    children?: JSX.Element|JSX.Element[];
+}
+const AuthLayout = ({ title, subtitle, titleContainerStyle, children }:authLayoutProps) => {
     return (
         <View
             style={{

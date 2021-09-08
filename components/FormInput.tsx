@@ -10,14 +10,14 @@ import {
 import { FONTS, SIZES, COLORS } from '../constants';
 
 export type FormInputType = {
-  containerStyle: ViewStyle;
+  containerStyle?: ViewStyle;
   label: string;
-  placeholder: string;
-  inputStyle: ViewStyle;
-  prependComponent: JSX.Element;
+  placeholder?: string;
+  inputStyle?: ViewStyle;
+  prependComponent?: JSX.Element;
   appendComponent: JSX.Element;
   onChange: (text: string) => void;
-  secureTextEntry: boolean;
+  secureTextEntry?: boolean;
   keyboardType?: KeyboardTypeOptions;
   autoCompleteType?:
     | 'cc-csc'

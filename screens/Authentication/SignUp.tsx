@@ -1,14 +1,13 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 
-import { AuthLayout } from '../';
+import { AuthLayout } from '..';
 import { FONTS, SIZES, COLORS, icons } from '../../constants';
 import { FormInput, TextButton, TextIconButton } from '../../components';
 import { utils } from '../../utils';
 import Firebase from '../../utils/firebase';
 
 const auth = Firebase.auth();
-
 
 const SignUp = ({ navigation }) => {
   const [email, setEmail] = React.useState('');
@@ -19,8 +18,7 @@ const SignUp = ({ navigation }) => {
   const [emailError, setEmailError] = React.useState('');
   const [usernameError, setUsernameError] = React.useState('');
   const [passwordError, setPasswordError] = React.useState('');
-  const [errorMsg, setErrorMsg] = React.useState();
-
+  const [errorMsg, setErrorMsg] = React.useState('');
 
   function isEnableSignUp() {
     return (
@@ -32,19 +30,17 @@ const SignUp = ({ navigation }) => {
     );
   }
 
-  const onHandleSignup = async () => {
+  const onHandleSignUp = async () => {
     try {
       if (email !== '' && password !== '') {
         await auth.createUserWithEmailAndPassword(email, password);
 
         await navigation.replace('Home');
-
       }
     } catch (error) {
-      setSignupError(error.message);
+      setErrorMsg(error.message);
     }
   };
-
 
   return (
     <AuthLayout
@@ -177,9 +173,14 @@ const SignUp = ({ navigation }) => {
               ? COLORS.primary
               : COLORS.transparentPrimary,
           }}
-          onPress={() => onHandleSignup()}
+          onPress={() => onHandleSignUp()}
         />
 
+        {errorMsg && errorMsg.length > 0 && (
+          <Text style={{ color: COLORS.red, ...FONTS.body4 }}>
+            {errorMsg || ' '}
+          </Text>
+        )}
         <View
           style={{
             flexDirection: 'row',
