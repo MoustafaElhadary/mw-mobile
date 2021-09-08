@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity, Text, Image, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 
-import { FONTS, COLORS } from '../constants';
+import { FONTS, COLORS } from '../utils/constants';
 
 const TextIconButton = ({
   containerStyle,

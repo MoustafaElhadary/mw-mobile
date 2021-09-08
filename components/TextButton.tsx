@@ -6,7 +6,7 @@ import {
   GestureResponderEvent,
   TextStyle,
 } from 'react-native';
-import { FONTS, COLORS } from '../constants';
+import { FONTS, COLORS } from '../utils/constants';
 
 export type TextButtonProps = {
   label: string;

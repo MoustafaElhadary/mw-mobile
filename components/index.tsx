@@ -7,6 +7,8 @@ import TextButton from './TextButton';
 import TextIconButton from './TextIconButton';
 import TwoPointSlider from './TwoPointSlider';
 import VerticalFoodCard from './VerticalFoodCard';
+import FilterModal from './FilterModal'
+import Section from './Section'
 
 export {
   CustomSwitch,
@@ -18,4 +20,6 @@ export {
   TextIconButton,
   TwoPointSlider,
   VerticalFoodCard,
+  FilterModal,
+  Section
 };

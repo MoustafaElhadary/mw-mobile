@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
-
-import { AuthLayout } from '..';
-import { FONTS, SIZES, COLORS, icons } from '../../constants';
-import { FormInput, TextButton, TextIconButton } from '../../components';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { utils } from '../../utils';
+import { COLORS, FONTS, icons, SIZES } from '../../utils/constants';
 import Firebase from '../../utils/firebase';
+import { AuthLayout } from '..';
+import { FormInput, TextButton } from '../../components';
+
 
 const auth = Firebase.auth();
 

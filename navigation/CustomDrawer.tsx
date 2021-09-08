@@ -23,7 +23,7 @@ import {
   constants,
   icons,
   dummyData,
-} from '../constants';
+} from '../utils/constants';
 
 import { setSelectedTab } from '../redux/tabSlice';
 import Firebase from '../utils/firebase';

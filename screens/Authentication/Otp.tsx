@@ -1,10 +1,10 @@
-import React from 'react';
-import { View, Text } from 'react-native';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
-
-import { FONTS, SIZES, COLORS } from '../../constants';
-import { TextButton } from '../../components';
+import React from 'react';
+import { Text, View } from 'react-native';
+import { COLORS, FONTS, SIZES } from '../../utils/constants';
 import { AuthLayout } from '..';
+import { TextButton } from '../../components';
+
 
 const Otp = ({ navigation }) => {
   const [timer, setTimer] = React.useState(60);

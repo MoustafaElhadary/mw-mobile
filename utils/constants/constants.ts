@@ -1,24 +1,24 @@
 const onboarding_screens = [
   {
     id: 1,
-    backgroundImage: require('../assets/images/background_01.png'),
-    bannerImage: require('../assets/images/p1.png'),
+    backgroundImage: require('../../assets/images/background_01.png'),
+    bannerImage: require('../../assets/images/p1.png'),
     title: 'Simple. Sweet. Intros',
     description:
       'Moved to a new city? let your friends know so they can connect you with their favorite people that also live there!',
   },
   {
     id: 2,
-    backgroundImage: require('../assets/images/background_02.png'),
-    bannerImage: require('../assets/images/p3.png'),
+    backgroundImage: require('../../assets/images/background_02.png'),
+    bannerImage: require('../../assets/images/p3.png'),
     title: 'Craving something new?',
     description:
       'tired of ordering chinese for the 7th time this month? Ask your friends for recommendations for the best spots in town',
   },
   {
     id: 3,
-    backgroundImage: require('../assets/images/background_01.png'),
-    bannerImage: require('../assets/images/p2.png'),
+    backgroundImage: require('../../assets/images/background_01.png'),
+    bannerImage: require('../../assets/images/p2.png'),
     title: 'You are the expert!',
     description:
       'Whether you know the best spots in town for food, or are the local "tech" expert, get acknowledged for it!',

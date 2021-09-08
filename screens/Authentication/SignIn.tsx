@@ -1,15 +1,14 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
-import { FONTS, SIZES, COLORS, icons } from '../../constants';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { utils } from '../../utils';
+import { COLORS, FONTS, icons, SIZES } from '../../utils/constants';
+import Firebase from '../../utils/firebase';
 import { AuthLayout } from '..';
 import {
   CustomSwitch,
   FormInput,
-  TextButton,
-  TextIconButton,
+  TextButton
 } from '../../components';
-import { utils } from '../../utils';
-import Firebase from '../../utils/firebase';
 
 const auth = Firebase.auth();
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
-import { COLORS, FONTS, SIZES } from '../constants';
+import { COLORS, FONTS, SIZES } from '../utils/constants';
 
 const CustomSwitch = ({ onChange, value }) => {
   return (

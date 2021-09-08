@@ -26,7 +26,7 @@ import {
   icons,
   constants,
   dummyData,
-} from '../constants';
+} from '../utils/constants';
 
 import { AuthenticatedUserContext } from '../navigation/AuthenticatedUserProvider';
 import Firebase from '../utils/firebase';

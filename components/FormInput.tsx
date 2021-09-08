@@ -7,7 +7,7 @@ import {
   KeyboardTypeOptions,
 } from 'react-native';
 
-import { FONTS, SIZES, COLORS } from '../constants';
+import { FONTS, SIZES, COLORS } from '../utils/constants';
 
 export type FormInputType = {
   containerStyle?: ViewStyle;

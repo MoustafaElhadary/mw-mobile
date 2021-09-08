@@ -12,7 +12,7 @@ import MainLayout from "./MainLayout";
 
 // Home
 import Home from "./Home/Home"
-import FilterModal from "./Home/FilterModal";
+import FilterModal from "../components/FilterModal";
 
 // Search
 import Search from "./Search/Search";

@@ -1,6 +1,6 @@
 const myProfile = {
   name: 'Moustafa Elhadary',
-  profile_image: require('../assets/images/profile.jpeg'),
+  profile_image: require('../../assets/images/profile.jpeg'),
   address: '2771 Oakbrook Manor, Weston, FL, 33332',
 };
 
@@ -8,17 +8,17 @@ const categories = [
   {
     id: 1,
     name: 'Fast Food',
-    icon: require('../assets/icons/burger.png'),
+    icon: require('../../assets/icons/burger.png'),
   },
   {
     id: 2,
     name: 'Fruit Item',
-    icon: require('../assets/icons/cherry.png'),
+    icon: require('../../assets/icons/cherry.png'),
   },
   {
     id: 3,
     name: 'Rice Item',
-    icon: require('../assets/icons/rice.png'),
+    icon: require('../../assets/icons/rice.png'),
   },
 ];
 
@@ -30,7 +30,7 @@ const hamburger = {
   price: 15.99,
   calories: 78,
   isFavorite: true,
-  image: require('../assets/dummyData/hamburger.png'),
+  image: require('../../assets/dummyData/hamburger.png'),
 };
 
 const hotTacos = {
@@ -41,7 +41,7 @@ const hotTacos = {
   price: 10.99,
   calories: 78,
   isFavorite: false,
-  image: require('../assets/dummyData/hot_tacos.png'),
+  image: require('../../assets/dummyData/hot_tacos.png'),
 };
 
 const vegBiryani = {
@@ -52,7 +52,7 @@ const vegBiryani = {
   price: 10.99,
   calories: 78,
   isFavorite: true,
-  image: require('../assets/dummyData/veg_biryani.png'),
+  image: require('../../assets/dummyData/veg_biryani.png'),
 };
 
 const wrapSandwich = {
@@ -63,7 +63,7 @@ const wrapSandwich = {
   price: 10.99,
   calories: 78,
   isFavorite: true,
-  image: require('../assets/dummyData/wrap_sandwich.png'),
+  image: require('../../assets/dummyData/wrap_sandwich.png'),
 };
 
 const menu = [

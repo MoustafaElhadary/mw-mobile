@@ -15,8 +15,8 @@ import {
   TwoPointSlider,
   TextButton,
   TextIconButton,
-} from '../../components';
-import { COLORS, FONTS, SIZES, constants, icons } from '../../constants';
+} from '.';
+import { COLORS, FONTS, SIZES, constants, icons } from '../utils/constants';
 
 export type SectionProps = {
   title: string;

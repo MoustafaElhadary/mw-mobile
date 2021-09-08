@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, ViewStyle } from 'react-native';
-import { FONTS } from '../constants';
+import { FONTS } from '../utils/constants';
 
 export type HeaderProps = {
   containerStyle: ViewStyle;

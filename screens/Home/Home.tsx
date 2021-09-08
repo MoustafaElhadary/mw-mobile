@@ -5,38 +5,11 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
+import { COLORS, dummyData, FONTS, icons, SIZES } from '../../utils/constants';
 import { FilterModal } from '..';
-import { HorizontalFoodCard, VerticalFoodCard } from '../../components';
-import { COLORS, dummyData, FONTS, icons, SIZES } from '../../constants';
-
-const Section = ({ title, onPress, children }) => {
-  return (
-    <View>
-      {/* Header */}
-      <View
-        style={{
-          flexDirection: 'row',
-          marginHorizontal: SIZES.padding,
-          marginTop: 30,
-          marginBottom: 20,
-        }}
-      >
-        <Text style={{ flex: 1, ...FONTS.h3 }}>{title}</Text>
-
-        <TouchableOpacity onPress={onPress}>
-          <Text style={{ color: COLORS.primary, ...FONTS.body3 }}>
-            Show All
-          </Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Content */}
-      {children}
-    </View>
-  );
-};
+import { HorizontalFoodCard, VerticalFoodCard,Section } from '../../components';
 
 const Home = () => {
   const [selectedCategoryId, setSelectedCategoryId] = React.useState(1);

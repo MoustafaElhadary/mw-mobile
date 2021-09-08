@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, ImageBackground, Image, Animated, FlatList } from 'react-native';
-
-import { constants, images, FONTS, SIZES, COLORS } from '../../constants';
+import { Animated, FlatList, Image, ImageBackground, Text, View } from 'react-native';
+import { COLORS, constants, FONTS, images, SIZES } from '../../utils/constants';
 import { TextButton } from '../../components';
+
 
 const OnBoarding = ({ navigation }) => {
   const scrollX = React.useRef(new Animated.Value(0)).current;
