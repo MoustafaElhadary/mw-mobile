@@ -1,24 +1,23 @@
 import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { AuthLayout } from '..';
+import { FormInput, TextButton } from '../../components';
 import { utils } from '../../utils';
 import { COLORS, FONTS, icons, SIZES } from '../../utils/constants';
 import Firebase from '../../utils/firebase';
-import { AuthLayout } from '..';
-import { FormInput, TextButton } from '../../components';
-
 
 const auth = Firebase.auth();
 
 const SignUp = ({ navigation }) => {
-  const [email, setEmail] = React.useState('');
-  const [username, setUsername] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [email, setEmail] = React.useState<string>('');
+  const [username, setUsername] = React.useState<string>('');
+  const [password, setPassword] = React.useState<string>('');
   const [showPass, setShowPass] = React.useState(false);
 
-  const [emailError, setEmailError] = React.useState('');
-  const [usernameError, setUsernameError] = React.useState('');
-  const [passwordError, setPasswordError] = React.useState('');
-  const [errorMsg, setErrorMsg] = React.useState('');
+  const [emailError, setEmailError] = React.useState<string>('');
+  const [usernameError, setUsernameError] = React.useState<string>('');
+  const [passwordError, setPasswordError] = React.useState<string>('');
+  const [errorMsg, setErrorMsg] = React.useState<string>('');
 
   function isEnableSignUp() {
     return (
@@ -176,11 +175,7 @@ const SignUp = ({ navigation }) => {
           onPress={() => onHandleSignUp()}
         />
 
-        {errorMsg && errorMsg.length > 0 && (
-          <Text style={{ color: COLORS.red, ...FONTS.body4 }}>
-            {errorMsg || ' '}
-          </Text>
-        )}
+        <Text style={{ color: COLORS.red, ...FONTS.body4 }}>{errorMsg}</Text>
         <View
           style={{
             flexDirection: 'row',

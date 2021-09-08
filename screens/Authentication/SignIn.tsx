@@ -1,26 +1,22 @@
 import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { AuthLayout } from '..';
+import { CustomSwitch, FormInput, TextButton } from '../../components';
 import { utils } from '../../utils';
 import { COLORS, FONTS, icons, SIZES } from '../../utils/constants';
 import Firebase from '../../utils/firebase';
-import { AuthLayout } from '..';
-import {
-  CustomSwitch,
-  FormInput,
-  TextButton
-} from '../../components';
 
 const auth = Firebase.auth();
 
 const SignIn = ({ navigation }) => {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [emailError, setEmailError] = React.useState('');
+  const [email, setEmail] = React.useState<string>('');
+  const [password, setPassword] = React.useState<string>('');
+  const [emailError, setEmailError] = React.useState<string>('');
 
   const [showPass, setShowPass] = React.useState(false);
   const [saveMe, setSaveMe] = React.useState(false);
 
-  const [errorMsg, setErrorMsg] = React.useState('');
+  const [errorMsg, setErrorMsg] = React.useState<string>('');
 
   function isEnableSignIn() {
     return email != '' && password != '' && emailError == '';
@@ -35,7 +31,7 @@ const SignIn = ({ navigation }) => {
         await navigation.replace('Home');
       }
     } catch (error) {
-      setErrorMsg(error.message);
+      setErrorMsg(error.message || '');
     }
   };
 
@@ -159,11 +155,8 @@ const SignIn = ({ navigation }) => {
           onPress={() => onLogin()}
         />
 
-        {errorMsg && errorMsg.length > 0 && (
-          <Text style={{ color: COLORS.red, ...FONTS.body4 }}>
-            {errorMsg || ' '}
-          </Text>
-        )}
+        <Text style={{ color: COLORS.red, ...FONTS.body4 }}>{errorMsg}</Text>
+
         {/* Sign Up */}
         <View
           style={{
