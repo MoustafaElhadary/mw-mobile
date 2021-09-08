@@ -46,7 +46,7 @@ Did you just move to a new city? trying to meet new people? find things to do? f
 - [x] login
 - [x] log out
 - [ ] sign up
-  - [x] sign up with email and passwoord
+  - [x] sign up with email and password
   - [ ] flow to collect other data (image, first and last name, location and phone)
 - [x] persist user
 
@@ -79,4 +79,4 @@ Did you just move to a new city? trying to meet new people? find things to do? f
 
 ### App level
 
-- [ ] convert to typescript
+- [x] convert to typescript

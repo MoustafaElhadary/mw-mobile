@@ -17,5 +17,9 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "emitDecoratorMetadata": true,
+    "paths": {
+      "@src": ["*"]
+    }
   },
+  "exclude": ["node_modules"]
 }

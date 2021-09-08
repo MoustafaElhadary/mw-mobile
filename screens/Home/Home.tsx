@@ -1,16 +1,15 @@
 import React from 'react';
 import {
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  TextInput,
   FlatList,
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-
 import { FilterModal } from '..';
 import { HorizontalFoodCard, VerticalFoodCard } from '../../components';
-import { FONTS, SIZES, COLORS, icons, dummyData } from '../../constants';
+import { COLORS, dummyData, FONTS, icons, SIZES } from '../../constants';
 
 const Section = ({ title, onPress, children }) => {
   return (
