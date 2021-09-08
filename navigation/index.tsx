@@ -1,12 +1,17 @@
-import { AuthenticatedUserProvider } from './AuthenticatedUserProvider';
-import React, { useContext, useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { View, ActivityIndicator } from 'react-native';
-
-import Firebase from '../utils/firebase';
-import { AuthenticatedUserContext } from './AuthenticatedUserProvider';
 import { createStackNavigator } from '@react-navigation/stack';
-import { OnBoarding, SignIn, SignUp, ForgotPassword, Otp } from '../screens';
+import React, { useContext, useEffect, useState } from 'react';
+import { ActivityIndicator, Text, View } from 'react-native';
+import ForgotPassword from '../screens/Authentication/ForgotPassword';
+import Otp from '../screens/Authentication/Otp';
+import SignIn from '../screens/Authentication/SignIn';
+import SignUp from '../screens/Authentication/SignUp';
+import OnBoarding from '../screens/OnBoarding/OnBoarding';
+import Firebase from '../utils/firebase';
+import {
+  AuthenticatedUserContext,
+  AuthenticatedUserProvider,
+} from './AuthenticatedUserProvider';
 import CustomDrawer from './CustomDrawer';
 
 export default function Routes() {
@@ -57,6 +62,12 @@ function RootNavigator() {
       {user ? <HomeStack /> : <AuthStack />}
     </NavigationContainer>
   );
+
+  // return (
+  //   <View>
+  //     <Text> yooooooooooooooooooooooooooooo</Text>
+  //   </View>
+  // );
 }
 
 function HomeStack() {

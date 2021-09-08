@@ -1,10 +1,11 @@
+import FormInput from '../../components/FormInput';
+import TextButton from '../../components/TextButton';
 import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
-import { AuthLayout } from '..';
-import { FormInput, TextButton } from '../../components';
 import { utils } from '../../utils';
 import { COLORS, FONTS, icons, SIZES } from '../../utils/constants';
 import Firebase from '../../utils/firebase';
+import AuthLayout from './AuthLayout';
 
 const auth = Firebase.auth();
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Animated, FlatList, Image, ImageBackground, Text, View } from 'react-native';
+import TextButton from '../../components/TextButton';
 import { COLORS, constants, FONTS, images, SIZES } from '../../utils/constants';
-import { TextButton } from '../../components';
 
 
 const OnBoarding = ({ navigation }) => {

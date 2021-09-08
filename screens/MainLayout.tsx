@@ -17,8 +17,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { setSelectedTab } from '../redux/tabSlice';
 
-import { Home, Search, CartTab, Favorite, Notification } from '.';
-import { Header } from '../components';
+import  Header  from '../components/Header';
 import {
   COLORS,
   FONTS,
@@ -30,7 +29,12 @@ import {
 
 import { AuthenticatedUserContext } from '../navigation/AuthenticatedUserProvider';
 import Firebase from '../utils/firebase';
-import { RootState } from 'redux/store';
+import { RootState } from '../redux/store';
+import CartTab from './Cart/CartTab';
+import Favorite from './Favorite/Favorite';
+import Home from './Home/Home';
+import Search from './Search/Search';
+import Notification from './Notification/Notification';
 
 const auth = Firebase.auth();
 

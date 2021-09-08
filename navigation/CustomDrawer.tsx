@@ -14,8 +14,6 @@ import {
 } from '@react-navigation/drawer';
 import Animated from 'react-native-reanimated';
 import { useSelector, useDispatch } from 'react-redux';
-
-import { MainLayout } from '../screens';
 import {
   COLORS,
   FONTS,
@@ -27,8 +25,9 @@ import {
 
 import { setSelectedTab } from '../redux/tabSlice';
 import Firebase from '../utils/firebase';
-import { RootState } from 'redux/store';
+import { RootState } from '../redux/store';
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
+import MainLayout from '../screens/MainLayout';
 
 const auth = Firebase.auth();
 

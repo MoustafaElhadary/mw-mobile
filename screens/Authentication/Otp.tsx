@@ -2,8 +2,8 @@ import OTPInputView from '@twotalltotems/react-native-otp-input';
 import React from 'react';
 import { Text, View } from 'react-native';
 import { COLORS, FONTS, SIZES } from '../../utils/constants';
-import { AuthLayout } from '..';
-import { TextButton } from '../../components';
+import TextButton from '../../components/TextButton';
+import AuthLayout from './AuthLayout';
 
 
 const Otp = ({ navigation }) => {

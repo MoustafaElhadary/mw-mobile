@@ -1,4 +1,4 @@
-import { HorizontalFoodCard, VerticalFoodCard, Section } from '../../components';
+
 import React from 'react';
 import {
   FlatList,
@@ -8,8 +8,11 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import FilterModal from '../../components/FilterModal';
+import HorizontalFoodCard from '../../components/HorizontalFoodCard';
+import Section from '../../components/Section';
+import VerticalFoodCard from '../../components/VerticalFoodCard';
 import { COLORS, dummyData, FONTS, icons, SIZES } from '../../utils/constants';
-import { FilterModal } from '..';
 
 
 const CartTab = () => {

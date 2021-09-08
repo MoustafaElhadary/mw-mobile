@@ -10,13 +10,12 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import {
-  IconButton,
-  TwoPointSlider,
-  TextButton,
-  TextIconButton,
-} from '.';
+
 import { COLORS, FONTS, SIZES, constants, icons } from '../utils/constants';
+import IconButton from './IconButton';
+import TextButton from './TextButton';
+import TextIconButton from './TextIconButton';
+import TwoPointSlider from './TwoPointSlider';
 
 export type SectionProps = {
   title: string;
