@@ -1,8 +1,16 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  ImageSourcePropType,
+  GestureResponderEvent,
+} from 'react-native';
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
+  DrawerScreenProps,
 } from '@react-navigation/drawer';
 import Animated from 'react-native-reanimated';
 import { useSelector, useDispatch } from 'react-redux';
@@ -19,12 +27,29 @@ import {
 
 import { setSelectedTab } from '../redux/tabSlice';
 import Firebase from '../utils/firebase';
+import { RootState } from 'redux/store';
+import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
 
 const auth = Firebase.auth();
 
 const Drawer = createDrawerNavigator();
+type Props = {
+  navigation: DrawerNavigationHelpers;
+};
 
-const CustomDrawerItem = ({ label, icon, isFocused, onPress }) => {
+export type CustomDrawerItemProps = {
+  label: string;
+  icon: ImageSourcePropType;
+  isFocused?: boolean;
+  onPress?: (event: GestureResponderEvent) => void;
+};
+
+const CustomDrawerItem = ({
+  label,
+  icon,
+  isFocused,
+  onPress,
+}: CustomDrawerItemProps) => {
   return (
     <TouchableOpacity
       style={{
@@ -60,8 +85,10 @@ const CustomDrawerItem = ({ label, icon, isFocused, onPress }) => {
   );
 };
 
-const CustomDrawerContent = ({ navigation }) => {
-  const selectedTab = useSelector((state) => state.store.selectedTab);
+const CustomDrawerContent = ({ navigation }: Props) => {
+  const selectedTab = useSelector(
+    (state: RootState) => state.store.selectedTab
+  );
   const dispatch = useDispatch();
 
   return (
@@ -215,8 +242,10 @@ const CustomDrawerContent = ({ navigation }) => {
   );
 };
 
-const CustomDrawer = ({ selectedTab, setSelectedTab }) => {
-  const [progress, setProgress] = React.useState(new Animated.Value(0));
+const CustomDrawer = () => {
+  const [progress, setProgress] = React.useState<Animated.Node<number>>(
+    new Animated.Value(0)
+  );
 
   const scale = Animated.interpolateNode(progress, {
     inputRange: [0, 1],
@@ -255,13 +284,7 @@ const CustomDrawer = ({ selectedTab, setSelectedTab }) => {
             setProgress(props.progress);
           }, 0);
 
-          return (
-            <CustomDrawerContent
-              navigation={props.navigation}
-              selectedTab={selectedTab}
-              setSelectedTab={setSelectedTab}
-            />
-          );
+          return <CustomDrawerContent navigation={props.navigation} />;
         }}
       >
         <Drawer.Screen name="MainLayout">

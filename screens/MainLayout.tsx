@@ -17,7 +17,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { setSelectedTab } from '../redux/tabSlice';
 
-import { Home, Search, CartTab, Favorite, Notification } from '../screens';
+import { Home, Search, CartTab, Favorite, Notification } from '.';
 import { Header } from '../components';
 import {
   COLORS,
@@ -30,6 +30,7 @@ import {
 
 import { AuthenticatedUserContext } from '../navigation/AuthenticatedUserProvider';
 import Firebase from '../utils/firebase';
+import { RootState } from 'redux/store';
 
 const auth = Firebase.auth();
 
@@ -94,9 +95,16 @@ const TabButton = ({
 };
 
 const MainLayout = ({ drawerAnimationStyle, navigation }) => {
-  const flatListRef = React.useRef();
+  const flatListRef = React.useRef<
+    FlatList<{
+      id: number;
+      label: string;
+    }>
+  >();
 
-  const selectedTab = useSelector((state) => state.store.selectedTab);
+  const selectedTab = useSelector(
+    (state: RootState) => state.store.selectedTab
+  );
   const dispatch = useDispatch();
   // Reanimated Shared Value
 
@@ -110,15 +118,15 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
   };
   console.log({ auth, user });
   const homeTabFlex = useSharedValue(1);
-  const homeTabColor = useSharedValue(COLORS.white);
+  const homeTabColor = useSharedValue<string | number>(COLORS.white);
   const searchTabFlex = useSharedValue(1);
-  const searchTabColor = useSharedValue(COLORS.white);
+  const searchTabColor = useSharedValue<string | number>(COLORS.white);
   const cartTabFlex = useSharedValue(1);
-  const cartTabColor = useSharedValue(COLORS.white);
+  const cartTabColor = useSharedValue<string | number>(COLORS.white);
   const favoriteTabFlex = useSharedValue(1);
-  const favoriteTabColor = useSharedValue(COLORS.white);
+  const favoriteTabColor = useSharedValue<string | number>(COLORS.white);
   const notificationTabFlex = useSharedValue(1);
-  const notificationTabColor = useSharedValue(COLORS.white);
+  const notificationTabColor = useSharedValue<string | number>(COLORS.white);
 
   // Reanimated Animated Style
 
