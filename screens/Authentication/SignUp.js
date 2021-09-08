@@ -5,6 +5,10 @@ import { AuthLayout } from '../';
 import { FONTS, SIZES, COLORS, icons } from '../../constants';
 import { FormInput, TextButton, TextIconButton } from '../../components';
 import { utils } from '../../utils';
+import Firebase from '../../utils/firebase';
+
+const auth = Firebase.auth();
+
 
 const SignUp = ({ navigation }) => {
   const [email, setEmail] = React.useState('');
@@ -15,16 +19,32 @@ const SignUp = ({ navigation }) => {
   const [emailError, setEmailError] = React.useState('');
   const [usernameError, setUsernameError] = React.useState('');
   const [passwordError, setPasswordError] = React.useState('');
+  const [errorMsg, setErrorMsg] = React.useState();
+
 
   function isEnableSignUp() {
     return (
       email != '' &&
-      username != '' &&
+      // username != '' &&
       password != '' &&
       emailError == '' &&
       passwordError == ''
     );
   }
+
+  const onHandleSignup = async () => {
+    try {
+      if (email !== '' && password !== '') {
+        await auth.createUserWithEmailAndPassword(email, password);
+
+        await navigation.replace('Home');
+
+      }
+    } catch (error) {
+      setSignupError(error.message);
+    }
+  };
+
 
   return (
     <AuthLayout
@@ -157,7 +177,7 @@ const SignUp = ({ navigation }) => {
               ? COLORS.primary
               : COLORS.transparentPrimary,
           }}
-          onPress={() => navigation.navigate('Otp')}
+          onPress={() => onHandleSignup()}
         />
 
         <View

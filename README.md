@@ -43,10 +43,12 @@ Did you just move to a new city? trying to meet new people? find things to do? f
 
 ### Auth
 
-- [ ] login
-- [ ] log out
+- [x] login
+- [x] log out
 - [ ] sign up
-- [ ] persist user
+  - [x] sign up with email and passwoord
+  - [ ] flow to collect other data (image, first and last name, location and phone)
+- [x] persist user
 
 ### Home page
 

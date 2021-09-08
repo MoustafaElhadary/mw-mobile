@@ -17,8 +17,10 @@ import {
   dummyData,
 } from '../constants';
 
-
 import { setSelectedTab } from '../redux/tabSlice';
+import Firebase from '../utils/firebase';
+
+const auth = Firebase.auth();
 
 const Drawer = createDrawerNavigator();
 
@@ -198,7 +200,15 @@ const CustomDrawerContent = ({ navigation }) => {
             marginBottom: SIZES.padding,
           }}
         >
-          <CustomDrawerItem label="Logout" icon={icons.logout} />
+          <CustomDrawerItem
+            label="Logout"
+            icon={icons.logout}
+            onPress={() => {
+              auth.signOut();
+              // dispatch(setSelectedTab(constants.screens.favorite));
+              // navigation.navigate('MainLayout');
+            }}
+          />
         </View>
       </View>
     </DrawerContentScrollView>

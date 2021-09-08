@@ -11,6 +11,8 @@ import {
 import { utils } from '../../utils';
 import Firebase from '../../utils/firebase';
 
+  const auth = Firebase.auth();
+
 const SignIn = ({ navigation }) => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -25,7 +27,6 @@ const SignIn = ({ navigation }) => {
     return email != '' && password != '' && emailError == '';
   }
 
-  const auth = Firebase.auth();
 
   const onLogin = async () => {
     try {

@@ -38,7 +38,7 @@ const VerticalFoodCard = ({ containerStyle, item, onPress }) => {
                     style={{
                         width: 20,
                         height: 20,
-                        tintColor: item.isFavorite ? COLORS.primary : COLORS.gray
+                        tintColor: item.isFavorite ? COLORS.red : COLORS.gray
                     }}
                 />
             </View>

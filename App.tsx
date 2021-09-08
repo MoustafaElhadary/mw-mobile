@@ -1,17 +1,10 @@
-import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
+import React, { useContext, useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import { useFonts } from 'expo-font';
-
-import CustomDrawer from './navigation/CustomDrawer';
+import Routes from './navigation/index';
 
 import store from './redux/store';
-import { OnBoarding, SignIn, SignUp, ForgotPassword, Otp } from './screens';
-import Firebase from './utils/firebase';
-
-const Stack = createStackNavigator();
-
+import { View } from 'react-native';
 
 const App = () => {
   const [loaded] = useFonts({
@@ -21,38 +14,15 @@ const App = () => {
     'Poppins-Regular': require('./assets/fonts/Poppins-Regular.ttf'),
   });
 
+  console.log('hello');
   if (!loaded) {
     return null;
   }
-
-  const auth = Firebase.auth();
-
-  console.log({auth})
-  
-
+  console.log('world');
 
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false,
-          }}
-          initialRouteName={'OnBoarding'}
-        >
-          <Stack.Screen name="OnBoarding" component={OnBoarding} />
-
-          <Stack.Screen name="SignIn" component={SignIn} />
-
-          <Stack.Screen name="SignUp" component={SignUp} />
-
-          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-
-          <Stack.Screen name="Otp" component={Otp} />
-
-          <Stack.Screen name="Home" component={CustomDrawer} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <Routes />
     </Provider>
   );
 };

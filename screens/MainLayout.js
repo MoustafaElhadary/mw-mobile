@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   View,
   Text,
@@ -13,9 +13,9 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useSelector,useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-import {setSelectedTab} from '../redux/tabSlice'
+import { setSelectedTab } from '../redux/tabSlice';
 
 import { Home, Search, CartTab, Favorite, Notification } from '../screens';
 import { Header } from '../components';
@@ -28,8 +28,10 @@ import {
   dummyData,
 } from '../constants';
 
+import { AuthenticatedUserContext } from '../navigation/AuthenticatedUserProvider';
 import Firebase from '../utils/firebase';
 
+const auth = Firebase.auth();
 
 const TabButton = ({
   label,
@@ -98,9 +100,15 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
   const dispatch = useDispatch();
   // Reanimated Shared Value
 
-  const auth = Firebase.auth();
-
-  console.log({auth})
+  const { user } = useContext(AuthenticatedUserContext);
+  const handleSignOut = async () => {
+    try {
+      await auth.signOut();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  console.log({ auth, user });
   const homeTabFlex = useSharedValue(1);
   const homeTabColor = useSharedValue(COLORS.white);
   const searchTabFlex = useSharedValue(1);
@@ -414,7 +422,9 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
             isFocused={selectedTab == constants.screens.notification}
             outerContainerStyle={notificationFlexStyle}
             innerContainerStyle={notificationColorStyle}
-            onPress={() => dispatch(setSelectedTab(constants.screens.notification))}
+            onPress={() =>
+              dispatch(setSelectedTab(constants.screens.notification))
+            }
           />
         </View>
       </View>

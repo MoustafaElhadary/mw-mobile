@@ -36,7 +36,7 @@ const OnBoarding = ({ navigation }) => {
                     constants.onboarding_screens.map((item, index) => {
                         const dotColor = dotPosition.interpolate({
                             inputRange: [index - 1, index, index + 1],
-                            outputRange: [COLORS.lightOrange, COLORS.primary, COLORS.lightOrange],
+                            outputRange: [COLORS.transparentBlack1, COLORS.primary, COLORS.transparentBlack1],
                             extrapolate: "clamp"
                         })
 
