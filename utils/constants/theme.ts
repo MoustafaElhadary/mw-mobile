@@ -2,7 +2,8 @@ import { Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('window');
 
 export const COLORS = {
-  primary: '#000', //orange
+  primary: '#000',
+  primaryOrange: "#FF6C44", //orange
   transparentPrimary: 'rgba(227, 120, 75, 0.4)',
   orange: '#FFA133',
   lightOrange: '#FFA133',

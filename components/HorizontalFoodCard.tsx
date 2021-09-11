@@ -1,6 +1,14 @@
 import React from 'react';
-import { TouchableOpacity, View, Text, Image } from 'react-native';
+import { TouchableOpacity, View, Text, Image, ViewStyle, ImageStyle, GestureResponderEvent } from 'react-native';
 import { COLORS, FONTS, icons, SIZES } from '../utils/constants';
+
+
+export type HorizontalFoodCardType = {
+  containerStyle: ViewStyle;
+  imageStyle: ImageStyle;
+  item: any;
+  onPress: (event: GestureResponderEvent) => void;
+};
 
 const HorizontalFoodCard = ({ containerStyle, imageStyle, item, onPress }) => {
   return (

@@ -1,3 +1,5 @@
+import { Post } from "../../types";
+
 const myProfile = {
   name: 'Moustafa Elhadary',
   profile_image: require('../../assets/images/profile.jpeg'),
@@ -66,6 +68,53 @@ const wrapSandwich = {
   image: require('../../assets/dummyData/wrap_sandwich.png'),
 };
 
+const posts: Post[] = [
+  {
+    id: 1,
+    user: {
+      id: 1,
+      username: `Krin Ramos`,
+      userImage: 'https://randomuser.me/api/portraits/women/96.jpg',
+      userKarma: 70,
+    },
+    date: new Date(),
+    postText: 'Just moved to miami, who should i meet?',
+  },
+  {
+    id: 2,
+    user: {
+      id: 2,
+      username: `Penny Lopez`,
+      userImage: 'https://randomuser.me/api/portraits/women/74.jpg',
+      userKarma: 43,
+    },
+    date: new Date(),
+    postText: 'In NYC this weekend, who wants to chill?',
+  },
+  {
+    id: 3,
+    user: {
+      id: 2,
+      username: `Jesse Sullivan`,
+      userImage: 'https://randomuser.me/api/portraits/men/74.jpg',
+      userKarma: 690,
+    },
+    date: new Date(),
+    postText: 'Wanna watch the dolphins game at champs?',
+  },
+  {
+    id: 4,
+    user: {
+      id: 2,
+      username: `Moustafa Elhadary`,
+      userImage: 'https://randomuser.me/api/portraits/men/1.jpg',
+      userKarma: 420,
+    },
+    date: new Date(),
+    postText: 'I am hungry and bored of the usual, what is the best wing place in town?',
+  },
+];
+
 const menu = [
   {
     id: 1,
@@ -103,4 +152,5 @@ export default {
   myProfile,
   categories,
   menu,
+  posts,
 };
