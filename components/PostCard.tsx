@@ -31,59 +31,53 @@ const PostCard = ({
         flexDirection: 'column',
         borderRadius: SIZES.radius,
         backgroundColor: COLORS.lightGray2,
-        alignItems: 'center',
+        // alignItems: 'center',
         marginHorizontal: SIZES.padding,
+        paddingHorizontal: SIZES.padding,
         marginBottom: SIZES.radius,
         ...containerStyle,
       }}
     >
-      <TouchableOpacity
+      <View
         style={{
+          marginTop: 20,
           flexDirection: 'row',
-          borderRadius: SIZES.radius,
-          backgroundColor: COLORS.lightGray2,
-          height: 150,
-          alignItems: 'center',
+          justifyContent: 'space-between',
         }}
-        onPress={onPress}
       >
-        {/* Image */}
-        <Image
-          source={{ uri: item.user.userImage }}
-          style={{
-            marginTop: -65,
-            marginLeft: 15,
-            marginRight: 15,
-            height: 40,
-            width: 40,
-            borderRadius: SIZES.radius,
-            ...imageStyle,
-          }}
-        />
-        {/* Info */}
-        <View
-          style={{
-            flex: 1,
-            marginTop: -40,
-          }}
-        >
-          {/* Name */}
-          <Text style={{ ...FONTS.h3, color: COLORS.darkGray2, fontSize: 14 }}>
-            {item.user.username}
-          </Text>
-          <Text style={{ ...FONTS.h4, color: COLORS.darkGray2, fontSize: 10 }}>
-            2h ago
-          </Text>
-          <Text style={{ marginTop: SIZES.base, ...FONTS.h3 }}>
-            {item.postText}
-          </Text>
+        <View style={{ flexDirection: 'row' }}>
+          <TouchableOpacity onPress={onPress}>
+            <Image
+              source={{ uri: item.user.userImage }}
+              style={{
+                height: 40,
+                width: 40,
+                borderRadius: SIZES.radius,
+                ...imageStyle,
+              }}
+            />
+          </TouchableOpacity>
+
+          {/* Name and Date */}
+          <View style={{ marginLeft: 10, flexDirection: 'column' }}>
+            <Text
+              style={{ ...FONTS.h3, color: COLORS.darkGray2, fontSize: 14 }}
+            >
+              {item.user.username}
+            </Text>
+            <Text
+              style={{ ...FONTS.h4, color: COLORS.darkGray2, fontSize: 10 }}
+            >
+              2h ago
+            </Text>
+          </View>
         </View>
+        {/* Image */}
+
+        {/* Streak */}
         <View
           style={{
             flexDirection: 'row',
-            position: 'absolute',
-            top: 5,
-            right: SIZES.radius,
           }}
         >
           <Image
@@ -97,8 +91,16 @@ const PostCard = ({
             {item.user.userKarma}
           </Text>
         </View>
+      </View>
+      <Text style={{ marginTop: SIZES.base, ...FONTS.h3 }}>
+        {item.postText}
+      </Text>
+      <TouchableOpacity
+        onPress={onPress}
+        style={{ alignSelf: 'center', paddingVertical: 15 }}
+      >
+        <Text> ✈️ Message </Text>
       </TouchableOpacity>
-      <Text>Message </Text>
     </View>
   );
 };

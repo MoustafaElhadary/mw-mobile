@@ -12,8 +12,6 @@ import PostCard from '../../components/PostCard';
 import { COLORS, dummyData, FONTS, icons, SIZES } from '../../utils/constants';
 
 const Home = () => {
-  const [selectedCategoryId, setSelectedCategoryId] = React.useState(1);
-  const [selectedPostType, setSelectedPostType] = React.useState(1);
 
   const [postList, setPostList] = React.useState(dummyData.posts);
 
@@ -56,7 +54,7 @@ const Home = () => {
         />
 
         {/* Filter Button */}
-        <TouchableOpacity onPress={() => setShowFilterModal(true)}>
+        {/* <TouchableOpacity onPress={() => setShowFilterModal(true)}>
           <Image
             source={icons.filter}
             style={{
@@ -65,7 +63,7 @@ const Home = () => {
               tintColor: COLORS.black,
             }}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     );
   }

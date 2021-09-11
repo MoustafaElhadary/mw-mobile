@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, ViewStyle } from 'react-native';
-import { FONTS } from '../utils/constants';
+import { View, Text, ViewStyle, Image } from 'react-native';
+import { FONTS, images } from '../utils/constants';
 
 export type HeaderProps = {
   containerStyle: ViewStyle;
@@ -26,7 +26,18 @@ const Header = ({
     >
       {leftComponent}
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text style={{ ...FONTS.h3, ...titleStyle }}>{title}</Text>
+        {title === 'HOME' ? (
+          <Image
+            source={images.logo_01}
+            resizeMode="contain"
+            style={{
+              height: 40,
+              width: 40,
+            }}
+          />
+        ) : (
+          <Text style={{ ...FONTS.h3, ...titleStyle }}>{title}</Text>
+        )}
       </View>
       {rightComponent}
     </View>

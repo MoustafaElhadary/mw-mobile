@@ -52,10 +52,10 @@ Did you just move to a new city? trying to meet new people? find things to do? f
 
 ### Home page
 
-- [ ] list of posts
-  - [ ] a post has a user name, image, date, user karma, question and action
+- [x] list of posts
+  - [x] a post has a user name, image, date, user karma, post text and action
 - [ ] post button to open modal to enter text
-- [ ] search textbox
+- [x] search textbox
 
 ### Messages page
 
@@ -77,6 +77,11 @@ Did you just move to a new city? trying to meet new people? find things to do? f
 - [ ] location
 - [ ] stats? (Moustafa has a strong network in Erie, and Pittsburgh, recommendations are mostly about food, etc..)
 
+### Backend integration
+
+- [ ] fetch posts from firebase
+- [ ] create post in firebase
+- [ ] grab user info from firebase
 ### App level
 
 - [x] convert to typescript
