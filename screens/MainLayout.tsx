@@ -1,40 +1,31 @@
+import { LinearGradient } from 'expo-linear-gradient';
 import React, { useContext } from 'react';
 import {
-  View,
-  Text,
+  FlatList, Image, Text,
   TouchableOpacity,
-  TouchableWithoutFeedback,
-  Image,
-  FlatList,
+  TouchableWithoutFeedback, View
 } from 'react-native';
+import { ChartBarIcon, CreditCardIcon, HomeIcon, UserIcon } from "react-native-heroicons/outline";
 import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
+  useAnimatedStyle, useSharedValue, withTiming
 } from 'react-native-reanimated';
-import { LinearGradient } from 'expo-linear-gradient';
-import { useSelector, useDispatch } from 'react-redux';
-
-import { setSelectedTab } from '../redux/tabSlice';
-
-import  Header  from '../components/Header';
-import {
-  COLORS,
-  FONTS,
-  SIZES,
-  icons,
-  constants,
-  dummyData,
-} from '../utils/constants';
-
+import { useDispatch, useSelector } from 'react-redux';
+import Header from '../components/Header';
 import { AuthenticatedUserContext } from '../navigation/AuthenticatedUserProvider';
-import Firebase from '../utils/firebase';
 import { RootState } from '../redux/store';
-import CartTab from './Cart/CartTab';
-import Favorite from './Favorite/Favorite';
+import { setSelectedTab } from '../redux/tabSlice';
+import {
+  COLORS, constants,
+  dummyData, FONTS, icons, SIZES
+} from '../utils/constants';
+import Firebase from '../utils/firebase';
 import Home from './Home/Home';
-import Search from './Search/Search';
-import Notification from './Notification/Notification';
+import Payments from './Payments/Payments';
+import Profile from './Profile/Profile';
+import Transactions from './Transactions/Transactions';
+
+
+
 
 const auth = Firebase.auth();
 
@@ -71,14 +62,8 @@ const TabButton = ({
             innerContainerStyle,
           ]}
         >
-          <Image
-            source={icon}
-            style={{
-              width: 20,
-              height: 20,
-              tintColor: isFocused ? COLORS.white : COLORS.gray,
-            }}
-          />
+         
+         {icon}
 
           {isFocused && (
             <Text
@@ -123,14 +108,12 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
   console.log({ auth, user });
   const homeTabFlex = useSharedValue(1);
   const homeTabColor = useSharedValue<string | number>(COLORS.white);
-  const searchTabFlex = useSharedValue(1);
-  const searchTabColor = useSharedValue<string | number>(COLORS.white);
-  const cartTabFlex = useSharedValue(1);
-  const cartTabColor = useSharedValue<string | number>(COLORS.white);
-  const favoriteTabFlex = useSharedValue(1);
-  const favoriteTabColor = useSharedValue<string | number>(COLORS.white);
-  const notificationTabFlex = useSharedValue(1);
-  const notificationTabColor = useSharedValue<string | number>(COLORS.white);
+  const transactionsTabFlex = useSharedValue(1);
+  const transactionsTabColor = useSharedValue<string | number>(COLORS.white);
+  const paymentsTabFlex = useSharedValue(1);
+  const paymentsTabColor = useSharedValue<string | number>(COLORS.white);
+  const profileTabFlex = useSharedValue(1);
+  const profileTabColor = useSharedValue<string | number>(COLORS.white);
 
   // Reanimated Animated Style
 
@@ -146,53 +129,42 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
     };
   });
 
-  const searchFlexStyle = useAnimatedStyle(() => {
+  const transactionsFlexStyle = useAnimatedStyle(() => {
     return {
-      flex: searchTabFlex.value,
+      flex: transactionsTabFlex.value,
     };
   });
 
-  const searchColorStyle = useAnimatedStyle(() => {
+  const transactionsColorStyle = useAnimatedStyle(() => {
     return {
-      backgroundColor: searchTabColor.value,
+      backgroundColor: transactionsTabColor.value,
     };
   });
 
-  const cartFlexStyle = useAnimatedStyle(() => {
+  const paymentsFlexStyle = useAnimatedStyle(() => {
     return {
-      flex: cartTabFlex.value,
+      flex: paymentsTabFlex.value,
     };
   });
 
-  const cartColorStyle = useAnimatedStyle(() => {
+  const paymentsColorStyle = useAnimatedStyle(() => {
     return {
-      backgroundColor: cartTabColor.value,
+      backgroundColor: paymentsTabColor.value,
     };
   });
 
-  const favoriteFlexStyle = useAnimatedStyle(() => {
+  const profileFlexStyle = useAnimatedStyle(() => {
     return {
-      flex: favoriteTabFlex.value,
+      flex: profileTabFlex.value,
     };
   });
 
-  const favoriteColorStyle = useAnimatedStyle(() => {
+  const profileColorStyle = useAnimatedStyle(() => {
     return {
-      backgroundColor: favoriteTabColor.value,
+      backgroundColor: profileTabColor.value,
     };
   });
 
-  const notificationFlexStyle = useAnimatedStyle(() => {
-    return {
-      flex: notificationTabFlex.value,
-    };
-  });
-
-  const notificationColorStyle = useAnimatedStyle(() => {
-    return {
-      backgroundColor: notificationTabColor.value,
-    };
-  });
 
   React.useEffect(() => {
     dispatch(setSelectedTab(constants.screens.home));
@@ -212,59 +184,45 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
       homeTabColor.value = withTiming(COLORS.white, { duration: 500 });
     }
 
-    if (selectedTab == constants.screens.search) {
+    if (selectedTab == constants.screens.transactions) {
       flatListRef?.current?.scrollToIndex({
         index: 1,
         animated: false,
       });
 
-      searchTabFlex.value = withTiming(4, { duration: 500 });
-      searchTabColor.value = withTiming(COLORS.primary, { duration: 500 });
+      transactionsTabFlex.value = withTiming(4, { duration: 500 });
+      transactionsTabColor.value = withTiming(COLORS.primary, { duration: 500 });
     } else {
-      searchTabFlex.value = withTiming(1, { duration: 500 });
-      searchTabColor.value = withTiming(COLORS.white, { duration: 500 });
+      transactionsTabFlex.value = withTiming(1, { duration: 500 });
+      transactionsTabColor.value = withTiming(COLORS.white, { duration: 500 });
     }
 
-    if (selectedTab == constants.screens.cart) {
+    if (selectedTab == constants.screens.payments) {
       flatListRef?.current?.scrollToIndex({
         index: 2,
         animated: false,
       });
 
-      cartTabFlex.value = withTiming(4, { duration: 500 });
-      cartTabColor.value = withTiming(COLORS.primary, { duration: 500 });
+      paymentsTabFlex.value = withTiming(4, { duration: 500 });
+      paymentsTabColor.value = withTiming(COLORS.primary, { duration: 500 });
     } else {
-      cartTabFlex.value = withTiming(1, { duration: 500 });
-      cartTabColor.value = withTiming(COLORS.white, { duration: 500 });
+      paymentsTabFlex.value = withTiming(1, { duration: 500 });
+      paymentsTabColor.value = withTiming(COLORS.white, { duration: 500 });
     }
 
-    if (selectedTab == constants.screens.favorite) {
+    if (selectedTab == constants.screens.profile) {
       flatListRef?.current?.scrollToIndex({
         index: 3,
         animated: false,
       });
 
-      favoriteTabFlex.value = withTiming(4, { duration: 500 });
-      favoriteTabColor.value = withTiming(COLORS.primary, { duration: 500 });
+      profileTabFlex.value = withTiming(4, { duration: 500 });
+      profileTabColor.value = withTiming(COLORS.primary, { duration: 500 });
     } else {
-      favoriteTabFlex.value = withTiming(1, { duration: 500 });
-      favoriteTabColor.value = withTiming(COLORS.white, { duration: 500 });
+      profileTabFlex.value = withTiming(1, { duration: 500 });
+      profileTabColor.value = withTiming(COLORS.white, { duration: 500 });
     }
 
-    if (selectedTab == constants.screens.notification) {
-      flatListRef?.current?.scrollToIndex({
-        index: 4,
-        animated: false,
-      });
-
-      notificationTabFlex.value = withTiming(4, { duration: 500 });
-      notificationTabColor.value = withTiming(COLORS.primary, {
-        duration: 500,
-      });
-    } else {
-      notificationTabFlex.value = withTiming(1, { duration: 500 });
-      notificationTabColor.value = withTiming(COLORS.white, { duration: 500 });
-    }
   }, [selectedTab]);
 
   return (
@@ -345,12 +303,9 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
                 }}
               >
                 {item.label == constants.screens.home && <Home />}
-                {item.label == constants.screens.search && <Search />}
-                {item.label == constants.screens.cart && <CartTab />}
-                {item.label == constants.screens.favorite && <Favorite />}
-                {item.label == constants.screens.notification && (
-                  <Notification />
-                )}
+                {item.label == constants.screens.transactions && <Transactions />}
+                {item.label == constants.screens.payments && <Payments />}
+                {item.label == constants.screens.profile && <Profile />}
               </View>
             );
           }}
@@ -394,7 +349,7 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
         >
           <TabButton
             label={constants.screens.home}
-            icon={icons.home}
+            icon={ <HomeIcon color={selectedTab == constants.screens.home ? COLORS.white : COLORS.gray}  size={24} />}
             isFocused={selectedTab == constants.screens.home}
             outerContainerStyle={homeFlexStyle}
             innerContainerStyle={homeColorStyle}
@@ -402,42 +357,32 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
           />
 
           <TabButton
-            label={constants.screens.search}
-            icon={icons.search}
-            isFocused={selectedTab == constants.screens.search}
-            outerContainerStyle={searchFlexStyle}
-            innerContainerStyle={searchColorStyle}
-            onPress={() => dispatch(setSelectedTab(constants.screens.search))}
+            label={constants.screens.transactions}
+            icon={ <ChartBarIcon color={selectedTab == constants.screens.transactions ? COLORS.white : COLORS.gray}  size={24} />}
+            isFocused={selectedTab == constants.screens.transactions}
+            outerContainerStyle={transactionsFlexStyle}
+            innerContainerStyle={transactionsColorStyle}
+            onPress={() => dispatch(setSelectedTab(constants.screens.transactions))}
           />
 
           <TabButton
-            label={constants.screens.cart}
-            icon={icons.cart}
-            isFocused={selectedTab == constants.screens.cart}
-            outerContainerStyle={cartFlexStyle}
-            innerContainerStyle={cartColorStyle}
-            onPress={() => dispatch(setSelectedTab(constants.screens.cart))}
+            label={constants.screens.payments}
+            icon={ <CreditCardIcon color={selectedTab == constants.screens.payments ? COLORS.white : COLORS.gray}  size={24} />}
+            isFocused={selectedTab == constants.screens.payments}
+            outerContainerStyle={paymentsFlexStyle}
+            innerContainerStyle={paymentsColorStyle}
+            onPress={() => dispatch(setSelectedTab(constants.screens.payments))}
           />
 
           <TabButton
-            label={constants.screens.favorite}
-            icon={icons.favorite}
-            isFocused={selectedTab == constants.screens.favorite}
-            outerContainerStyle={favoriteFlexStyle}
-            innerContainerStyle={favoriteColorStyle}
-            onPress={() => dispatch(setSelectedTab(constants.screens.favorite))}
+            label={constants.screens.profile}
+            icon={ <UserIcon color={selectedTab == constants.screens.profile ? COLORS.white : COLORS.gray}  size={24} />}
+            isFocused={selectedTab == constants.screens.profile}
+            outerContainerStyle={profileFlexStyle}
+            innerContainerStyle={profileColorStyle}
+            onPress={() => dispatch(setSelectedTab(constants.screens.profile))}
           />
 
-          <TabButton
-            label={constants.screens.notification}
-            icon={icons.notification}
-            isFocused={selectedTab == constants.screens.notification}
-            outerContainerStyle={notificationFlexStyle}
-            innerContainerStyle={notificationColorStyle}
-            onPress={() =>
-              dispatch(setSelectedTab(constants.screens.notification))
-            }
-          />
         </View>
       </View>
     </Animated.View>

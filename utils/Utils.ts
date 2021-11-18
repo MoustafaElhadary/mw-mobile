@@ -3,6 +3,11 @@ function isValidEmail(value) {
   return re.test(String(value).toLowerCase());
 }
 
+function isValidPhoneNumber(value) {
+  const re = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+  return re.test(String(value));
+}
+
 function validateEmail(value, setEmailError) {
   if (value == '') {
     setEmailError('');
@@ -10,6 +15,17 @@ function validateEmail(value, setEmailError) {
     setEmailError('');
   } else {
     setEmailError('Invalid Email');
+  }
+}
+
+//function to validate phoneNumber
+function validatePhoneNumber(value, setPhoneNumberError) {
+  if (value.length < 10) {
+    setPhoneNumberError('Phone number must be 10 digits');
+  } else {
+    if (isValidPhoneNumber(value)) {
+      setPhoneNumberError('');
+    }
   }
 }
 
@@ -25,6 +41,7 @@ const utils = {
   isValidEmail,
   validateEmail,
   validatePassword,
+  validatePhoneNumber,
 };
 
 export default utils;

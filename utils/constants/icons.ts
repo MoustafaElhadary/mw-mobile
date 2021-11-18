@@ -26,6 +26,9 @@ const setting = require('../../assets/icons/setting.png');
 const star = require('../../assets/icons/star.png');
 const wallet = require('../../assets/icons/wallet.png');
 const help = require('../../assets/icons/help.png');
+const person = require('../../assets/icons/person.png');
+const creditCard = require('../../assets/icons/credit-card.png');
+const barChart = require('../../assets/icons/bar-chart.png');
 
 export default {
   coupon,
@@ -56,4 +59,7 @@ export default {
   star,
   wallet,
   help,
+  person,
+  creditCard,
+  barChart,
 };

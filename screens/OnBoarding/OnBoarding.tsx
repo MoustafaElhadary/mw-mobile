@@ -1,18 +1,17 @@
 import React from 'react';
-import { Animated, FlatList, Image, ImageBackground, Text, View } from 'react-native';
+import { Animated, FlatList, Image, Text, View } from 'react-native';
 import TextButton from '../../components/TextButton';
-import { COLORS, constants, FONTS, images, SIZES } from '../../utils/constants';
-
+import { COLORS, constants, FONTS, SIZES } from '../../utils/constants';
 
 const OnBoarding = ({ navigation }) => {
   const scrollX = React.useRef(new Animated.Value(0)).current;
   const flatListRef = React.useRef<
     FlatList<{
-        id: number;
-        backgroundImage: string;
-        bannerImage: string;
-        title: string;
-        description: string;
+      id: number;
+      backgroundImage: string;
+      bannerImage: string;
+      title: string;
+      description: string;
     }>
   >();
   const [currentIndex, setCurrentIndex] = React.useState(0);
@@ -70,22 +69,29 @@ const OnBoarding = ({ navigation }) => {
     return (
       <View
         style={{
-          position: 'absolute',
-          top: SIZES.height > 800 ? 50 : 25,
-          left: 0,
-          right: 0,
           alignItems: 'center',
-          justifyContent: 'center',
+          width: SIZES.width * 1,
+            height: 200,
         }}
       >
-        <Image
+        {/* <Image
           source={images.logo_02}
           resizeMode="contain"
           style={{
             width: SIZES.width * 1,
             height: 200,
           }}
-        />
+        /> */}
+
+        <Text
+          style={{
+            ...FONTS.h1,
+            fontSize: 45,
+            paddingTop: 90
+          }}
+        >
+          MochaWallet
+        </Text>
       </View>
     );
   }
@@ -202,8 +208,7 @@ const OnBoarding = ({ navigation }) => {
                   flex: 3,
                 }}
               >
-                <ImageBackground
-                  source={item.backgroundImage}
+                <View
                   style={{
                     flex: 1,
                     alignItems: 'center',
@@ -221,7 +226,7 @@ const OnBoarding = ({ navigation }) => {
                       marginBottom: -SIZES.padding,
                     }}
                   />
-                </ImageBackground>
+                </View>
               </View>
 
               {/* Detail */}

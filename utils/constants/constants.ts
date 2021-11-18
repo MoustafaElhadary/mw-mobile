@@ -1,38 +1,33 @@
 const onboarding_screens = [
   {
     id: 1,
-    backgroundImage: require('../../assets/images/background_01.png'),
     bannerImage: require('../../assets/images/p1.png'),
-    title: 'Simple. Sweet. Intros',
+    title: 'Get out of debt fast.',
     description:
-      'Moved to a new city? let your friends know so they can connect you with their favorite people that also live there!',
+      'From roundups to refinancing, We streamline every part of the debt paying process—so you can focus on your life, not your debt.',
   },
   {
     id: 2,
-    backgroundImage: require('../../assets/images/background_02.png'),
     bannerImage: require('../../assets/images/p3.png'),
-    title: 'Craving something new?',
+    title: 'Payoff your debt',
     description:
-      'tired of ordering chinese for the 7th time this month? Ask your friends for recommendations for the best spots in town',
+      'We take the change from your everyday purchases and use it to pay off your loans.',
   },
   {
     id: 3,
-    backgroundImage: require('../../assets/images/background_01.png'),
     bannerImage: require('../../assets/images/p2.png'),
-    title: 'You are the expert!',
+    title: 'Unlock the power of people (coming soon)',
     description:
-      'Whether you know the best spots in town for food, or are the local "tech" expert, get acknowledged for it!',
+      'Receive matching contributions from friends, family or your employer.',
   },
 ];
 
 const screens = {
   main_layout: 'MainLayout',
   home: 'Home',
-  search: 'Search',
-  cart: 'Cart',
-  favorite: 'Favorite',
-  notification: 'Notification',
-  my_wallet: 'My Wallet',
+  transactions: 'Transactions',
+  payments: 'Payments',
+  profile: 'Profile',
 };
 
 const bottom_tabs = [
@@ -42,19 +37,15 @@ const bottom_tabs = [
   },
   {
     id: 1,
-    label: screens.search,
+    label: screens.transactions,
   },
   {
     id: 2,
-    label: screens.cart,
+    label: screens.payments,
   },
   {
     id: 3,
-    label: screens.favorite,
-  },
-  {
-    id: 4,
-    label: screens.notification,
+    label: screens.profile,
   },
 ];
 

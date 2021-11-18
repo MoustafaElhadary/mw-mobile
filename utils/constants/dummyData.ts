@@ -1,4 +1,4 @@
-import { Post } from "../../types";
+import { Post } from '../../types';
 
 const myProfile = {
   name: 'Moustafa Elhadary',
@@ -74,28 +74,34 @@ const posts: Post[] = [
     user: {
       id: 1,
       username: `Krin Ramos`,
+      firstName: 'Krin',
+      lastName: 'Ramos',
       userImage: 'https://randomuser.me/api/portraits/women/96.jpg',
       userKarma: 70,
     },
     date: new Date(),
-    postText: 'Just moved to miami, who should i meet?',
+    postText: 'krin is in miami, who should she meet?',
   },
   {
     id: 2,
     user: {
       id: 2,
       username: `Penny Lopez`,
+      firstName: 'Penny',
+      lastName: 'Lopez',
       userImage: 'https://randomuser.me/api/portraits/women/74.jpg',
       userKarma: 43,
     },
     date: new Date(),
-    postText: 'In NYC this weekend, who wants to chill?',
+    postText: 'Penny is in NYC, what are some of the best restaurants there that she should try?',
   },
   {
     id: 3,
     user: {
       id: 2,
       username: `Jesse Sullivan`,
+      firstName: 'Jesse',
+      lastName: 'Sullivan',
       userImage: 'https://randomuser.me/api/portraits/men/74.jpg',
       userKarma: 690,
     },
@@ -107,11 +113,14 @@ const posts: Post[] = [
     user: {
       id: 2,
       username: `Moustafa Elhadary`,
+      firstName: 'Moustafa',
+      lastName: 'Elhadary',
       userImage: 'https://randomuser.me/api/portraits/men/1.jpg',
       userKarma: 420,
     },
     date: new Date(),
-    postText: 'I am hungry and bored of the usual, what is the best wing place in town?',
+    postText:
+      'I am hungry and bored of the usual, what is the best wing place in town?',
   },
 ];
 

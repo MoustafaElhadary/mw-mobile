@@ -1,33 +1,22 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  ImageSourcePropType,
-  GestureResponderEvent,
-} from 'react-native';
 import {
   createDrawerNavigator,
-  DrawerContentScrollView,
-  DrawerScreenProps,
+  DrawerContentScrollView
 } from '@react-navigation/drawer';
-import Animated from 'react-native-reanimated';
-import { useSelector, useDispatch } from 'react-redux';
-import {
-  COLORS,
-  FONTS,
-  SIZES,
-  constants,
-  icons,
-  dummyData,
-} from '../utils/constants';
-
-import { setSelectedTab } from '../redux/tabSlice';
-import Firebase from '../utils/firebase';
-import { RootState } from '../redux/store';
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
+import React from 'react';
+import {
+  GestureResponderEvent, Image, ImageSourcePropType, Text, TouchableOpacity, View
+} from 'react-native';
+import Animated from 'react-native-reanimated';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
+import { setSelectedTab } from '../redux/tabSlice';
 import MainLayout from '../screens/MainLayout';
+import {
+  COLORS, constants, dummyData, FONTS, icons, SIZES
+} from '../utils/constants';
+import Firebase from '../utils/firebase';
+
 
 const auth = Firebase.auth();
 
@@ -165,54 +154,10 @@ const CustomDrawerContent = ({ navigation }: Props) => {
             marginTop: SIZES.padding,
           }}
         >
-          <CustomDrawerItem
-            label={constants.screens.home}
-            icon={icons.home}
-            isFocused={selectedTab == constants.screens.home}
-            onPress={() => {
-              dispatch(setSelectedTab(constants.screens.home));
-              navigation.navigate('MainLayout');
-            }}
-          />
 
-          <CustomDrawerItem
-            label={constants.screens.my_wallet}
-            icon={icons.wallet}
-          />
+          {/* <CustomDrawerItem label="Track Your Order" icon={icons.location} />
 
-          <CustomDrawerItem
-            label={constants.screens.notification}
-            icon={icons.notification}
-            isFocused={selectedTab == constants.screens.notification}
-            onPress={() => {
-              dispatch(setSelectedTab(constants.screens.notification));
-              navigation.navigate('MainLayout');
-            }}
-          />
-
-          <CustomDrawerItem
-            label={constants.screens.favorite}
-            icon={icons.favorite}
-            isFocused={selectedTab == constants.screens.favorite}
-            onPress={() => {
-              dispatch(setSelectedTab(constants.screens.favorite));
-              navigation.navigate('MainLayout');
-            }}
-          />
-
-          {/* Line Divider */}
-          <View
-            style={{
-              height: 1,
-              marginVertical: SIZES.radius,
-              marginLeft: SIZES.radius,
-              backgroundColor: COLORS.lightGray1,
-            }}
-          />
-
-          <CustomDrawerItem label="Track Your Order" icon={icons.location} />
-
-          <CustomDrawerItem label="Coupons" icon={icons.coupon} />
+          <CustomDrawerItem label="Coupons" icon={icons.coupon} /> */}
 
           <CustomDrawerItem label="Settings" icon={icons.setting} />
 

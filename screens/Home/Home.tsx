@@ -12,7 +12,6 @@ import PostCard from '../../components/PostCard';
 import { COLORS, dummyData, FONTS, icons, SIZES } from '../../utils/constants';
 
 const Home = () => {
-
   const [postList, setPostList] = React.useState(dummyData.posts);
 
   const [showFilterModal, setShowFilterModal] = React.useState(false);
@@ -68,7 +67,6 @@ const Home = () => {
     );
   }
 
-
   return (
     <View
       style={{
@@ -95,7 +93,7 @@ const Home = () => {
         renderItem={({ item, index }) => {
           return (
             <PostCard
-            key={`${index} - post - card - ${item.id}`}
+              key={`${index} - post - card - ${item.id}`}
               item={item}
               onPress={() => console.log('HorizontalFoodCard')}
             />
@@ -103,6 +101,28 @@ const Home = () => {
         }}
         ListFooterComponent={<View style={{ height: 200 }} />}
       />
+
+      <TouchableOpacity
+        style={{
+          borderWidth: 1,
+          borderColor: 'rgba(0,0,0,0.2)',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: 70,
+          position: 'absolute',
+          bottom: 30,
+          right: 10,
+          height: 70,
+          backgroundColor: '#fff',
+          borderRadius: 100,
+        }}
+      >
+        {/* <Icon name="plus" size={30} color="#01a699" /> */}
+        <Image
+          style={{ width: 50, height: 50, resizeMode: 'contain' }}
+          source={ dummyData.myProfile?.profile_image }
+        />
+      </TouchableOpacity>
     </View>
   );
 };

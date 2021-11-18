@@ -1,7 +1,7 @@
-import FormInput from '../../components/FormInput';
-import TextButton from '../../components/TextButton';
 import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
+import FormInput from '../../components/FormInput';
+import TextButton from '../../components/TextButton';
 import { utils } from '../../utils';
 import { COLORS, FONTS, icons, SIZES } from '../../utils/constants';
 import Firebase from '../../utils/firebase';
@@ -11,21 +11,22 @@ const auth = Firebase.auth();
 
 const SignUp = ({ navigation }) => {
   const [email, setEmail] = React.useState<string>('');
-  const [username, setUsername] = React.useState<string>('');
+  const [phone, setPhone] = React.useState<string>('');
   const [password, setPassword] = React.useState<string>('');
   const [showPass, setShowPass] = React.useState(false);
 
   const [emailError, setEmailError] = React.useState<string>('');
-  const [usernameError, setUsernameError] = React.useState<string>('');
+  const [phoneError, setPhoneError] = React.useState<string>('');
   const [passwordError, setPasswordError] = React.useState<string>('');
   const [errorMsg, setErrorMsg] = React.useState<string>('');
 
   function isEnableSignUp() {
     return (
       email != '' &&
-      // username != '' &&
+      phone != '' &&
       password != '' &&
       emailError == '' &&
+      phoneError == '' &&
       passwordError == ''
     );
   }
@@ -92,15 +93,18 @@ const SignUp = ({ navigation }) => {
           }
         />
 
-        {/* <FormInput
-          label="Username"
+        <FormInput
+          label="Phone Number"
+          keyboardType="phone-pad"
+          autoCompleteType="tel"
+          onChange={(value) => {
+            utils.validatePhoneNumber(value, setPhoneError);
+            setPhone(value);
+          }}
           containerStyle={{
             marginTop: SIZES.radius,
           }}
-          onChange={(value) => {
-            setUsername(value);
-          }}
-          errorMsg={usernameError}
+          errorMsg={phoneError}
           appendComponent={
             <View
               style={{
@@ -109,7 +113,7 @@ const SignUp = ({ navigation }) => {
             >
               <Image
                 source={
-                  username == '' || (username != '' && usernameError == '')
+                  phone == '' || (phone != '' && phoneError == '')
                     ? icons.correct
                     : icons.cancel
                 }
@@ -117,16 +121,16 @@ const SignUp = ({ navigation }) => {
                   height: 20,
                   width: 20,
                   tintColor:
-                    username == ''
+                    phone == ''
                       ? COLORS.gray
-                      : username != '' && usernameError == ''
+                      : phone != '' && phoneError == ''
                       ? COLORS.green
                       : COLORS.red,
                 }}
               />
             </View>
           }
-        /> */}
+        />
 
         <FormInput
           label="Password"

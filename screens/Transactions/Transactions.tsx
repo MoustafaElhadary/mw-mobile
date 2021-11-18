@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { Text, View } from 'react-native';
 
-const Search = () => {
+const Transactions = () => {
   return (
     <View
       style={{
@@ -10,9 +10,9 @@ const Search = () => {
         justifyContent: 'center',
       }}
     >
-      <Text>Search</Text>
+      <Text>Transactions</Text>
     </View>
   );
 };
 
-export default Search;
+export default Transactions;

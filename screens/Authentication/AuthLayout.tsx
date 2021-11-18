@@ -5,7 +5,7 @@ import { COLORS, FONTS, images, SIZES } from '../../utils/constants';
 
 export type authLayoutProps = {
   title: string;
-  subtitle: string;
+  subtitle?: string;
   titleContainerStyle?: ViewStyle;
   children?: JSX.Element | JSX.Element[];
 };
@@ -61,16 +61,19 @@ const AuthLayout = ({
           >
             {title}
           </Text>
-          <Text
-            style={{
-              textAlign: 'center',
-              color: COLORS.darkGray,
-              marginTop: SIZES.base,
-              ...FONTS.body3,
-            }}
-          >
-            {subtitle}
-          </Text>
+
+          {subtitle && (
+            <Text
+              style={{
+                textAlign: 'center',
+                color: COLORS.darkGray,
+                marginTop: SIZES.base,
+                ...FONTS.body3,
+              }}
+            >
+              {subtitle}
+            </Text>
+          )}
         </View>
 
         {children}

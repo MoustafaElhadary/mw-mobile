@@ -1,8 +1,7 @@
-import CustomSwitch from '../../components/CustomSwitch';
-import FormInput from '../../components/FormInput';
-import TextButton from '../../components/TextButton';
 import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
+import FormInput from '../../components/FormInput';
+import TextButton from '../../components/TextButton';
 import { utils } from '../../utils';
 import { COLORS, FONTS, icons, SIZES } from '../../utils/constants';
 import Firebase from '../../utils/firebase';
@@ -39,8 +38,8 @@ const SignIn = ({ navigation }) => {
 
   return (
     <AuthLayout
-      title="Let's Sign You In"
-      subtitle="Welcome back, you've been missed!"
+      title="Welcome back!"
+      // subtitle="Welcome back, you've been missed!"
     >
       <View
         style={{
@@ -123,10 +122,10 @@ const SignIn = ({ navigation }) => {
           }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <CustomSwitch
+            {/* <CustomSwitch
               value={saveMe}
               onChange={(value) => setSaveMe(value)}
-            />
+            /> */}
           </View>
           <TextButton
             label="Forgot Password?"
