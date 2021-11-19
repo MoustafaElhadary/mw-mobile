@@ -8,6 +8,7 @@ import ForgotPassword from '../screens/Authentication/ForgotPassword';
 import Otp from '../screens/Authentication/Otp';
 import SignIn from '../screens/Authentication/SignIn';
 import SignUp from '../screens/Authentication/SignUp';
+import GetYouSetup from '../screens/OnBoarding/GetYouSetup';
 import OnBoarding from '../screens/OnBoarding/OnBoarding';
 import Registration from '../screens/OnBoarding/Registration';
 import Firebase from '../utils/firebase';
@@ -65,7 +66,7 @@ function RootNavigator() {
 
   return (
     <NavigationContainer>
-      {user && registered ? <HomeStack /> : <AuthStack />}
+      {user ? registered ? <HomeStack /> : <GetYouSetup /> : <AuthStack />}
     </NavigationContainer>
   );
 
@@ -79,12 +80,14 @@ function HomeStack() {
   );
 }
 
-function AuthStack() {
+const AuthStack = () =>{
   return (
     <Stack.Navigator headerMode="none">
       <Stack.Screen name="OnBoarding" component={OnBoarding} />
 
       <Stack.Screen name="Registration" component={Registration} />
+
+      <Stack.Screen name="GetYouSetup" component={GetYouSetup} />
 
       <Stack.Screen name="SignIn" component={SignIn} />
 

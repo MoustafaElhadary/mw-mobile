@@ -1,3 +1,4 @@
+import firebase from 'firebase';
 import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import FormInput from '../../components/FormInput';
@@ -34,9 +35,16 @@ const SignUp = ({ navigation }) => {
   const onHandleSignUp = async () => {
     try {
       if (email !== '' && password !== '') {
-        await auth.createUserWithEmailAndPassword(email, password);
+        await auth
+          .createUserWithEmailAndPassword(email, password)
+          .then((res) => {
+            firebase.firestore().collection('users').doc(res.user.uid).set({
+              email: email,
+              phone: phone,
+            });
+          });
 
-        await navigation.replace('Home');
+        await navigation.navigate('GetYouSetup');
       }
     } catch (error) {
       setErrorMsg(error.message);
