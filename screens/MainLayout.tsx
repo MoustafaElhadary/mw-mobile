@@ -92,7 +92,7 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
   >();
 
   const selectedTab = useSelector(
-    (state: RootState) => state.store.selectedTab
+    (state: RootState) => state.ui.selectedTab
   );
   const dispatch = useDispatch();
   // Reanimated Shared Value
@@ -107,13 +107,13 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
   };
   console.log({ auth, user });
   const homeTabFlex = useSharedValue(1);
-  const homeTabColor = useSharedValue<string | number>(COLORS.white);
+  const homeTabColor = useSharedValue<string | number>(COLORS.primary);
   const transactionsTabFlex = useSharedValue(1);
-  const transactionsTabColor = useSharedValue<string | number>(COLORS.white);
+  const transactionsTabColor = useSharedValue<string | number>(COLORS.primary);
   const paymentsTabFlex = useSharedValue(1);
-  const paymentsTabColor = useSharedValue<string | number>(COLORS.white);
+  const paymentsTabColor = useSharedValue<string | number>(COLORS.primary);
   const profileTabFlex = useSharedValue(1);
-  const profileTabColor = useSharedValue<string | number>(COLORS.white);
+  const profileTabColor = useSharedValue<string | number>(COLORS.primary);
 
   // Reanimated Animated Style
 

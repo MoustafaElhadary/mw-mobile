@@ -70,24 +70,13 @@ const OnBoarding = ({ navigation }) => {
       <View
         style={{
           alignItems: 'center',
-          width: SIZES.width * 1,
-            height: 200,
         }}
       >
-        {/* <Image
-          source={images.logo_02}
-          resizeMode="contain"
-          style={{
-            width: SIZES.width * 1,
-            height: 200,
-          }}
-        /> */}
-
         <Text
           style={{
             ...FONTS.h1,
             fontSize: 45,
-            paddingTop: 90
+            paddingTop: 90,
           }}
         >
           MochaWallet

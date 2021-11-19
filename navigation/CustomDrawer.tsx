@@ -75,7 +75,7 @@ const CustomDrawerItem = ({
 
 const CustomDrawerContent = ({ navigation }: Props) => {
   const selectedTab = useSelector(
-    (state: RootState) => state.store.selectedTab
+    (state: RootState) => state.ui.selectedTab
   );
   const dispatch = useDispatch();
 

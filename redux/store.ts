@@ -1,9 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 import tabReducer from './tabSlice';
+import registrationReducer from './registrationSlice';
+
 const store = configureStore({
   reducer: {
-    store: tabReducer,
+    ui: tabReducer,
+    registration: registrationReducer,
+
   },
 });
 

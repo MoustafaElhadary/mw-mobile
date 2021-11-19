@@ -1,16 +1,19 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React, { useContext, useEffect, useState } from 'react';
-import { ActivityIndicator, Text, View } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 import ForgotPassword from '../screens/Authentication/ForgotPassword';
 import Otp from '../screens/Authentication/Otp';
 import SignIn from '../screens/Authentication/SignIn';
 import SignUp from '../screens/Authentication/SignUp';
 import OnBoarding from '../screens/OnBoarding/OnBoarding';
+import Registration from '../screens/OnBoarding/Registration';
 import Firebase from '../utils/firebase';
 import {
   AuthenticatedUserContext,
-  AuthenticatedUserProvider,
+  AuthenticatedUserProvider
 } from './AuthenticatedUserProvider';
 import CustomDrawer from './CustomDrawer';
 
@@ -25,6 +28,9 @@ const Stack = createStackNavigator();
 
 function RootNavigator() {
   const auth = Firebase.auth();
+  const registered = useSelector(
+    (state: RootState) => state.registration.registered
+  );
 
   const { user, setUser } = useContext(AuthenticatedUserContext);
   const [isLoading, setIsLoading] = useState(true);
@@ -59,15 +65,10 @@ function RootNavigator() {
 
   return (
     <NavigationContainer>
-      {user ? <HomeStack /> : <AuthStack />}
+      {user && registered ? <HomeStack /> : <AuthStack />}
     </NavigationContainer>
   );
 
-  // return (
-  //   <View>
-  //     <Text> yooooooooooooooooooooooooooooo</Text>
-  //   </View>
-  // );
 }
 
 function HomeStack() {
@@ -82,6 +83,8 @@ function AuthStack() {
   return (
     <Stack.Navigator headerMode="none">
       <Stack.Screen name="OnBoarding" component={OnBoarding} />
+
+      <Stack.Screen name="Registration" component={Registration} />
 
       <Stack.Screen name="SignIn" component={SignIn} />
 

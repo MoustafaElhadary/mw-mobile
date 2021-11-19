@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { Text, View } from 'react-native';
 
-const Favorite = () => {
+const Registration = () => {
   return (
     <View
       style={{
@@ -10,9 +10,9 @@ const Favorite = () => {
         justifyContent: 'center',
       }}
     >
-      <Text>Favorite</Text>
+      <Text>Registration</Text>
     </View>
   );
 };
 
-export default Favorite;
+export default Registration;
