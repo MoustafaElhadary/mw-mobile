@@ -105,7 +105,6 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
       console.log(error);
     }
   };
-  console.log({ auth, user });
   const homeTabFlex = useSharedValue(1);
   const homeTabColor = useSharedValue<string | number>(COLORS.primary);
   const transactionsTabFlex = useSharedValue(1);

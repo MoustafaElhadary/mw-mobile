@@ -1,9 +1,9 @@
 import React from 'react';
 import {
-  GestureResponderEvent,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
+    GestureResponderEvent,
+    Image,
+    StyleSheet,
+    TouchableOpacity
 } from 'react-native';
 import { images } from '../../utils/constants';
 
@@ -54,8 +54,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'flex-end',
-    width: 6,
-    height: 6,
+    width: 2,
+    height: 2,
     marginRight: 22,
     paddingHorizontal: 10,
     paddingVertical: 10,

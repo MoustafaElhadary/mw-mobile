@@ -24,11 +24,9 @@ const App = () => {
     'Ageo-Bold': require('./assets/fonts/Ageo-Bold.otf'),
   });
 
-  console.log('hello');
   if (!loaded) {
     return null;
   }
-  console.log('world');
 
   return (
     <ApplicationProvider {...eva} theme={eva.light}>

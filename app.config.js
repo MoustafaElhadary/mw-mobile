@@ -19,6 +19,7 @@ export default {
     ios: {
       supportsTablet: true,
     },
+    userInterfaceStyle: "automatic",
     android: {
       adaptiveIcon: {
         foregroundImage: './assets/adaptive-icon.png',

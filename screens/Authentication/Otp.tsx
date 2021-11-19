@@ -5,7 +5,6 @@ import { COLORS, FONTS, SIZES } from '../../utils/constants';
 import TextButton from '../../components/TextButton';
 import AuthLayout from './AuthLayout';
 
-
 const Otp = ({ navigation }) => {
   const [timer, setTimer] = React.useState(60);
 
