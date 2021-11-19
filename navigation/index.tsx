@@ -8,13 +8,13 @@ import ForgotPassword from '../screens/Authentication/ForgotPassword';
 import Otp from '../screens/Authentication/Otp';
 import SignIn from '../screens/Authentication/SignIn';
 import SignUp from '../screens/Authentication/SignUp';
-import GetYouSetup from '../screens/OnBoarding/GetYouSetup';
 import OnBoarding from '../screens/OnBoarding/OnBoarding';
+
 import Registration from '../screens/OnBoarding/Registration';
 import Firebase from '../utils/firebase';
 import {
   AuthenticatedUserContext,
-  AuthenticatedUserProvider
+  AuthenticatedUserProvider,
 } from './AuthenticatedUserProvider';
 import CustomDrawer from './CustomDrawer';
 
@@ -66,10 +66,9 @@ function RootNavigator() {
 
   return (
     <NavigationContainer>
-      {user ? registered ? <HomeStack /> : <GetYouSetup /> : <AuthStack />}
+      {user ? registered ? <HomeStack /> : <Registration /> : <AuthStack />}
     </NavigationContainer>
   );
-
 }
 
 function HomeStack() {
@@ -80,14 +79,12 @@ function HomeStack() {
   );
 }
 
-const AuthStack = () =>{
+const AuthStack = () => {
   return (
     <Stack.Navigator headerMode="none">
       <Stack.Screen name="OnBoarding" component={OnBoarding} />
 
       <Stack.Screen name="Registration" component={Registration} />
-
-      <Stack.Screen name="GetYouSetup" component={GetYouSetup} />
 
       <Stack.Screen name="SignIn" component={SignIn} />
 
@@ -98,4 +95,4 @@ const AuthStack = () =>{
       <Stack.Screen name="Otp" component={Otp} />
     </Stack.Navigator>
   );
-}
+};

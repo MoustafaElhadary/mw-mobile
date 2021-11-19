@@ -44,7 +44,7 @@ const SignUp = ({ navigation }) => {
             });
           });
 
-        await navigation.navigate('GetYouSetup');
+        await navigation.navigate('Registration');
       }
     } catch (error) {
       setErrorMsg(error.message);
