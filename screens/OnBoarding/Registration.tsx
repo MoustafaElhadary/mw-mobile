@@ -1,11 +1,13 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Text } from '@ui-kitten/components';
+import Constants from 'expo-constants';
 import firebase from 'firebase';
 import moment from 'moment';
 import React, { useContext, useEffect, useState } from 'react';
 import { Control, Controller, useForm } from 'react-hook-form';
 import { StyleSheet, TextInput, TextInputProps, View } from 'react-native';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
@@ -45,6 +47,10 @@ const Registration = ({ navigation }: RegistrationProps) => {
         break;
       case 1:
         return <PersonalInfo handleContinue={handleContinue} />;
+        break;
+      case 2:
+        return <GooglePlacesInput handleContinue={handleContinue} />;
+        break;
       default:
         <> </>;
     }
@@ -202,7 +208,7 @@ const PersonalInfo = ({ handleContinue }) => {
       .then((doc) => {
         if (doc.exists) {
           const date = moment(doc.data().date).format('MMM Do, YYYY');
-          console.log({myDate: date});
+          console.log({ myDate: date });
           setValue('dob', date || '');
           setValue('firstName', doc.data().firstName || '');
           setValue('lastName', doc.data().lastName || '');
@@ -216,7 +222,7 @@ const PersonalInfo = ({ handleContinue }) => {
       .firestore()
       .collection('users')
       .doc(user.uid)
-      .set({
+      .update({
         ...data,
       });
 
@@ -263,7 +269,7 @@ const PersonalInfo = ({ handleContinue }) => {
 
       <View style={commonStyles.flex} />
       <View style={commonStyles.buttonView}>
-        <ContinueButton text="Get Started" onPress={handleSubmit(onSubmit)} />
+        <ContinueButton onPress={handleSubmit(onSubmit)} />
       </View>
     </>
   );
@@ -293,7 +299,6 @@ const MWTextInput = ({
   };
 
   const handleConfirm = (onChange, date) => {
-
     onChange(moment(date).format('MMM Do, YYYY'));
     hideDatePicker();
   };
@@ -336,7 +341,44 @@ const MWTextInput = ({
   );
 };
 
+const GooglePlacesInput = ({ handleContinue }) => {
+  const { user } = useContext(AuthenticatedUserContext);
+
+  return (
+    <>
+      <Text style={commonStyles.titleText}>what's your address? </Text>
+
+      <View style={styles.container}>
+        <GooglePlacesAutocomplete
+          placeholder="12 Sesame Street"
+          query={{
+            key: Constants.manifest.extra.mapsAPIkey,
+            language: 'en', // language of the results
+          }}
+          onPress={(data, details = null) => {
+            firebase.firestore().collection('users').doc(user.uid).update({
+              address: data.description,
+            });
+            console.log(data.description);
+          }}
+          onFail={(error) => console.error(error)}
+        />
+      </View>
+
+      <View style={commonStyles.buttonView}>
+        <ContinueButton onPress={() => handleContinue()} />
+      </View>
+    </>
+  );
+};
+
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 10,
+    paddingTop: Constants.statusBarHeight + 10,
+    width: '100%',
+  },
   MainView: {
     flex: 1,
     backgroundColor: 'rgb(248, 248, 247)',
