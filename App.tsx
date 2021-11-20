@@ -12,16 +12,16 @@ import store from './redux/store';
 import axios from 'axios';
 import Constants from 'expo-constants';
 
-const defaultQueryFn = async ({ queryKey }) => {
-  const { data } = await axios.get(`${Constants.manifest.extra.apiUrl}${queryKey}`);
-  return data;
-};
+// const defaultQueryFn = async ({ queryKey }) => {
+//   const { data } = await axios.get(`${Constants.manifest.extra.apiUrl}${queryKey}`);
+//   return data;
+// };
 const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      queryFn: defaultQueryFn,
-    },
-  },
+  // defaultOptions: {
+  //   queries: {
+  //     queryFn: defaultQueryFn,
+  //   },
+  // },
 });
 
 const App = () => {

@@ -1,6 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Text } from '@ui-kitten/components';
+import axios from 'axios';
 import Constants from 'expo-constants';
 import firebase from 'firebase';
 import moment from 'moment';
@@ -13,7 +15,6 @@ import {
 } from 'react-native-google-places-autocomplete';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
 import { CloseButton } from '../../components/common/buttons';
@@ -23,11 +24,9 @@ import PlaidLink from '../../components/common/PlaidWebview';
 import { ContinueButton } from '../../components/common/SignUpButtons';
 import TextButton from '../../components/TextButton';
 import { AuthenticatedUserContext } from '../../navigation/AuthenticatedUserProvider';
-import { setStep } from '../../redux/registrationSlice';
+import { setRegistered, setStep } from '../../redux/registrationSlice';
 import { RootState } from '../../redux/store';
 import { COLORS, commonStyles, FONTS } from '../../utils/constants/theme';
-import axios from 'axios';
-
 interface RegistrationProps {
   navigation?: StackNavigationProp<any>;
 }
@@ -40,6 +39,8 @@ interface IFormInputs {
 }
 
 const Registration = ({ navigation }: RegistrationProps) => {
+  const { user } = useContext(AuthenticatedUserContext);
+
   const insets = useSafeAreaInsets();
   const step = useSelector((state: RootState) => state.registration.step);
   const dispatch = useDispatch();
@@ -62,6 +63,26 @@ const Registration = ({ navigation }: RegistrationProps) => {
       },
     ],
   };
+
+  const checkIfUserExists = async () => {
+    const data = await firebase
+      .firestore()
+      .collection('users')
+      .doc(user.uid)
+      .get();
+
+    if (data.exists) {
+      const firebaseUser = data.data();
+
+      if (firebaseUser.registered === true) {
+        dispatch(setRegistered(true));
+      }
+    }
+  };
+
+  useEffect(() => {
+    checkIfUserExists();
+  }, []);
 
   const connectYourAccounts = {
     header: 'Connect your accounts',
@@ -101,9 +122,22 @@ const Registration = ({ navigation }: RegistrationProps) => {
       case 4:
         return <InfoScreen content={connectYourAccounts} />;
       case 5:
-        return <PlaidScreen title="Link your bank account" type="funding" />;
+        return (
+          <PlaidScreen
+            title="Link your bank account"
+            type="funding"
+            key="funding"
+          />
+        );
       case 6:
-          return <PlaidScreen title="Link your loan account" type="loan" />;
+        return (
+          <PlaidScreen
+            key="loans"
+            title="Link your Loan account"
+            type="loan"
+            lastStep={true}
+          />
+        );
       default:
         <> </>;
     }
@@ -261,9 +295,7 @@ const PersonalInfo = () => {
       .get()
       .then((doc) => {
         if (doc.exists) {
-          const date = moment(doc.data().date).format('MMM Do, YYYY');
-          console.log({ myDate: date });
-          setValue('dob', date || '');
+          setValue('dob', doc.data().dob ? doc.data().dob : '');
           setValue('firstName', doc.data().firstName || '');
           setValue('lastName', doc.data().lastName || '');
           setValue('ssn', doc.data().ssn || '');
@@ -271,7 +303,6 @@ const PersonalInfo = () => {
       });
   }, []);
   const onSubmit = (data: IFormInputs) => {
-    console.log({ data });
     firebase
       .firestore()
       .collection('users')
@@ -435,7 +466,6 @@ const GooglePlacesInput = () => {
             firebase.firestore().collection('users').doc(user.uid).update({
               address: data.description,
             });
-            console.log(data.description);
           }}
           onFail={(error) => console.error(error)}
           ref={ref}
@@ -569,64 +599,69 @@ const ConfirmDetails = () => {
 const PlaidScreen = ({
   title,
   type,
-  reload
+  lastStep,
 }: {
   title: string;
   type: 'funding' | 'loan';
-  reload?: boolean,
-
+  lastStep?: boolean;
 }) => {
+  const [data, setData] = React.useState(null);
   const { user } = useContext(AuthenticatedUserContext);
   const step = useSelector((state: RootState) => state.registration.step);
   const dispatch = useDispatch();
 
-  const { isLoading, error, data, refetch } = useQuery<{ linkToken: string }>(
-    '/createLinkToken'
-  );
-
-  if(reload) refetch();
-
-  console.log({ data, error, isLoading });
-  if (isLoading)
-    return (
-      <>
-        <Text>Loading...</Text>
-      </>
+  const fetchData = async () => {
+    const { data } = await axios.post(
+      `${Constants.manifest.extra.apiUrl}/createLinkToken`,
+      {
+        fundingType: type,
+      }
     );
+    setData(data);
+  };
+  useEffect(() => {
+    fetchData();
+  }, [type]);
 
-  const linkToken = data?.linkToken;
+  const storeData = async (value) => {
+    try {
+      await AsyncStorage.setItem('@registered', value);
+      dispatch(setRegistered(true));
+    } catch (e) {
+      console.log({ e });
+    }
+  };
 
-  if (error)
-    return (
-      <>
-        <Text>An error has occurred</Text>
-      </>
-    );
+  console.log({ lastStep, data, type });
 
   return (
     <>
       <Text style={commonStyles.titleText}>{title}</Text>
 
-      <PlaidLink
-        linkToken={linkToken}
-        onEvent={(event) => console.log(event)}
-        onExit={(exit) => console.log(exit)}
-        onSuccess={async (success) => {
-          console.log(success.publicToken);
-
-          const mwAccessToken = await user.getIdToken()
-          axios
-            .post(`${Constants.manifest.extra.apiUrl}/tokenExchange`, {
-              publicToken: success.publicToken,
-              mwAccessToken,
-              fundingType: type,
-            })
-            .then( (response) => {
-              console.log(response);
-              dispatch(setStep(step + 1));
-            });
-        }}
-      />
+      {data && (
+        <PlaidLink
+          linkToken={data?.linkToken}
+          onEvent={(event) => {}}
+          onExit={(exit) => console.log(exit)}
+          onSuccess={async (success) => {
+            const mwAccessToken = await user.getIdToken();
+            axios
+              .post(`${Constants.manifest.extra.apiUrl}/tokenExchange`, {
+                publicToken: success.publicToken,
+                mwAccessToken,
+                fundingType: type,
+                lastStep,
+              })
+              .then(async (response) => {
+                if (lastStep) {
+                  await storeData('true');
+                } else {
+                  dispatch(setStep(step + 1));
+                }
+              });
+          }}
+        />
+      )}
     </>
   );
 };

@@ -1,22 +1,26 @@
 import {
   createDrawerNavigator,
-  DrawerContentScrollView
+  DrawerContentScrollView,
 } from '@react-navigation/drawer';
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
 import React from 'react';
 import {
-  GestureResponderEvent, Image, ImageSourcePropType, Text, TouchableOpacity, View
+  GestureResponderEvent,
+  Image,
+  ImageSourcePropType,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { useDispatch, useSelector } from 'react-redux';
+import { setRegistered } from '../redux/registrationSlice';
 import { RootState } from '../redux/store';
 import { setSelectedTab } from '../redux/tabSlice';
 import MainLayout from '../screens/MainLayout';
-import {
-  COLORS, constants, dummyData, FONTS, icons, SIZES
-} from '../utils/constants';
+import { COLORS, dummyData, FONTS, icons, SIZES } from '../utils/constants';
 import Firebase from '../utils/firebase';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const auth = Firebase.auth();
 
@@ -74,9 +78,7 @@ const CustomDrawerItem = ({
 };
 
 const CustomDrawerContent = ({ navigation }: Props) => {
-  const selectedTab = useSelector(
-    (state: RootState) => state.ui.selectedTab
-  );
+  const selectedTab = useSelector((state: RootState) => state.ui.selectedTab);
   const dispatch = useDispatch();
 
   return (
@@ -154,7 +156,6 @@ const CustomDrawerContent = ({ navigation }: Props) => {
             marginTop: SIZES.padding,
           }}
         >
-
           {/* <CustomDrawerItem label="Track Your Order" icon={icons.location} />
 
           <CustomDrawerItem label="Coupons" icon={icons.coupon} /> */}
@@ -174,10 +175,10 @@ const CustomDrawerContent = ({ navigation }: Props) => {
           <CustomDrawerItem
             label="Logout"
             icon={icons.logout}
-            onPress={() => {
-              auth.signOut();
-              // dispatch(setSelectedTab(constants.screens.favorite));
-              // navigation.navigate('MainLayout');
+            onPress={async () => {
+              await auth.signOut();
+              dispatch(setRegistered(false));
+              await AsyncStorage.removeItem('@registered');
             }}
           />
         </View>

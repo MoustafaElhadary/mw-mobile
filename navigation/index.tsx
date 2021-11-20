@@ -2,13 +2,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React, { useContext, useEffect, useState } from 'react';
 import { ActivityIndicator, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import ForgotPassword from '../screens/Authentication/ForgotPassword';
 import Otp from '../screens/Authentication/Otp';
 import SignIn from '../screens/Authentication/SignIn';
 import SignUp from '../screens/Authentication/SignUp';
 import OnBoarding from '../screens/OnBoarding/OnBoarding';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Registration from '../screens/OnBoarding/Registration';
 import Firebase from '../utils/firebase';
@@ -17,6 +18,7 @@ import {
   AuthenticatedUserProvider,
 } from './AuthenticatedUserProvider';
 import CustomDrawer from './CustomDrawer';
+import { setRegistered } from '../redux/registrationSlice';
 
 export default function Routes() {
   return (
@@ -32,10 +34,27 @@ function RootNavigator() {
   const registered = useSelector(
     (state: RootState) => state.registration.registered
   );
+  const dispatch = useDispatch();
 
   const { user, setUser } = useContext(AuthenticatedUserContext);
   const [isLoading, setIsLoading] = useState(true);
 
+
+  const checkIfAlreadyRegistered = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@registered')
+      if(value !== null) {
+        var isTrue = (value === 'true')
+
+        if(isTrue){
+          dispatch(setRegistered(true));
+        }
+      }
+    } catch(e) {
+      // error reading value
+    }
+  }
+  
   useEffect(() => {
     // onAuthStateChanged returns an unsubscriber
     const unsubscribeAuth = auth.onAuthStateChanged(
@@ -45,17 +64,19 @@ function RootNavigator() {
             ? setUser(authenticatedUser)
             : setUser(null));
           setIsLoading(false);
+          checkIfAlreadyRegistered();
         } catch (error) {
           console.log(error);
         }
       }
     );
 
+
+
     // unsubscribe auth listener on unmount
     return unsubscribeAuth;
   }, []);
 
-  console.log({ user, auth });
   if (isLoading) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

@@ -1,8 +1,7 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { WebView } from 'react-native-webview';
 import queryString from 'query-string';
-import { Dimensions, StyleSheet } from 'react-native';
-
+import { useWindowDimensions, StyleSheet, View } from 'react-native';
 
 export const LinkEventName = {
   CLOSE_OAUTH: 'close_oauth',
@@ -322,17 +321,36 @@ export default function PlaidLink({ linkToken, onEvent, onExit, onSuccess }) {
     return true;
   };
 
+  const windowWidth = useWindowDimensions().width;
+  const windowHeight = useWindowDimensions().height;
+
+  useEffect(() => {
+    console.log({ windowWidth, windowHeight });
+  }, [windowWidth, windowHeight]);
+
+  const INJECTED_JAVASCRIPT = `(function() {
+    const meta = document.createElement('meta'); meta.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta);
+  })();`;
+
   return (
-    <WebView
-      // source={{ uri: 'https://reactnative.dev/' }}
-      style = {{marginTop: 20, width: Dimensions.get('window').width, height: Dimensions.get('window').height}}
-      source={{
-        uri: `https://cdn.plaid.com/link/v2/stable/link.html?isWebview=true&token=${linkToken}`,
-      }}
-      ref={(ref) => (webviewRef = ref)}
-      onError={() => webviewRef.reload()}
-      originWhitelist={['https://*', 'plaidlink://*']}
-      onShouldStartLoadWithRequest={handleNavigationStateChange}
-    />
+    <View style={{ borderWidth: 2, borderColor: 'transparent' }}>
+      <WebView
+        // source={{ uri: 'https://reactnative.dev/' }}
+        style={{ marginTop: 20, height: windowHeight, width: windowWidth }}
+        source={{
+          uri: `https://cdn.plaid.com/link/v2/stable/link.html?isWebview=true&token=${linkToken}`,
+        }}
+        ref={(ref) => (webviewRef = ref)}
+        onError={() => webviewRef.reload()}
+        originWhitelist={['https://*', 'plaidlink://*']}
+        onShouldStartLoadWithRequest={handleNavigationStateChange}
+        scalesPageToFit={false}
+        androidLayerType={'software'}
+        useWebkit={false}
+        scrollEnabled={false}
+        injectedJavaScript={INJECTED_JAVASCRIPT}
+        onMessage={() => {}}
+      />
+    </View>
   );
 }
