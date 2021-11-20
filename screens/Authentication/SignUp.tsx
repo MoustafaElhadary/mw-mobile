@@ -41,6 +41,7 @@ const SignUp = ({ navigation }) => {
             firebase.firestore().collection('users').doc(res.user.uid).set({
               email: email,
               phone: phone,
+              registered: false
             });
           });
 

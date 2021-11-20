@@ -37,6 +37,7 @@ export default {
       messagingSenderId: process.env.MESSAGING_SENDER_ID,
       appId: process.env.APP_ID,
       mapsAPIkey: process.env.MAPS_API_KEY,
+      apiUrl: process.env.API_URL,
     },
   },
 };

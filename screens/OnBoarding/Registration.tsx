@@ -13,17 +13,20 @@ import {
 } from 'react-native-google-places-autocomplete';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
 import { CloseButton } from '../../components/common/buttons';
 import DismissKeyboardView from '../../components/common/DismissKeyboardView';
 import { CheckmarkIcon } from '../../components/common/icons';
+import PlaidLink from '../../components/common/PlaidWebview';
 import { ContinueButton } from '../../components/common/SignUpButtons';
 import TextButton from '../../components/TextButton';
 import { AuthenticatedUserContext } from '../../navigation/AuthenticatedUserProvider';
 import { setStep } from '../../redux/registrationSlice';
 import { RootState } from '../../redux/store';
 import { COLORS, commonStyles, FONTS } from '../../utils/constants/theme';
+import axios from 'axios';
 
 interface RegistrationProps {
   navigation?: StackNavigationProp<any>;
@@ -97,6 +100,10 @@ const Registration = ({ navigation }: RegistrationProps) => {
         return <ConfirmDetails />;
       case 4:
         return <InfoScreen content={connectYourAccounts} />;
+      case 5:
+        return <PlaidScreen title="Link your bank account" type="funding" />;
+      case 6:
+          return <PlaidScreen title="Link your loan account" type="loan" />;
       default:
         <> </>;
     }
@@ -555,6 +562,71 @@ const ConfirmDetails = () => {
           onPress={() => dispatch(setStep(1))}
         />
       </View>
+    </>
+  );
+};
+
+const PlaidScreen = ({
+  title,
+  type,
+  reload
+}: {
+  title: string;
+  type: 'funding' | 'loan';
+  reload?: boolean,
+
+}) => {
+  const { user } = useContext(AuthenticatedUserContext);
+  const step = useSelector((state: RootState) => state.registration.step);
+  const dispatch = useDispatch();
+
+  const { isLoading, error, data, refetch } = useQuery<{ linkToken: string }>(
+    '/createLinkToken'
+  );
+
+  if(reload) refetch();
+
+  console.log({ data, error, isLoading });
+  if (isLoading)
+    return (
+      <>
+        <Text>Loading...</Text>
+      </>
+    );
+
+  const linkToken = data?.linkToken;
+
+  if (error)
+    return (
+      <>
+        <Text>An error has occurred</Text>
+      </>
+    );
+
+  return (
+    <>
+      <Text style={commonStyles.titleText}>{title}</Text>
+
+      <PlaidLink
+        linkToken={linkToken}
+        onEvent={(event) => console.log(event)}
+        onExit={(exit) => console.log(exit)}
+        onSuccess={async (success) => {
+          console.log(success.publicToken);
+
+          const mwAccessToken = await user.getIdToken()
+          axios
+            .post(`${Constants.manifest.extra.apiUrl}/tokenExchange`, {
+              publicToken: success.publicToken,
+              mwAccessToken,
+              fundingType: type,
+            })
+            .then( (response) => {
+              console.log(response);
+              dispatch(setStep(step + 1));
+            });
+        }}
+      />
     </>
   );
 };
