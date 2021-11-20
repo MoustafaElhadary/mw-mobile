@@ -4,10 +4,13 @@ import { Text } from '@ui-kitten/components';
 import Constants from 'expo-constants';
 import firebase from 'firebase';
 import moment from 'moment';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Control, Controller, useForm } from 'react-hook-form';
 import { StyleSheet, TextInput, TextInputProps, View } from 'react-native';
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import {
+  GooglePlacesAutocomplete,
+  GooglePlacesAutocompleteRef,
+} from 'react-native-google-places-autocomplete';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,10 +19,11 @@ import { CloseButton } from '../../components/common/buttons';
 import DismissKeyboardView from '../../components/common/DismissKeyboardView';
 import { CheckmarkIcon } from '../../components/common/icons';
 import { ContinueButton } from '../../components/common/SignUpButtons';
+import TextButton from '../../components/TextButton';
 import { AuthenticatedUserContext } from '../../navigation/AuthenticatedUserProvider';
 import { setStep } from '../../redux/registrationSlice';
 import { RootState } from '../../redux/store';
-import { commonStyles } from '../../utils/constants/theme';
+import { COLORS, commonStyles, FONTS } from '../../utils/constants/theme';
 
 interface RegistrationProps {
   navigation?: StackNavigationProp<any>;
@@ -36,21 +40,63 @@ const Registration = ({ navigation }: RegistrationProps) => {
   const insets = useSafeAreaInsets();
   const step = useSelector((state: RootState) => state.registration.step);
   const dispatch = useDispatch();
-  const handleContinue = () => {
-    dispatch(setStep(step + 1));
+
+  const getYouSetup = {
+    header: "Let's get you set up!",
+    subheader:
+      "We'll ask for some information so we can verify your identity and ensure your account is secure",
+    infoNeeded: [
+      {
+        id: 1,
+        title: 'Your personal information',
+        subtitle: 'Your full name, DOB, and residential address.',
+      },
+      {
+        id: 2,
+        title: 'Your Social Security Number (SSN)',
+        subtitle:
+          " We're required to collect this to verify your identity and comply with anti money laundering regulations.",
+      },
+    ],
+  };
+
+  const connectYourAccounts = {
+    header: 'Connect your accounts',
+    subheader:
+      'All that’s left is to connect a funding source and loan accounts',
+    infoNeeded: [
+      {
+        id: 1,
+        title: 'Link your bank account',
+        subtitle:
+          'Verify your bank account instantly using our military-grade encryption',
+      },
+      {
+        id: 2,
+        title: 'Link your loans and credit providers',
+        subtitle:
+          'Connect your loans and credit cards so we can help you pay them off',
+      },
+      {
+        id: 3,
+        title: 'Set up payments',
+        subtitle: 'Set up round ups and daily minimums to accelerate payoff',
+      },
+    ],
   };
 
   const renderView = (): JSX.Element => {
     switch (step) {
       case 0:
-        return <GetYouSetup handleContinue={handleContinue} />;
-        break;
+        return <InfoScreen content={getYouSetup} />;
       case 1:
-        return <PersonalInfo handleContinue={handleContinue} />;
-        break;
+        return <PersonalInfo />;
       case 2:
-        return <GooglePlacesInput handleContinue={handleContinue} />;
-        break;
+        return <GooglePlacesInput />;
+      case 3:
+        return <ConfirmDetails />;
+      case 4:
+        return <InfoScreen content={connectYourAccounts} />;
       default:
         <> </>;
     }
@@ -78,24 +124,21 @@ const Registration = ({ navigation }: RegistrationProps) => {
   );
 };
 
-const GetYouSetup = ({ handleContinue }) => {
-  const infoNeeded = [
-    {
-      id: 1,
-      title: 'Your personal information',
-      subtitle: 'Your full name, DOB, and residential address.',
-    },
-    {
-      id: 2,
-      title: 'Your Social Security Number (SSN)',
-      subtitle:
-        " We're required to collect this to verify your identity and comply with anti money laundering regulations.",
-    },
-  ];
+const InfoScreen = ({
+  content,
+}: {
+  content: {
+    header: string;
+    subheader: string;
+    infoNeeded: { id: number; title: string; subtitle: string }[];
+  };
+}) => {
+  const step = useSelector((state: RootState) => state.registration.step);
+  const dispatch = useDispatch();
 
   return (
     <>
-      <Text style={commonStyles.titleText}>Let's get you set up!</Text>
+      <Text style={commonStyles.titleText}>{content.header}</Text>
       <Text
         style={{
           ...commonStyles.subTitleText,
@@ -103,16 +146,18 @@ const GetYouSetup = ({ handleContinue }) => {
           marginBottom: 15,
         }}
       >
-        We'll ask for some information so we can verify your identity and ensure
-        your account is secure
+        {content.subheader}
       </Text>
 
-      {infoNeeded.map(({ title, subtitle, id }) => (
+      {content.infoNeeded.map(({ title, subtitle, id }) => (
         <CheckmarkCard title={title} subtitle={subtitle} key={id} />
       ))}
       <View style={commonStyles.flex} />
       <View style={commonStyles.buttonView}>
-        <ContinueButton text="Get Started" onPress={() => handleContinue()} />
+        <ContinueButton
+          text="Get Started"
+          onPress={() => dispatch(setStep(step + 1))}
+        />
       </View>
     </>
   );
@@ -158,8 +203,10 @@ const CheckmarkCard = ({ title, subtitle }) => {
   );
 };
 
-const PersonalInfo = ({ handleContinue }) => {
+const PersonalInfo = () => {
   const { user } = useContext(AuthenticatedUserContext);
+  const step = useSelector((state: RootState) => state.registration.step);
+  const dispatch = useDispatch();
 
   const schema = yup
     .object({
@@ -226,7 +273,7 @@ const PersonalInfo = ({ handleContinue }) => {
         ...data,
       });
 
-    handleContinue();
+    dispatch(setStep(step + 1));
   };
   return (
     <>
@@ -319,7 +366,7 @@ const MWTextInput = ({
           <>
             <TextInput
               onChangeText={onChange}
-              value={value.toString()}
+              value={value}
               style={[styles.input, secondaryInputStyle]}
               onFocus={(): void => onFocus()}
               onBlur={(): void => setInputFocused(false)}
@@ -341,16 +388,38 @@ const MWTextInput = ({
   );
 };
 
-const GooglePlacesInput = ({ handleContinue }) => {
+const GooglePlacesInput = () => {
   const { user } = useContext(AuthenticatedUserContext);
 
+  const [address, setAddress] = React.useState<string>('');
+  const ref = useRef<GooglePlacesAutocompleteRef>();
+
+  const step = useSelector((state: RootState) => state.registration.step);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    firebase
+      .firestore()
+      .collection('users')
+      .doc(user.uid)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          if (ref?.current) {
+            ref?.current?.setAddressText(doc.data().address || '');
+          }
+          setAddress(doc.data().address || '');
+        }
+      });
+  }, []);
   return (
     <>
       <Text style={commonStyles.titleText}>what's your address? </Text>
 
       <View style={styles.container}>
         <GooglePlacesAutocomplete
-          placeholder="12 Sesame Street"
+          enableHighAccuracyLocation={true}
+          placeholder={address ? address : '12 Sesame Street'}
           query={{
             key: Constants.manifest.extra.mapsAPIkey,
             language: 'en', // language of the results
@@ -362,11 +431,129 @@ const GooglePlacesInput = ({ handleContinue }) => {
             console.log(data.description);
           }}
           onFail={(error) => console.error(error)}
+          ref={ref}
         />
       </View>
 
       <View style={commonStyles.buttonView}>
-        <ContinueButton onPress={() => handleContinue()} />
+        <ContinueButton onPress={() => dispatch(setStep(step + 1))} />
+      </View>
+    </>
+  );
+};
+
+const ConfirmDetails = () => {
+  const { user } = useContext(AuthenticatedUserContext);
+  const [data, setData] = React.useState(null);
+
+  const step = useSelector((state: RootState) => state.registration.step);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    firebase
+      .firestore()
+      .collection('users')
+      .doc(user.uid)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          setData(doc.data());
+        }
+      });
+  }, []);
+
+  return (
+    <>
+      <Text style={commonStyles.titleText}>Confirm your details</Text>
+      <Text
+        style={{
+          ...commonStyles.subTitleText,
+          marginTop: 15,
+          marginBottom: 15,
+        }}
+      >
+        Please take a moment to make sure all your information is correct.
+      </Text>
+
+      {data && (
+        <>
+          <View
+            style={{
+              width: '100%',
+              borderBottomColor: 'grey',
+              borderBottomWidth: 0.2,
+              borderTopColor: 'grey',
+              borderTopWidth: 0.2,
+              paddingVertical: 15,
+            }}
+          >
+            <Text style={{ ...commonStyles.subTitleText, marginBottom: 15 }}>
+              Legal Name
+            </Text>
+            <Text style={commonStyles.h3Text}>
+              {data.firstName} {data.lastName}
+            </Text>
+          </View>
+
+          <View
+            style={{
+              width: '100%',
+              borderBottomColor: 'grey',
+              borderBottomWidth: 0.2,
+              paddingVertical: 15,
+            }}
+          >
+            <Text style={{ ...commonStyles.subTitleText, marginBottom: 15 }}>
+              Date Of Birth
+            </Text>
+            <Text style={commonStyles.h3Text}>{data.dob}</Text>
+          </View>
+
+          <View
+            style={{
+              width: '100%',
+              borderBottomColor: 'grey',
+              borderBottomWidth: 0.2,
+              paddingVertical: 15,
+            }}
+          >
+            <Text style={{ ...commonStyles.subTitleText, marginBottom: 15 }}>
+              Address
+            </Text>
+            <Text style={commonStyles.h3Text}>{data.address}</Text>
+          </View>
+
+          <View
+            style={{
+              width: '100%',
+              borderBottomColor: 'grey',
+              borderBottomWidth: 0.2,
+              paddingVertical: 15,
+            }}
+          >
+            <Text style={{ ...commonStyles.subTitleText, marginBottom: 15 }}>
+              SSN
+            </Text>
+            <Text style={commonStyles.h3Text}>{data.ssn}</Text>
+          </View>
+        </>
+      )}
+      <View style={commonStyles.flex} />
+      <View style={commonStyles.buttonView}>
+        <ContinueButton onPress={() => dispatch(setStep(step + 1))} />
+        <TextButton
+          label={`I'd like to make changes`}
+          buttonContainerStyle={{
+            backgroundColor: null,
+            marginTop: 15,
+            marginBottom: 10,
+          }}
+          labelStyle={{
+            color: COLORS.primary,
+            ...FONTS.body4,
+          }}
+          onPress={() => dispatch(setStep(1))}
+        />
       </View>
     </>
   );
