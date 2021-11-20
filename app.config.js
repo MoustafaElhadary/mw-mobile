@@ -18,8 +18,9 @@ export default {
     assetBundlePatterns: ['**/*'],
     ios: {
       supportsTablet: true,
+      bundleIdentifier: 'com.Moustafa.MochaWallet',
     },
-    userInterfaceStyle: "automatic",
+    userInterfaceStyle: 'automatic',
     android: {
       adaptiveIcon: {
         foregroundImage: './assets/adaptive-icon.png',
