@@ -126,14 +126,6 @@ const CustomDrawerContent = ({ navigation }: Props) => {
           }}
           onPress={() => console.log('Profile')}
         >
-          <Image
-            source={dummyData.myProfile?.profile_image}
-            style={{
-              width: 50,
-              height: 50,
-              borderRadius: SIZES.radius,
-            }}
-          />
 
           <View
             style={{

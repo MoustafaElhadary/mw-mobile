@@ -1,31 +1,35 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useContext } from 'react';
 import {
-  FlatList, Image, Text,
+  FlatList,
+  Image,
+  Text,
   TouchableOpacity,
-  TouchableWithoutFeedback, View
+  TouchableWithoutFeedback,
+  View,
 } from 'react-native';
-import { ChartBarIcon, CreditCardIcon, HomeIcon, UserIcon } from "react-native-heroicons/outline";
+import {
+  ChartBarIcon,
+  CreditCardIcon,
+  HomeIcon,
+  UserIcon,
+} from 'react-native-heroicons/outline';
 import Animated, {
-  useAnimatedStyle, useSharedValue, withTiming
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
 } from 'react-native-reanimated';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from '../components/Header';
 import { AuthenticatedUserContext } from '../navigation/AuthenticatedUserProvider';
 import { RootState } from '../redux/store';
 import { setSelectedTab } from '../redux/tabSlice';
-import {
-  COLORS, constants,
-  dummyData, FONTS, icons, SIZES
-} from '../utils/constants';
+import { COLORS, constants, FONTS, icons, SIZES } from '../utils/constants';
 import Firebase from '../utils/firebase';
 import Home from './Home/Home';
 import Payments from './Payments/Payments';
 import Profile from './Profile/Profile';
 import Transactions from './Transactions/Transactions';
-
-
-
 
 const auth = Firebase.auth();
 
@@ -62,8 +66,7 @@ const TabButton = ({
             innerContainerStyle,
           ]}
         >
-         
-         {icon}
+          {icon}
 
           {isFocused && (
             <Text
@@ -91,9 +94,7 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
     }>
   >();
 
-  const selectedTab = useSelector(
-    (state: RootState) => state.ui.selectedTab
-  );
+  const selectedTab = useSelector((state: RootState) => state.ui.selectedTab);
   const dispatch = useDispatch();
   // Reanimated Shared Value
 
@@ -164,7 +165,6 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
     };
   });
 
-
   React.useEffect(() => {
     dispatch(setSelectedTab(constants.screens.home));
   }, []);
@@ -190,7 +190,9 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
       });
 
       transactionsTabFlex.value = withTiming(4, { duration: 500 });
-      transactionsTabColor.value = withTiming(COLORS.primary, { duration: 500 });
+      transactionsTabColor.value = withTiming(COLORS.primary, {
+        duration: 500,
+      });
     } else {
       transactionsTabFlex.value = withTiming(1, { duration: 500 });
       transactionsTabColor.value = withTiming(COLORS.white, { duration: 500 });
@@ -221,7 +223,6 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
       profileTabFlex.value = withTiming(1, { duration: 500 });
       profileTabColor.value = withTiming(COLORS.white, { duration: 500 });
     }
-
   }, [selectedTab]);
 
   return (
@@ -239,6 +240,7 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
           paddingHorizontal: SIZES.padding,
           marginTop: 40,
           alignItems: 'center',
+          backgroundColor: '#fff',
         }}
         title={selectedTab.toUpperCase()}
         leftComponent={
@@ -255,24 +257,6 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
             onPress={() => navigation.openDrawer()}
           >
             <Image source={icons.menu} />
-          </TouchableOpacity>
-        }
-        rightComponent={
-          <TouchableOpacity
-            style={{
-              borderRadius: SIZES.radius,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Image
-              source={dummyData?.myProfile?.profile_image}
-              style={{
-                width: 40,
-                height: 40,
-                borderRadius: SIZES.radius,
-              }}
-            />
           </TouchableOpacity>
         }
       />
@@ -302,7 +286,9 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
                 }}
               >
                 {item.label == constants.screens.home && <Home />}
-                {item.label == constants.screens.transactions && <Transactions />}
+                {item.label == constants.screens.transactions && (
+                  <Transactions />
+                )}
                 {item.label == constants.screens.payments && <Payments />}
                 {item.label == constants.screens.profile && <Profile />}
               </View>
@@ -348,7 +334,16 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
         >
           <TabButton
             label={constants.screens.home}
-            icon={ <HomeIcon color={selectedTab == constants.screens.home ? COLORS.white : COLORS.gray}  size={24} />}
+            icon={
+              <HomeIcon
+                color={
+                  selectedTab == constants.screens.home
+                    ? COLORS.white
+                    : COLORS.gray
+                }
+                size={24}
+              />
+            }
             isFocused={selectedTab == constants.screens.home}
             outerContainerStyle={homeFlexStyle}
             innerContainerStyle={homeColorStyle}
@@ -357,16 +352,36 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
 
           <TabButton
             label={constants.screens.transactions}
-            icon={ <ChartBarIcon color={selectedTab == constants.screens.transactions ? COLORS.white : COLORS.gray}  size={24} />}
+            icon={
+              <ChartBarIcon
+                color={
+                  selectedTab == constants.screens.transactions
+                    ? COLORS.white
+                    : COLORS.gray
+                }
+                size={24}
+              />
+            }
             isFocused={selectedTab == constants.screens.transactions}
             outerContainerStyle={transactionsFlexStyle}
             innerContainerStyle={transactionsColorStyle}
-            onPress={() => dispatch(setSelectedTab(constants.screens.transactions))}
+            onPress={() =>
+              dispatch(setSelectedTab(constants.screens.transactions))
+            }
           />
 
           <TabButton
             label={constants.screens.payments}
-            icon={ <CreditCardIcon color={selectedTab == constants.screens.payments ? COLORS.white : COLORS.gray}  size={24} />}
+            icon={
+              <CreditCardIcon
+                color={
+                  selectedTab == constants.screens.payments
+                    ? COLORS.white
+                    : COLORS.gray
+                }
+                size={24}
+              />
+            }
             isFocused={selectedTab == constants.screens.payments}
             outerContainerStyle={paymentsFlexStyle}
             innerContainerStyle={paymentsColorStyle}
@@ -375,13 +390,21 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
 
           <TabButton
             label={constants.screens.profile}
-            icon={ <UserIcon color={selectedTab == constants.screens.profile ? COLORS.white : COLORS.gray}  size={24} />}
+            icon={
+              <UserIcon
+                color={
+                  selectedTab == constants.screens.profile
+                    ? COLORS.white
+                    : COLORS.gray
+                }
+                size={24}
+              />
+            }
             isFocused={selectedTab == constants.screens.profile}
             outerContainerStyle={profileFlexStyle}
             innerContainerStyle={profileColorStyle}
             onPress={() => dispatch(setSelectedTab(constants.screens.profile))}
           />
-
         </View>
       </View>
     </Animated.View>

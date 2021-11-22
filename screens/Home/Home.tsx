@@ -1,130 +1,124 @@
 import React from 'react';
 import {
-  FlatList,
-  Image,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
+  FlatList, StyleSheet, Text, View
 } from 'react-native';
-import FilterModal from '../../components/FilterModal';
-import PostCard from '../../components/PostCard';
-import { COLORS, dummyData, FONTS, icons, SIZES } from '../../utils/constants';
+import LiabilityCard from '../../components/LiabilityCard';
+import { dummyData, SIZES } from '../../utils/constants';
 
 const Home = () => {
-  const [postList, setPostList] = React.useState(dummyData.posts);
 
-  const [showFilterModal, setShowFilterModal] = React.useState(false);
+  const loans = [
+    {
+      id: 1,
+      type: 'Student',
+      amount: '$16,000',
+      apr: '10%',
+    },
+    {
+      id: 2,
+      type: 'Mortgage',
+      amount: '$100,000',
+      apr: '4%',
+    }
+  ]
 
-  // Render
-
-  function renderSearch() {
+  function renderRecommendedSection() {
     return (
-      <View
-        style={{
-          flexDirection: 'row',
-          height: 40,
-          alignItems: 'center',
-          marginHorizontal: SIZES.padding,
-          marginVertical: SIZES.base,
-          paddingHorizontal: SIZES.radius,
-          borderRadius: SIZES.radius,
-          backgroundColor: COLORS.lightGray2,
-        }}
-      >
-        {/* Icon */}
-        <Image
-          source={icons.search}
-          style={{
-            height: 20,
-            width: 20,
-            tintColor: COLORS.black,
-          }}
+      <View style={{ marginTop: 20 }}>
+        <FlatList
+          data={loans}
+          keyExtractor={(item) => `${item.id}`}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          renderItem={({ item, index }) => (
+            <LiabilityCard
+              item={item}
+              onPress={() => console.log('LiabilityCard')}
+              first={index == 0}
+              last={index == loans.length - 1}
+            />
+          )}
         />
-
-        {/* Text Input */}
-        <TextInput
-          style={{
-            flex: 1,
-            marginLeft: SIZES.radius,
-            ...FONTS.body3,
-          }}
-          placeholder="search..."
-        />
-
-        {/* Filter Button */}
-        {/* <TouchableOpacity onPress={() => setShowFilterModal(true)}>
-          <Image
-            source={icons.filter}
-            style={{
-              height: 20,
-              width: 20,
-              tintColor: COLORS.black,
-            }}
-          />
-        </TouchableOpacity> */}
       </View>
     );
   }
-
   return (
     <View
       style={{
         flex: 1,
+        backgroundColor: '#F8F8F7'
       }}
     >
-      {/* Search */}
-      {renderSearch()}
-
-      {/* Filter */}
-      {showFilterModal && (
-        <FilterModal
-          isVisible={showFilterModal}
-          onClose={() => setShowFilterModal(false)}
-        />
-      )}
-
       {/* List */}
       <FlatList
-        data={postList}
+        data={[]}
         keyExtractor={(item) => `${item.id}`}
         showsVerticalScrollIndicator={false}
-        ListHeaderComponent={<View>{}</View>}
-        renderItem={({ item, index }) => {
-          return (
-            <PostCard
-              key={`${index} - post - card - ${item.id}`}
-              item={item}
-              onPress={() => console.log('HorizontalFoodCard')}
-            />
-          );
+        ListHeaderComponent={
+          <View>
+            <View
+              style={{
+                backgroundColor: '#fff',
+                paddingHorizontal: 20,
+                paddingTop: 20,
+                paddingBottom: 40,
+                borderBottomColor: '#F0EEEE',
+                borderBottomWidth: 1,
+              }}
+            >
+              <Text style={styles.header}> Total loan amount</Text>
+              <Text style={{ ...styles.content, paddingBottom: 16 }}>
+                {' '}
+                $16,839
+              </Text>
+
+              <Text style={styles.header}> Amount paid</Text>
+              <Text style={{ ...styles.content, paddingBottom: 16 }}>
+                {' '}
+                $16,839
+              </Text>
+
+              <Text style={styles.header}> Amount left</Text>
+              <Text style={{ ...styles.content, paddingBottom: 16 }}>
+                {' '}
+                $16,839
+              </Text>
+
+              <Text style={styles.header}> Savings</Text>
+              <Text style={styles.content}> 💰 $16,839</Text>
+              <Text style={styles.content}> 🕐 $16,839</Text>
+            </View>
+
+            {/* Recommended */}
+            {renderRecommendedSection()}
+          </View>
+        }
+        renderItem={() => {
+          return <View />;
         }}
         ListFooterComponent={<View style={{ height: 200 }} />}
       />
-
-      <TouchableOpacity
-        style={{
-          borderWidth: 1,
-          borderColor: 'rgba(0,0,0,0.2)',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: 70,
-          position: 'absolute',
-          bottom: 30,
-          right: 10,
-          height: 70,
-          backgroundColor: '#fff',
-          borderRadius: 100,
-        }}
-      >
-        {/* <Icon name="plus" size={30} color="#01a699" /> */}
-        <Image
-          style={{ width: 50, height: 50, resizeMode: 'contain' }}
-          source={ dummyData.myProfile?.profile_image }
-        />
-      </TouchableOpacity>
     </View>
   );
 };
 
 export default Home;
+
+const styles = StyleSheet.create({
+  header: {
+    color: '#234236',
+    fontFamily: 'Ageo',
+    fontSize: 22,
+    lineHeight: 32,
+    fontStyle: 'normal',
+    fontWeight: '400',
+  },
+  content: {
+    color: '#398E71',
+    fontFamily: 'Ageo',
+    fontSize: 26,
+    lineHeight: 32,
+    fontStyle: 'normal',
+    fontWeight: '400',
+  },
+});

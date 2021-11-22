@@ -39,22 +39,21 @@ function RootNavigator() {
   const { user, setUser } = useContext(AuthenticatedUserContext);
   const [isLoading, setIsLoading] = useState(true);
 
-
   const checkIfAlreadyRegistered = async () => {
     try {
-      const value = await AsyncStorage.getItem('@registered')
-      if(value !== null) {
-        var isTrue = (value === 'true')
+      const value = await AsyncStorage.getItem('@registered');
+      if (value !== null) {
+        var isTrue = value === 'true';
 
-        if(isTrue){
+        if (isTrue) {
           dispatch(setRegistered(true));
         }
       }
-    } catch(e) {
+    } catch (e) {
       // error reading value
     }
-  }
-  
+  };
+
   useEffect(() => {
     // onAuthStateChanged returns an unsubscriber
     const unsubscribeAuth = auth.onAuthStateChanged(
@@ -64,14 +63,13 @@ function RootNavigator() {
             ? setUser(authenticatedUser)
             : setUser(null));
           setIsLoading(false);
-          checkIfAlreadyRegistered();
         } catch (error) {
           console.log(error);
         }
+
+        checkIfAlreadyRegistered();
       }
     );
-
-
 
     // unsubscribe auth listener on unmount
     return unsubscribeAuth;

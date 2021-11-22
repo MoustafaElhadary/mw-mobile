@@ -9,7 +9,7 @@ import {
   View
 } from 'react-native';
 import FilterModal from '../../components/FilterModal';
-import HorizontalFoodCard from '../../components/HorizontalFoodCard';
+import LiabilityCard from '../../components/LiabilityCard';
 import Section from '../../components/Section';
 import VerticalFoodCard from '../../components/VerticalFoodCard';
 import { COLORS, dummyData, FONTS, icons, SIZES } from '../../utils/constants';
@@ -157,7 +157,7 @@ const CartTab = () => {
           horizontal
           showsHorizontalScrollIndicator={false}
           renderItem={({ item, index }) => (
-            <HorizontalFoodCard
+            <LiabilityCard
               containerStyle={{
                 height: 180,
                 width: SIZES.width * 0.85,
@@ -172,7 +172,7 @@ const CartTab = () => {
                 width: 150,
               }}
               item={item}
-              onPress={() => console.log('HorizontalFoodCard')}
+              onPress={() => console.log('LiabilityCard')}
             />
           )}
         />
@@ -342,7 +342,7 @@ const CartTab = () => {
         }
         renderItem={({ item, index }) => {
           return (
-            <HorizontalFoodCard
+            <LiabilityCard
               containerStyle={{
                 height: 130,
                 alignItems: 'center',
@@ -355,7 +355,7 @@ const CartTab = () => {
                 width: 110,
               }}
               item={item}
-              onPress={() => console.log('HorizontalFoodCard')}
+              onPress={() => console.log('LiabilityCard')}
             />
           );
         }}

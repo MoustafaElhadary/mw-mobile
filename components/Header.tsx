@@ -7,7 +7,7 @@ export type HeaderProps = {
   title: string;
   titleStyle?: ViewStyle;
   leftComponent: JSX.Element;
-  rightComponent: JSX.Element;
+  rightComponent?: JSX.Element;
 };
 const Header = ({
   containerStyle,
