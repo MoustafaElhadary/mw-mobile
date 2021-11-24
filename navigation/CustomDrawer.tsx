@@ -1,26 +1,26 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   createDrawerNavigator,
-  DrawerContentScrollView,
+  DrawerContentScrollView
 } from '@react-navigation/drawer';
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
-import React from 'react';
+import firebase from 'firebase';
+import React, { useContext, useEffect } from 'react';
 import {
   GestureResponderEvent,
   Image,
   ImageSourcePropType,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import Animated from 'react-native-reanimated';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setRegistered } from '../redux/registrationSlice';
-import { RootState } from '../redux/store';
-import { setSelectedTab } from '../redux/tabSlice';
 import MainLayout from '../screens/MainLayout';
-import { COLORS, dummyData, FONTS, icons, SIZES } from '../utils/constants';
+import { COLORS, FONTS, icons, SIZES } from '../utils/constants';
 import Firebase from '../utils/firebase';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AuthenticatedUserContext } from './AuthenticatedUserProvider';
 
 const auth = Firebase.auth();
 
@@ -78,8 +78,25 @@ const CustomDrawerItem = ({
 };
 
 const CustomDrawerContent = ({ navigation }: Props) => {
-  const selectedTab = useSelector((state: RootState) => state.ui.selectedTab);
   const dispatch = useDispatch();
+
+  const { user } = useContext(AuthenticatedUserContext);
+  const [data, setData] = React.useState(null);
+
+  
+  useEffect(() => {
+    firebase
+      .firestore()
+      .collection('users')
+      .doc(user.uid)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          console.log({ doc: doc.data() });
+          setData(doc.data());
+        }
+      });
+  }, []);
 
   return (
     <DrawerContentScrollView
@@ -126,14 +143,13 @@ const CustomDrawerContent = ({ navigation }: Props) => {
           }}
           onPress={() => console.log('Profile')}
         >
-
           <View
             style={{
               marginLeft: SIZES.radius,
             }}
           >
             <Text style={{ color: COLORS.white, ...FONTS.h3 }}>
-              {dummyData.myProfile?.name}
+              {data?.firstName} {data?.lastName}
             </Text>
             <Text style={{ color: COLORS.white, ...FONTS.body4 }}>
               View your profile

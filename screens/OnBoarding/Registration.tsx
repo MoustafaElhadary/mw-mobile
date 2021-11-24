@@ -11,7 +11,7 @@ import { Control, Controller, useForm } from 'react-hook-form';
 import { StyleSheet, TextInput, TextInputProps, View } from 'react-native';
 import {
   GooglePlacesAutocomplete,
-  GooglePlacesAutocompleteRef,
+  GooglePlacesAutocompleteRef
 } from 'react-native-google-places-autocomplete';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -35,7 +35,7 @@ interface IFormInputs {
   firstName: string;
   dob: string;
   lastName: string;
-  ssn: string;
+  // ssn: string;
 }
 
 const Registration = ({ navigation }: RegistrationProps) => {
@@ -53,14 +53,14 @@ const Registration = ({ navigation }: RegistrationProps) => {
       {
         id: 1,
         title: 'Your personal information',
-        subtitle: 'Your full name, DOB, and residential address.',
+        subtitle: 'Your full name, date of birth, and residential address.',
       },
-      {
-        id: 2,
-        title: 'Your Social Security Number (SSN)',
-        subtitle:
-          " We're required to collect this to verify your identity and comply with anti money laundering regulations.",
-      },
+      // {
+      //   id: 2,
+      //   title: 'Your Social Security Number (SSN)',
+      //   subtitle:
+      //     " We're required to collect this to verify your identity and comply with anti money laundering regulations.",
+      // },
     ],
   };
 
@@ -263,13 +263,13 @@ const PersonalInfo = () => {
         .string()
         .required('A Date of birth is required')
         .typeError('A Date of birth is required'),
-      ssn: yup
-        .string()
-        .required('A Social Security Number is required')
-        .matches(/^[0-9]+$/, 'A Social Security Number must be only digits')
-        .min(9, 'A Social Security Number  must be exactly 9 digits')
-        .max(9, 'A Social Security Number  must be exactly 9 digits')
-        .typeError('A Social Security Number is required'),
+      // ssn: yup
+      //   .string()
+      //   .required('A Social Security Number is required')
+      //   .matches(/^[0-9]+$/, 'A Social Security Number must be only digits')
+      //   .min(9, 'A Social Security Number  must be exactly 9 digits')
+      //   .max(9, 'A Social Security Number  must be exactly 9 digits')
+      //   .typeError('A Social Security Number is required'),
     })
     .required();
   const {
@@ -283,7 +283,7 @@ const PersonalInfo = () => {
       firstName: '',
       lastName: '',
       dob: '',
-      ssn: '',
+      // ssn: '',
     },
   });
 
@@ -298,7 +298,7 @@ const PersonalInfo = () => {
           setValue('dob', doc.data().dob ? doc.data().dob : '');
           setValue('firstName', doc.data().firstName || '');
           setValue('lastName', doc.data().lastName || '');
-          setValue('ssn', doc.data().ssn || '');
+          // setValue('ssn', doc.data().ssn || '');
         }
       });
   }, []);
@@ -341,7 +341,7 @@ const PersonalInfo = () => {
         <Text style={styles.inputError}>{errors.dob.message}</Text>
       )}
 
-      <MWTextInput
+      {/* <MWTextInput
         control={control}
         name="ssn"
         placeholder="SSN"
@@ -350,7 +350,7 @@ const PersonalInfo = () => {
       />
       {errors.ssn && (
         <Text style={styles.inputError}>{errors.ssn.message}</Text>
-      )}
+      )} */}
 
       <View style={commonStyles.flex} />
       <View style={commonStyles.buttonView}>
@@ -450,7 +450,7 @@ const GooglePlacesInput = () => {
         }
       })
 
-      
+
   }, []);
   return (
     <>
@@ -562,7 +562,7 @@ const ConfirmDetails = () => {
             <Text style={commonStyles.h3Text}>{data.address}</Text>
           </View>
 
-          <View
+          {/* <View
             style={{
               width: '100%',
               borderBottomColor: 'grey',
@@ -574,7 +574,7 @@ const ConfirmDetails = () => {
               SSN
             </Text>
             <Text style={commonStyles.h3Text}>{data.ssn}</Text>
-          </View>
+          </View> */}
         </>
       )}
       <View style={commonStyles.flex} />

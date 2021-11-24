@@ -1,0 +1,162 @@
+{
+    "users": [{
+        "user_id": {
+            "firstName": "string",
+            "lastName": "string",
+            "dob": "string",
+            "email": "string",
+            "phone": "string",
+            "registered": "boolean",
+            "address": "string",
+            "items": [{
+                "access_token": "string",
+                "item_id": "string FK",
+                "type": "funding | loan"
+            }],
+            "payments": {
+                "receiving": {
+                    "previous": ["payment_id"],
+                    "upcoming": ["payment_id"]
+                },
+                "giving": {
+                    "previous": ["payment_id"],
+                    "upcoming": ["payment_id"]
+                }
+            },
+            "roundups": {
+                "previous": ["transaction_id"],
+                "upcoming": ["transaction_id"]
+            }
+        }
+    }],
+    "items": [{
+        "item_id": {
+            "access_token": "string",
+            "item_id": "string FK",
+            "type": "funding | loan",
+            "user_id": "string FK",
+            "liabilities": {
+                "credit": [],
+                "mortgage": [],
+                "student": [{
+                    "repayment_plan": {
+                        "description": "string",
+                        "type": "string"
+                    },
+                    "outstanding_interest_amount": "number",
+                    "last_statement_issue_date": "Date",
+                    "origination_date": "Date",
+                    "last_payment_date": "Date",
+                    "expected_payoff_date": "Date",
+                    "is_overdue": "boolean",
+                    "origination_principal_amount": "number",
+                    "interest_rate_percentage": "number",
+                    "guarantor": "string",
+                    "ytd_interest_paid": "number",
+                    "sequence_number": "1",
+                    "ytd_principal_paid": "number",
+                    "next_payment_due_date": "Date",
+                    "disbursement_dates": [
+                        "Date"
+                    ],
+                    "account_number": "4277075694",
+                    "payment_reference_number": "4277075694",
+                    "loan_status": {
+                        "type": "repayment",
+                        "end_date": "Date"
+                    },
+                    "servicer_address": {
+                        "street": "string",
+                        "region": "string",
+                        "country": "string",
+                        "city": "string",
+                        "postal_code": "string"
+                    },
+                    "pslf_status": {
+                        "payments_remaining": "number",
+                        "payments_made": "number",
+                        "estimated_eligibility_date": "Date"
+                    },
+                    "last_payment_amount": "number",
+                    "account_id": "string FK",
+                    "minimum_payment_amount": "number",
+                    "last_statement_balance": "number",
+                    "loan_name": "string"
+                }]
+            },
+            "transactions": [{
+                "datetime": null,
+                "transaction_id": "M3Rvxg1Bzosp87EwPvKBU69xR7XzGxC94ZkwZ",
+                "authorized_datetime": null,
+                "transaction_code": null,
+                "merchant_name": "Uber",
+                "payment_channel": "in store",
+                "account_owner": null,
+                "category": [
+                    "Travel",
+                    "Taxi"
+                ],
+                "iso_currency_code": "USD",
+                "date": "2021-11-19",
+                "pending_transaction_id": null,
+                "name": "Uber 072515 SF**POOL**",
+                "amount": 6.33,
+                "payment_meta": {
+                    "payment_processor": null,
+                    "reason": null,
+                    "payee": null,
+                    "ppd_id": null,
+                    "by_order_of": null,
+                    "reference_number": null,
+                    "payer": null,
+                    "payment_method": null
+                },
+                "pending": false,
+                "authorized_date": "2021-11-18",
+                "check_number": null,
+                "unofficial_currency_code": null,
+                "personal_finance_category": null,
+                "category_id": "22016000",
+                "transaction_type": "special",
+                "account_id": "KzyvBAerKZs1KaXVPBdLTm4Dd3bQl1SVE3JWE",
+                "location": {
+                    "lon": null,
+                    "country": null,
+                    "region": null,
+                    "lat": null,
+                    "postal_code": null,
+                    "city": null,
+                    "store_number": null,
+                    "address": null
+                }
+            }]
+
+        }
+    }],
+    "roundups": [{
+        "transaction_id": {
+            "transactionAmount": "number",
+            "roundupAmount": "number",
+            "dateCreated": "timestamp",
+            "payment_id": "string FK",
+            "user_id": "string FK",
+            "item_id": "string FK"
+        }
+    }],
+    "payments": [{
+        "payment_id": {
+            "payment_id": "string FK",
+            "amount": "number",
+            "source": "user | friend | family | organization",
+            "source_id": "string FK",
+            "type": "funding | loan",
+            "dateCreated": "timestamp",
+            "user_id": "string FK",
+            "roundups": ["transaction_id"],
+            "item_id": "string FK"
+        }
+    }],
+    "logs": [
+
+    ]
+}

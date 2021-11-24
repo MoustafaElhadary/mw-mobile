@@ -38,11 +38,29 @@ const SignUp = ({ navigation }) => {
         await auth
           .createUserWithEmailAndPassword(email, password)
           .then((res) => {
-            firebase.firestore().collection('users').doc(res.user.uid).set({
-              email: email,
-              phone: phone,
-              registered: false
-            });
+            firebase
+              .firestore()
+              .collection('users')
+              .doc(res.user.uid)
+              .set({
+                email: email,
+                phone: phone,
+                registered: false,
+                payments: {
+                  receiving: {
+                    previous: [],
+                    upcoming: [],
+                  },
+                  giving: {
+                    previous: [],
+                    upcoming: [],
+                  },
+                },
+                roundups: {
+                  previous: [],
+                  upcoming: [],
+                },
+              });
           });
 
         await navigation.navigate('Registration');
@@ -54,7 +72,7 @@ const SignUp = ({ navigation }) => {
 
   return (
     <AuthLayout
-      title="Getting Started"
+      title="Get Started"
       subtitle="Create an account to continue!"
       titleContainerStyle={{
         marginTop: SIZES.height > 800 ? SIZES.radius : 0,

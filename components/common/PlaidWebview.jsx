@@ -336,7 +336,7 @@ export default function PlaidLink({ linkToken, onEvent, onExit, onSuccess }) {
     <View style={{ borderWidth: 2, borderColor: 'transparent' }}>
       <WebView
         // source={{ uri: 'https://reactnative.dev/' }}
-        style={{ marginTop: 20, height: windowHeight, width: windowWidth }}
+        style={{ marginTop: 5, height: windowHeight, width: windowWidth }}
         source={{
           uri: `https://cdn.plaid.com/link/v2/stable/link.html?isWebview=true&token=${linkToken}`,
         }}

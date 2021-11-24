@@ -61,11 +61,11 @@ const LiabilityCard = ({ item, onPress, first, last }) => {
             fontWeight: '400',
           }}
         >
-          Average APR: {item.apr}
+          Average APR: {item.apr}%
         </Text>
       </View>
 
-      {/* Calories */}
+      {/* Type */}
       <View
         style={{
           flexDirection: 'row',

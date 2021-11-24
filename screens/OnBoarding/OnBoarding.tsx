@@ -120,7 +120,7 @@ const OnBoarding = ({ navigation }) => {
               labelStyle={{
                 color: COLORS.darkGray2,
               }}
-              onPress={() => navigation.replace('SignIn')}
+              onPress={() => navigation.replace('SignUp')}
             />
 
             <TextButton
@@ -153,7 +153,7 @@ const OnBoarding = ({ navigation }) => {
                 height: 60,
                 borderRadius: SIZES.radius,
               }}
-              onPress={() => navigation.replace('SignIn')}
+              onPress={() => navigation.replace('SignUp')}
             />
           </View>
         )}

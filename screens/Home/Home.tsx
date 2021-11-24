@@ -1,26 +1,52 @@
-import React from 'react';
-import {
-  FlatList, StyleSheet, Text, View
-} from 'react-native';
+import axios from 'axios';
+import Constants from 'expo-constants';
+import React, { useContext, useEffect, useState } from 'react';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import LiabilityCard from '../../components/LiabilityCard';
-import { dummyData, SIZES } from '../../utils/constants';
+import { AuthenticatedUserContext } from '../../navigation/AuthenticatedUserProvider';
+import { utils } from '../../utils';
 
 const Home = () => {
+  const { user } = useContext(AuthenticatedUserContext);
+  const [data, setData] = useState(null);
 
-  const loans = [
-    {
-      id: 1,
-      type: 'Student',
-      amount: '$16,000',
-      apr: '10%',
-    },
-    {
-      id: 2,
-      type: 'Mortgage',
-      amount: '$100,000',
-      apr: '4%',
+  const fetchLoans = async () => {
+    const mwAccessToken = await user.getIdToken();
+    axios
+      .post(`${Constants.manifest.extra.apiUrl}/loans`, {
+        mwAccessToken,
+      })
+      .then(async (response) => {
+        console.log({ data: response.data });
+        setData(response.data);
+      });
+  };
+
+  useEffect(() => {
+    fetchLoans();
+  }, []);
+
+  const loans = [];
+
+  if (data) {
+    if (data?.student.balance > 0) {
+      loans.push({
+        id: '1',
+        type: 'Student',
+        amount: utils.formatter.format(data?.student.balance),
+        apr: data?.student.averageInterestRate,
+      });
     }
-  ]
+
+    if (data?.mortgages?.balance > 0) {
+      loans.push({
+        id: '2',
+        type: 'mortgages',
+        amount: utils.formatter.format(data?.mortgages?.balance),
+        apr: data?.mortgages?.averageInterestRate,
+      });
+    }
+  }
 
   function renderRecommendedSection() {
     return (
@@ -46,7 +72,7 @@ const Home = () => {
     <View
       style={{
         flex: 1,
-        backgroundColor: '#F8F8F7'
+        backgroundColor: '#F8F8F7',
       }}
     >
       {/* List */}
@@ -69,10 +95,10 @@ const Home = () => {
               <Text style={styles.header}> Total loan amount</Text>
               <Text style={{ ...styles.content, paddingBottom: 16 }}>
                 {' '}
-                $16,839
+                {utils.formatter.format(data?.totalOriginalAmount || 0)}
               </Text>
 
-              <Text style={styles.header}> Amount paid</Text>
+              <Text style={styles.header}> Amount paid with MochaWallet</Text>
               <Text style={{ ...styles.content, paddingBottom: 16 }}>
                 {' '}
                 $16,839
@@ -80,8 +106,7 @@ const Home = () => {
 
               <Text style={styles.header}> Amount left</Text>
               <Text style={{ ...styles.content, paddingBottom: 16 }}>
-                {' '}
-                $16,839
+                {utils.formatter.format(data?.amountLeft || 0)}
               </Text>
 
               <Text style={styles.header}> Savings</Text>
