@@ -1,24 +1,24 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React, { useContext, useEffect, useState } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { setRegistered } from '../redux/registrationSlice';
 import { RootState } from '../redux/store';
 import ForgotPassword from '../screens/Authentication/ForgotPassword';
 import Otp from '../screens/Authentication/Otp';
 import SignIn from '../screens/Authentication/SignIn';
 import SignUp from '../screens/Authentication/SignUp';
+import ManageRoundups from '../screens/Funding/ManageRoundups';
 import OnBoarding from '../screens/OnBoarding/OnBoarding';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import Registration from '../screens/OnBoarding/Registration';
 import Firebase from '../utils/firebase';
 import {
   AuthenticatedUserContext,
-  AuthenticatedUserProvider,
+  AuthenticatedUserProvider
 } from './AuthenticatedUserProvider';
 import CustomDrawer from './CustomDrawer';
-import { setRegistered } from '../redux/registrationSlice';
 
 export default function Routes() {
   return (
@@ -94,6 +94,10 @@ function HomeStack() {
   return (
     <Stack.Navigator headerMode="none">
       <Stack.Screen name="Home" component={CustomDrawer} />
+      <Stack.Screen
+        name="ManageRoundups"
+        component={ManageRoundups}
+      />
     </Stack.Navigator>
   );
 }

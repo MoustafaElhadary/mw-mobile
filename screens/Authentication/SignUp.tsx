@@ -216,7 +216,7 @@ const SignUp = ({ navigation }) => {
           }}
         >
           <Text style={{ color: COLORS.darkGray, ...FONTS.body3 }}>
-            Already have an account?{' '}
+            Already have an account?
           </Text>
           <TextButton
             label="Sign In"
@@ -227,7 +227,7 @@ const SignUp = ({ navigation }) => {
               color: COLORS.primary,
               ...FONTS.h3,
             }}
-            onPress={() => navigation.goBack()}
+            onPress={() => navigation.navigate('SignIn')}
           />
         </View>
       </View>

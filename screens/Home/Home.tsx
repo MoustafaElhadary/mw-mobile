@@ -94,13 +94,13 @@ const Home = () => {
             >
               <Text style={styles.header}> Total loan amount</Text>
               <Text style={{ ...styles.content, paddingBottom: 16 }}>
-                {' '}
+                
                 {utils.formatter.format(data?.totalOriginalAmount || 0)}
               </Text>
 
               <Text style={styles.header}> Amount paid with MochaWallet</Text>
               <Text style={{ ...styles.content, paddingBottom: 16 }}>
-                {' '}
+                
                 $16,839
               </Text>
 

@@ -26,7 +26,7 @@ const screens = {
   main_layout: 'MainLayout',
   home: 'Home',
   transactions: 'Transactions',
-  payments: 'Payments',
+  funding: 'Funding',
   profile: 'Profile',
 };
 
@@ -41,7 +41,7 @@ const bottom_tabs = [
   },
   {
     id: 2,
-    label: screens.payments,
+    label: screens.funding,
   },
   {
     id: 3,

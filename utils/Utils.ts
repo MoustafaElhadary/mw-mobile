@@ -1,3 +1,5 @@
+import moment from "moment";
+
 function isValidEmail(value) {
   const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(value).toLowerCase());
@@ -51,6 +53,32 @@ var formatter = new Intl.NumberFormat('en-US', {
   maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
 });
 
+ const formatMoney = (amount: number | string, decimalCount = 0): string => {
+  let number = 0;
+  if (typeof amount === 'string') {
+      number = parseFloat(amount);
+  } else if (typeof amount === 'number') {
+      number = amount;
+  } else {
+      return 'NaN';
+  }
+
+  let numberString = Math.abs(number).toFixed(decimalCount);
+
+  const [ones, decimals] = numberString.split('.');
+  numberString = `${ones.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,')}${decimals ? `.${decimals}` : ''}`;
+  if (number < 0) numberString = `-${numberString}`;
+  return numberString;
+};
+
+
+const getNextMonday = () => {
+  const today = moment();
+  const day = today.day();
+  const nextMonday = today.add(7 - day, 'days');
+  return nextMonday.format('MMMM Do, YYYY').toString();
+};
+
 
 const utils = {
   isValidEmail,
@@ -58,7 +86,9 @@ const utils = {
   validatePassword,
   validatePhoneNumber,
   onlyUnique,
-  formatter
+  formatter,
+  formatMoney,
+  getNextMonday
 };
 
 export default utils;

@@ -1,7 +1,7 @@
-import FormInput from '../../components/FormInput';
-import TextButton from '../../components/TextButton';
 import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
+import FormInput from '../../components/FormInput';
+import TextButton from '../../components/TextButton';
 import { utils } from '../../utils';
 import { COLORS, FONTS, icons, SIZES } from '../../utils/constants';
 import AuthLayout from './AuthLayout';
@@ -74,7 +74,7 @@ const ForgotPassword = ({ navigation }) => {
           }}
         >
           <Text style={{ color: COLORS.darkGray, ...FONTS.body3 }}>
-            Already have an account?{' '}
+            Already have an account?
           </Text>
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Text style={{ color: COLORS.primary, ...FONTS.h3 }}>Sign In</Text>

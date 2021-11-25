@@ -1,13 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
-import tabReducer from './tabSlice';
 import registrationReducer from './registrationSlice';
+import roundupsReducer from './roundupsSlice';
+import tabReducer from './tabSlice';
 
 const store = configureStore({
   reducer: {
     ui: tabReducer,
     registration: registrationReducer,
-
+    roundups: roundupsReducer
   },
 });
 

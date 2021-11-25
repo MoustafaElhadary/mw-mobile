@@ -27,7 +27,7 @@ import { setSelectedTab } from '../redux/tabSlice';
 import { COLORS, constants, FONTS, icons, SIZES } from '../utils/constants';
 import Firebase from '../utils/firebase';
 import Home from './Home/Home';
-import Payments from './Payments/Payments';
+import Funding from './Funding/Funding';
 import Profile from './Profile/Profile';
 import Transactions from './Transactions/Transactions';
 
@@ -110,8 +110,8 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
   const homeTabColor = useSharedValue<string | number>(COLORS.primary);
   const transactionsTabFlex = useSharedValue(1);
   const transactionsTabColor = useSharedValue<string | number>(COLORS.primary);
-  const paymentsTabFlex = useSharedValue(1);
-  const paymentsTabColor = useSharedValue<string | number>(COLORS.primary);
+  const FundingTabFlex = useSharedValue(1);
+  const FundingTabColor = useSharedValue<string | number>(COLORS.primary);
   const profileTabFlex = useSharedValue(1);
   const profileTabColor = useSharedValue<string | number>(COLORS.primary);
 
@@ -141,15 +141,15 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
     };
   });
 
-  const paymentsFlexStyle = useAnimatedStyle(() => {
+  const FundingFlexStyle = useAnimatedStyle(() => {
     return {
-      flex: paymentsTabFlex.value,
+      flex: FundingTabFlex.value,
     };
   });
 
-  const paymentsColorStyle = useAnimatedStyle(() => {
+  const FundingColorStyle = useAnimatedStyle(() => {
     return {
-      backgroundColor: paymentsTabColor.value,
+      backgroundColor: FundingTabColor.value,
     };
   });
 
@@ -198,17 +198,17 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
       transactionsTabColor.value = withTiming(COLORS.white, { duration: 500 });
     }
 
-    if (selectedTab == constants.screens.payments) {
+    if (selectedTab == constants.screens.funding) {
       flatListRef?.current?.scrollToIndex({
         index: 2,
         animated: false,
       });
 
-      paymentsTabFlex.value = withTiming(4, { duration: 500 });
-      paymentsTabColor.value = withTiming(COLORS.primary, { duration: 500 });
+      FundingTabFlex.value = withTiming(4, { duration: 500 });
+      FundingTabColor.value = withTiming(COLORS.primary, { duration: 500 });
     } else {
-      paymentsTabFlex.value = withTiming(1, { duration: 500 });
-      paymentsTabColor.value = withTiming(COLORS.white, { duration: 500 });
+      FundingTabFlex.value = withTiming(1, { duration: 500 });
+      FundingTabColor.value = withTiming(COLORS.white, { duration: 500 });
     }
 
     if (selectedTab == constants.screens.profile) {
@@ -250,9 +250,6 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
               height: 40,
               alignItems: 'center',
               justifyContent: 'center',
-              borderWidth: 1,
-              borderColor: COLORS.gray2,
-              borderRadius: SIZES.radius,
             }}
             onPress={() => navigation.openDrawer()}
           >
@@ -289,7 +286,7 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
                 {item.label == constants.screens.transactions && (
                   <Transactions />
                 )}
-                {item.label == constants.screens.payments && <Payments />}
+                {item.label == constants.screens.funding && <Funding />}
                 {item.label == constants.screens.profile && <Profile />}
               </View>
             );
@@ -371,21 +368,21 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
           />
 
           <TabButton
-            label={constants.screens.payments}
+            label={constants.screens.funding}
             icon={
               <CreditCardIcon
                 color={
-                  selectedTab == constants.screens.payments
+                  selectedTab == constants.screens.funding
                     ? COLORS.white
                     : COLORS.gray
                 }
                 size={24}
               />
             }
-            isFocused={selectedTab == constants.screens.payments}
-            outerContainerStyle={paymentsFlexStyle}
-            innerContainerStyle={paymentsColorStyle}
-            onPress={() => dispatch(setSelectedTab(constants.screens.payments))}
+            isFocused={selectedTab == constants.screens.funding}
+            outerContainerStyle={FundingFlexStyle}
+            innerContainerStyle={FundingColorStyle}
+            onPress={() => dispatch(setSelectedTab(constants.screens.funding))}
           />
 
           <TabButton

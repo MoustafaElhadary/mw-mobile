@@ -167,7 +167,7 @@ const SignIn = ({ navigation }) => {
           }}
         >
           <Text style={{ color: COLORS.darkGray, ...FONTS.body3 }}>
-            Don't have an account?{' '}
+            Don't have an account?
           </Text>
           <TextButton
             label="Sign Up"

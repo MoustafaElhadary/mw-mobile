@@ -30,8 +30,9 @@ const App = () => {
     'Poppins-Bold': require('./assets/fonts/Poppins-Bold.ttf'),
     'Poppins-SemiBold': require('./assets/fonts/Poppins-SemiBold.ttf'),
     'Poppins-Regular': require('./assets/fonts/Poppins-Regular.ttf'),
-    Ageo: require('./assets/fonts/Ageo-SemiBold.otf'),
+    'Ageo': require('./assets/fonts/Ageo-SemiBold.otf'),
     'Ageo-Bold': require('./assets/fonts/Ageo-Bold.otf'),
+    'PublicSans-SemiBold': require('./assets/fonts/PublicSans-SemiBold.otf'),
   });
 
   if (!loaded) {
