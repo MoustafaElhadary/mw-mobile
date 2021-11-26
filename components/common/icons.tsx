@@ -46,3 +46,8 @@ export const FacebookIcon = (style: IconProps): JSX.Element => <Icon {...style} 
 export const GoogleIcon = (style: IconProps): JSX.Element => <Icon {...style} name="google" />;
 
 export const CheckmarkIcon = (style: IconProps): JSX.Element => <Icon {...style} name="checkmark-circle-outline" />;
+
+export const RadioButtonOnIcon = (style: IconProps): JSX.Element => <Icon {...style} name="radio-button-on" />;
+
+export const RadioButtonOffIcon = (style: IconProps): JSX.Element => <Icon {...style} name="radio-button-off" />;
+

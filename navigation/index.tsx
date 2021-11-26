@@ -10,7 +10,10 @@ import ForgotPassword from '../screens/Authentication/ForgotPassword';
 import Otp from '../screens/Authentication/Otp';
 import SignIn from '../screens/Authentication/SignIn';
 import SignUp from '../screens/Authentication/SignUp';
+import AutoDeposits from '../screens/Funding/AutoDeposits';
+import ConfirmAutoDeposits from '../screens/Funding/ConfirmAutoDeposits';
 import ManageRoundups from '../screens/Funding/ManageRoundups';
+import YouAreSet from '../screens/Funding/YouAreSet';
 import OnBoarding from '../screens/OnBoarding/OnBoarding';
 import Registration from '../screens/OnBoarding/Registration';
 import Firebase from '../utils/firebase';
@@ -98,6 +101,9 @@ function HomeStack() {
         name="ManageRoundups"
         component={ManageRoundups}
       />
+      <Stack.Screen name="AutoDeposits" component={AutoDeposits} />
+      <Stack.Screen name="ConfirmAutoDeposits" component={ConfirmAutoDeposits} />
+      <Stack.Screen name="YouAreSet" component={YouAreSet} />
     </Stack.Navigator>
   );
 }

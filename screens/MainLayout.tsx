@@ -385,7 +385,7 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
             onPress={() => dispatch(setSelectedTab(constants.screens.funding))}
           />
 
-          <TabButton
+          {/* <TabButton
             label={constants.screens.profile}
             icon={
               <UserIcon
@@ -401,7 +401,7 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
             outerContainerStyle={profileFlexStyle}
             innerContainerStyle={profileColorStyle}
             onPress={() => dispatch(setSelectedTab(constants.screens.profile))}
-          />
+          /> */}
         </View>
       </View>
     </Animated.View>

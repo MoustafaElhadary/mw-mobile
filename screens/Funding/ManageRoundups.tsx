@@ -2,10 +2,9 @@ import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import React from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
-import { ArrowBackIcon } from '../../components/common/icons';
+import Layout from '../../components/common/Layout';
 import { RootState } from '../../redux/store';
 import { utils } from '../../utils';
 import { COLORS } from '../../utils/constants';
@@ -19,53 +18,9 @@ const ManageRoundups = () => {
   console.log({ upcoming });
 
   return (
-    <View
-      style={{
-        flex: 1,
-        paddingBottom: insets.bottom,
-        paddingTop: insets.top,
-        backgroundColor: '#fff',
-      }}
+    <Layout
+    title="Manage Roundups"
     >
-      {/* Title */}
-      <View
-        style={{
-          marginTop: 16,
-          borderBottomColor: COLORS.lightGray1,
-          borderBottomWidth: 0.5,
-          backgroundColor: '#fff',
-          flexDirection: 'row',
-          paddingBottom: 16,
-        }}
-      >
-        <View>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <ArrowBackIcon
-              style={{ zIndex: 1 }}
-              width="36"
-              height="36"
-              fill="#234236"
-            />
-          </TouchableOpacity>
-        </View>
-
-        <View
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Text
-            style={{
-              textAlign: 'center',
-              ...styles.header,
-            }}
-          >
-            Roundup history
-          </Text>
-        </View>
-      </View>
       <FlatList
         data={[]}
         keyExtractor={(item) => `${item.id}`}
@@ -136,7 +91,7 @@ const ManageRoundups = () => {
         }}
         ListFooterComponent={<View style={{ height: 40 }} />}
       />
-    </View>
+    </Layout>
   );
 };
 

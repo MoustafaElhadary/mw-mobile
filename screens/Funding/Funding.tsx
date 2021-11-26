@@ -70,7 +70,7 @@ const Funding = () => {
         title="Auto Deposits"
         containerStyle={{ marginTop: 40 }}
         footer="Set up Auto deposits"
-        onPress={() => {}}
+        onPress={() => navigation.navigate('AutoDeposits')}
       >
         <View
           style={{
