@@ -1,8 +1,6 @@
-import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import React from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
 import Layout from '../../components/common/Layout';
 import { RootState } from '../../redux/store';
@@ -10,8 +8,6 @@ import { utils } from '../../utils';
 import { COLORS } from '../../utils/constants';
 
 const ManageRoundups = () => {
-  const insets = useSafeAreaInsets();
-  const navigation = useNavigation();
   const roundups = useSelector((state: RootState) => state.roundups.roundups);
   const upcoming = roundups.upcoming;
   const previous = roundups.previous;
@@ -160,7 +156,6 @@ const Card = ({ title, tileTotal, subtitle, subtitleTotal }: CardProps) => {
           }}
         >
           <Text style={{ ...styles.subtitle, flex: 1 }}>
-            {/* $3.96 → $4.00 */}
             {subtitle}
           </Text>
           {subtitleTotal && (

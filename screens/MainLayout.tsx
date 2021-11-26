@@ -29,7 +29,7 @@ import Firebase from '../utils/firebase';
 import Home from './Home/Home';
 import Funding from './Funding/Funding';
 import Profile from './Profile/Profile';
-import Transactions from './Transactions/Transactions';
+import Deposits from './Deposits/Deposits';
 
 const auth = Firebase.auth();
 
@@ -108,8 +108,8 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
   };
   const homeTabFlex = useSharedValue(1);
   const homeTabColor = useSharedValue<string | number>(COLORS.primary);
-  const transactionsTabFlex = useSharedValue(1);
-  const transactionsTabColor = useSharedValue<string | number>(COLORS.primary);
+  const depositsTabFlex = useSharedValue(1);
+  const depositsTabColor = useSharedValue<string | number>(COLORS.primary);
   const FundingTabFlex = useSharedValue(1);
   const FundingTabColor = useSharedValue<string | number>(COLORS.primary);
   const profileTabFlex = useSharedValue(1);
@@ -129,15 +129,15 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
     };
   });
 
-  const transactionsFlexStyle = useAnimatedStyle(() => {
+  const depositsFlexStyle = useAnimatedStyle(() => {
     return {
-      flex: transactionsTabFlex.value,
+      flex: depositsTabFlex.value,
     };
   });
 
-  const transactionsColorStyle = useAnimatedStyle(() => {
+  const depositsColorStyle = useAnimatedStyle(() => {
     return {
-      backgroundColor: transactionsTabColor.value,
+      backgroundColor: depositsTabColor.value,
     };
   });
 
@@ -183,19 +183,19 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
       homeTabColor.value = withTiming(COLORS.white, { duration: 500 });
     }
 
-    if (selectedTab == constants.screens.transactions) {
+    if (selectedTab == constants.screens.deposits) {
       flatListRef?.current?.scrollToIndex({
         index: 1,
         animated: false,
       });
 
-      transactionsTabFlex.value = withTiming(4, { duration: 500 });
-      transactionsTabColor.value = withTiming(COLORS.primary, {
+      depositsTabFlex.value = withTiming(4, { duration: 500 });
+      depositsTabColor.value = withTiming(COLORS.primary, {
         duration: 500,
       });
     } else {
-      transactionsTabFlex.value = withTiming(1, { duration: 500 });
-      transactionsTabColor.value = withTiming(COLORS.white, { duration: 500 });
+      depositsTabFlex.value = withTiming(1, { duration: 500 });
+      depositsTabColor.value = withTiming(COLORS.white, { duration: 500 });
     }
 
     if (selectedTab == constants.screens.funding) {
@@ -283,8 +283,8 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
                 }}
               >
                 {item.label == constants.screens.home && <Home />}
-                {item.label == constants.screens.transactions && (
-                  <Transactions />
+                {item.label == constants.screens.deposits && (
+                  <Deposits />
                 )}
                 {item.label == constants.screens.funding && <Funding />}
                 {item.label == constants.screens.profile && <Profile />}
@@ -348,22 +348,22 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
           />
 
           <TabButton
-            label={constants.screens.transactions}
+            label={constants.screens.deposits}
             icon={
               <ChartBarIcon
                 color={
-                  selectedTab == constants.screens.transactions
+                  selectedTab == constants.screens.deposits
                     ? COLORS.white
                     : COLORS.gray
                 }
                 size={24}
               />
             }
-            isFocused={selectedTab == constants.screens.transactions}
-            outerContainerStyle={transactionsFlexStyle}
-            innerContainerStyle={transactionsColorStyle}
+            isFocused={selectedTab == constants.screens.deposits}
+            outerContainerStyle={depositsFlexStyle}
+            innerContainerStyle={depositsColorStyle}
             onPress={() =>
-              dispatch(setSelectedTab(constants.screens.transactions))
+              dispatch(setSelectedTab(constants.screens.deposits))
             }
           />
 

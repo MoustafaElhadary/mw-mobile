@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   createDrawerNavigator,
-  DrawerContentScrollView
+  DrawerContentScrollView,
 } from '@react-navigation/drawer';
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
 import firebase from 'firebase';
@@ -10,17 +10,21 @@ import {
   GestureResponderEvent,
   Image,
   ImageSourcePropType,
+  Linking,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
+import { BookOpenIcon } from 'react-native-heroicons/outline';
 import Animated from 'react-native-reanimated';
 import { useDispatch } from 'react-redux';
+import { ActivityOutlineIcon, LockIcon } from '../components/common/icons';
 import { setRegistered } from '../redux/registrationSlice';
 import MainLayout from '../screens/MainLayout';
 import { COLORS, FONTS, icons, SIZES } from '../utils/constants';
 import Firebase from '../utils/firebase';
 import { AuthenticatedUserContext } from './AuthenticatedUserProvider';
+import Constants from 'expo-constants';
 
 const auth = Firebase.auth();
 
@@ -31,16 +35,18 @@ type Props = {
 
 export type CustomDrawerItemProps = {
   label: string;
-  icon: ImageSourcePropType;
+  image?: ImageSourcePropType;
+  icon?: JSX.Element;
   isFocused?: boolean;
   onPress?: (event: GestureResponderEvent) => void;
 };
 
 const CustomDrawerItem = ({
   label,
-  icon,
+  image,
   isFocused,
   onPress,
+  icon,
 }: CustomDrawerItemProps) => {
   return (
     <TouchableOpacity
@@ -55,15 +61,17 @@ const CustomDrawerItem = ({
       }}
       onPress={onPress}
     >
-      <Image
-        source={icon}
-        style={{
-          width: 20,
-          height: 20,
-          tintColor: COLORS.white,
-        }}
-      />
-
+      {image && (
+        <Image
+          source={image}
+          style={{
+            width: 20,
+            height: 20,
+            tintColor: COLORS.white,
+          }}
+        />
+      )}
+      {icon && icon}
       <Text
         style={{
           marginLeft: 15,
@@ -83,7 +91,6 @@ const CustomDrawerContent = ({ navigation }: Props) => {
   const { user } = useContext(AuthenticatedUserContext);
   const [data, setData] = React.useState(null);
 
-  
   useEffect(() => {
     firebase
       .firestore()
@@ -167,12 +174,51 @@ const CustomDrawerContent = ({ navigation }: Props) => {
           {/* <CustomDrawerItem label="Track Your Order" icon={icons.location} />
 
           <CustomDrawerItem label="Coupons" icon={icons.coupon} /> */}
+          <CustomDrawerItem
+            label="Financial Accounts"
+            icon={<ActivityOutlineIcon width="24" height="24" fill="#fff" />}
+          />
 
-          <CustomDrawerItem label="Settings" icon={icons.setting} />
+          <View
+            style={{
+              height: 1,
+              marginVertical: SIZES.height > 800 ? SIZES.radius : 0,
+              marginLeft: SIZES.radius,
+              backgroundColor: COLORS.lightGray1,
+            }}
+          />
 
-          <CustomDrawerItem label="Invite a Friend" icon={icons.profile} />
+          <CustomDrawerItem
+            label="Privacy Policy"
+            icon={<LockIcon width="24" height="24" fill="#fff" />}
+            onPress={() =>
+              navigation.navigate('CustomWebview', {
+                uri: 'https://mochawallet.webflow.io/',
+                title: 'Privacy Policy',
+              })
+            }
+          />
 
-          <CustomDrawerItem label="Help Center" icon={icons.help} />
+          <CustomDrawerItem
+            label="Terms of use"
+            icon={<BookOpenIcon width="24" height="24" stroke="#fff" />}
+            onPress={() =>
+              navigation.navigate('CustomWebview', {
+                uri: 'https://mochawallet.webflow.io/',
+                title: 'Terms of use',
+              })
+            }
+          />
+
+          <CustomDrawerItem
+            label="Help"
+            image={icons.help}
+            onPress={() =>
+              Linking.openURL(
+                'mailto:support@mochawallet.com?subject=Need help with app&body=Hello, I need help with app'
+              )
+            }
+          />
         </View>
 
         <View
@@ -182,13 +228,21 @@ const CustomDrawerContent = ({ navigation }: Props) => {
         >
           <CustomDrawerItem
             label="Logout"
-            icon={icons.logout}
+            image={icons.logout}
             onPress={async () => {
               await auth.signOut();
               dispatch(setRegistered(false));
               await AsyncStorage.removeItem('@registered');
             }}
           />
+          <Text
+            style={{
+              paddingLeft: SIZES.radius,
+              color: COLORS.white,
+            }}
+          >
+            Version {Constants.manifest.version}
+          </Text>
         </View>
       </View>
     </DrawerContentScrollView>

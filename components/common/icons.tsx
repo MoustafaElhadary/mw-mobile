@@ -17,6 +17,12 @@ export const HomeIcon = (style: IconProps): JSX.Element => <Icon {...style} name
 
 export const ClockIcon = (style: IconProps): JSX.Element => <Icon {...style} name="clock-outline" />;
 
+export const LockIcon = (style: IconProps): JSX.Element => <Icon {...style} name="lock-outline" />;
+
+export const ActivityOutlineIcon = (style: IconProps): JSX.Element => <Icon {...style} name="activity-outline" />;
+
+export const bookOpenOutline = (style: IconProps): JSX.Element => <Icon {...style} name="book-open-outline" />;
+
 export const MoreHorizontalIcon = (style: IconProps): JSX.Element => <Icon {...style} name="more-horizontal-outline" />;
 
 export const MoreVerticalIcon = (style: IconProps): JSX.Element => <Icon {...style} name="more-vertical-outline" />;
