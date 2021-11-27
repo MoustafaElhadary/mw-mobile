@@ -41,7 +41,11 @@ const Funding = () => {
         paddingVertical: 25,
       }}
     >
-      <Card title="Roundups" footer="Manage Roundups" onPress={() => navigation.navigate('ManageRoundups')}>
+      <Card
+        title="Roundups"
+        footer="Manage Roundups"
+        onPress={() => navigation.navigate('ManageRoundups')}
+      >
         <View
           style={{
             flexDirection: 'row',
@@ -78,14 +82,16 @@ const Funding = () => {
             padding: SIZES.padding,
           }}
         >
-        <Text style={{
-           color: '#234236',
-           fontFamily: 'PublicSans-SemiBold',
-           fontSize: 15,
-           lineHeight: 20,
-        }}>
-          Set it and forget it! Automate your deposits to suit your lifestyle
-        </Text>
+          <Text
+            style={{
+              color: '#234236',
+              fontFamily: 'PublicSans-SemiBold',
+              fontSize: 15,
+              lineHeight: 20,
+            }}
+          >
+            Set it and forget it! Automate your deposits to suit your lifestyle
+          </Text>
         </View>
       </Card>
     </View>

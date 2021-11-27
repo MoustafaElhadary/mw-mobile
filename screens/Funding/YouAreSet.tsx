@@ -1,6 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import * as Haptics from 'expo-haptics';
+import React, { useEffect } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import ConfettiCannon from 'react-native-confetti-cannon';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
 import { setSelectedTab } from '../../redux/tabSlice';
@@ -10,6 +12,12 @@ const YouAreSet = () => {
   const insets = useSafeAreaInsets();
   const navigation = useNavigation();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+  }, []);
+
   return (
     <View
       style={{
@@ -20,6 +28,7 @@ const YouAreSet = () => {
       }}
     >
       {/* Title */}
+
       <View
         style={{
           marginTop: '8%',
@@ -31,7 +40,7 @@ const YouAreSet = () => {
         }}
       >
         <Text style={styles.header}>You're all set!</Text>
-        <Text style={styles.subtile}>
+        <Text style={styles.subtitle}>
           Thanks! We’ve received your request. We’ll start transferring your
           deposit 1-2 days from the date you requested.
         </Text>
@@ -50,6 +59,8 @@ const YouAreSet = () => {
           }}
         />
       </View>
+      <ConfettiCannon count={400} origin={{ x: -10, y: 0 }} />
+
       <View
         style={{
           width: '100%',
@@ -99,7 +110,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     lineHeight: 40,
   },
-  subtile: {
+  subtitle: {
     color: '#8C9F97',
     fontFamily: 'PublicSans-SemiBold',
     fontSize: 12,

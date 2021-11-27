@@ -10,17 +10,19 @@ import ForgotPassword from '../screens/Authentication/ForgotPassword';
 import Otp from '../screens/Authentication/Otp';
 import SignIn from '../screens/Authentication/SignIn';
 import SignUp from '../screens/Authentication/SignUp';
-import CustomWebview from '../screens/CustomWebview.tsx';
+import CustomWebview from '../screens/CustomWebview';
 import AutoDeposits from '../screens/Funding/AutoDeposits';
 import ConfirmAutoDeposits from '../screens/Funding/ConfirmAutoDeposits';
 import ManageRoundups from '../screens/Funding/ManageRoundups';
 import YouAreSet from '../screens/Funding/YouAreSet';
 import OnBoarding from '../screens/OnBoarding/OnBoarding';
 import Registration from '../screens/OnBoarding/Registration';
+import FinancialAccounts from '../screens/Settings/FinancialAccounts';
+import Profile from '../screens/Settings/Profile';
 import Firebase from '../utils/firebase';
 import {
   AuthenticatedUserContext,
-  AuthenticatedUserProvider
+  AuthenticatedUserProvider,
 } from './AuthenticatedUserProvider';
 import CustomDrawer from './CustomDrawer';
 
@@ -98,14 +100,16 @@ function HomeStack() {
   return (
     <Stack.Navigator headerMode="none">
       <Stack.Screen name="Home" component={CustomDrawer} />
-      <Stack.Screen
-        name="ManageRoundups"
-        component={ManageRoundups}
-      />
+      <Stack.Screen name="ManageRoundups" component={ManageRoundups} />
       <Stack.Screen name="AutoDeposits" component={AutoDeposits} />
-      <Stack.Screen name="ConfirmAutoDeposits" component={ConfirmAutoDeposits} />
+      <Stack.Screen
+        name="ConfirmAutoDeposits"
+        component={ConfirmAutoDeposits}
+      />
       <Stack.Screen name="YouAreSet" component={YouAreSet} />
       <Stack.Screen name="CustomWebview" component={CustomWebview} />
+      <Stack.Screen name="FinancialAccounts" component={FinancialAccounts} />
+      <Stack.Screen name="Profile" component={Profile} />
     </Stack.Navigator>
   );
 }

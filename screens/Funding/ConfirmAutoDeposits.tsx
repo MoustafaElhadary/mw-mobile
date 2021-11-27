@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import {
   RadioButtonOffIcon,
-  RadioButtonOnIcon,
+  RadioButtonOnIcon
 } from '../../components/common/icons';
 import Layout from '../../components/common/Layout';
 import { utils } from '../../utils';
@@ -37,8 +37,8 @@ const ConfirmAutoDeposits = () => {
           width: '100%',
         }}
       >
-        <Card title="Amount" tileTotal={`$${utils.formatMoney(amount)}`} />
-        <Card title="Frequency" tileTotal={frequency} />
+        <Card title="Amount" titleTotal={`$${utils.formatMoney(amount)}`} />
+        <Card title="Frequency" titleTotal={frequency} />
         <View
           style={{
             backgroundColor: '#F8F8F7',
@@ -62,14 +62,14 @@ const ConfirmAutoDeposits = () => {
         </View>
         <Card
           title="World bank"
-          tileTotal="****1234"
+          titleTotal="****1234"
           selected={'World bank' === selected}
           onPress={() => setSelected('World bank')}
           showRadio
         />
         <Card
           title="PNC bank"
-          tileTotal="****3234"
+          titleTotal="****3234"
           selected={'PNC bank' === selected}
           onPress={() => setSelected('PNC bank')}
           showRadio
@@ -150,14 +150,14 @@ const ConfirmAutoDeposits = () => {
 
 export type CardProps = {
   title: string;
-  tileTotal: string;
+  titleTotal: string;
   selected?: boolean;
   showRadio?: boolean;
   onPress?: () => void;
 };
 const Card = ({
   title,
-  tileTotal,
+  titleTotal,
   onPress,
   selected,
   showRadio,
@@ -185,7 +185,7 @@ const Card = ({
       >
         <Text style={{ ...styles.subtitle, flex: 1 }}>{title}</Text>
 
-        <Text style={styles.title}>{tileTotal}</Text>
+        <Text style={styles.title}>{titleTotal}</Text>
         {showRadio && (
           <View style={{ marginLeft: 10 }}>
             {selected ? (

@@ -6,18 +6,17 @@ import {
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View,
+  View
 } from 'react-native';
 import {
   ChartBarIcon,
   CreditCardIcon,
-  HomeIcon,
-  UserIcon,
+  HomeIcon
 } from 'react-native-heroicons/outline';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
-  withTiming,
+  withTiming
 } from 'react-native-reanimated';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from '../components/Header';
@@ -26,10 +25,9 @@ import { RootState } from '../redux/store';
 import { setSelectedTab } from '../redux/tabSlice';
 import { COLORS, constants, FONTS, icons, SIZES } from '../utils/constants';
 import Firebase from '../utils/firebase';
-import Home from './Home/Home';
-import Funding from './Funding/Funding';
-import Profile from './Profile/Profile';
 import Deposits from './Deposits/Deposits';
+import Funding from './Funding/Funding';
+import Home from './Home/Home';
 
 const auth = Firebase.auth();
 
@@ -283,11 +281,9 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
                 }}
               >
                 {item.label == constants.screens.home && <Home />}
-                {item.label == constants.screens.deposits && (
-                  <Deposits />
-                )}
+                {item.label == constants.screens.deposits && <Deposits />}
                 {item.label == constants.screens.funding && <Funding />}
-                {item.label == constants.screens.profile && <Profile />}
+                {/* {item.label == constants.screens.profile && <Profile />} */}
               </View>
             );
           }}
@@ -362,9 +358,7 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
             isFocused={selectedTab == constants.screens.deposits}
             outerContainerStyle={depositsFlexStyle}
             innerContainerStyle={depositsColorStyle}
-            onPress={() =>
-              dispatch(setSelectedTab(constants.screens.deposits))
-            }
+            onPress={() => dispatch(setSelectedTab(constants.screens.deposits))}
           />
 
           <TabButton

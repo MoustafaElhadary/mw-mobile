@@ -1,9 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   createDrawerNavigator,
-  DrawerContentScrollView,
+  DrawerContentScrollView
 } from '@react-navigation/drawer';
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
+import Constants from 'expo-constants';
 import firebase from 'firebase';
 import React, { useContext, useEffect } from 'react';
 import {
@@ -13,18 +14,19 @@ import {
   Linking,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import { BookOpenIcon } from 'react-native-heroicons/outline';
 import Animated from 'react-native-reanimated';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ActivityOutlineIcon, LockIcon } from '../components/common/icons';
 import { setRegistered } from '../redux/registrationSlice';
+import { RootState } from '../redux/store';
+import { setInitialUser } from '../redux/userSlice';
 import MainLayout from '../screens/MainLayout';
 import { COLORS, FONTS, icons, SIZES } from '../utils/constants';
 import Firebase from '../utils/firebase';
 import { AuthenticatedUserContext } from './AuthenticatedUserProvider';
-import Constants from 'expo-constants';
 
 const auth = Firebase.auth();
 
@@ -88,19 +90,18 @@ const CustomDrawerItem = ({
 const CustomDrawerContent = ({ navigation }: Props) => {
   const dispatch = useDispatch();
 
-  const { user } = useContext(AuthenticatedUserContext);
-  const [data, setData] = React.useState(null);
-
+  const { user: authUser } = useContext(AuthenticatedUserContext);
+  const user = useSelector((state: RootState) => state.user);
   useEffect(() => {
     firebase
       .firestore()
       .collection('users')
-      .doc(user.uid)
+      .doc(authUser.uid)
       .get()
       .then((doc) => {
         if (doc.exists) {
-          console.log({ doc: doc.data() });
-          setData(doc.data());
+          // console.log({ doc: doc.data() });
+          dispatch(setInitialUser(doc.data()));
         }
       });
   }, []);
@@ -148,7 +149,7 @@ const CustomDrawerContent = ({ navigation }: Props) => {
             marginTop: SIZES.radius,
             alignItems: 'center',
           }}
-          onPress={() => console.log('Profile')}
+          onPress={() => navigation.navigate('Profile')}
         >
           <View
             style={{
@@ -156,7 +157,7 @@ const CustomDrawerContent = ({ navigation }: Props) => {
             }}
           >
             <Text style={{ color: COLORS.white, ...FONTS.h3 }}>
-              {data?.firstName} {data?.lastName}
+              {user.profile.firstName} {user.profile.lastName}
             </Text>
             <Text style={{ color: COLORS.white, ...FONTS.body4 }}>
               View your profile
@@ -177,6 +178,7 @@ const CustomDrawerContent = ({ navigation }: Props) => {
           <CustomDrawerItem
             label="Financial Accounts"
             icon={<ActivityOutlineIcon width="24" height="24" fill="#fff" />}
+            onPress={() => navigation.navigate('FinancialAccounts')}
           />
 
           <View

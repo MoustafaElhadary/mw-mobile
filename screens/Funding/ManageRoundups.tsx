@@ -14,9 +14,7 @@ const ManageRoundups = () => {
   console.log({ upcoming });
 
   return (
-    <Layout
-    title="Manage Roundups"
-    >
+    <Layout title="Manage Roundups">
       <FlatList
         data={[]}
         keyExtractor={(item) => `${item.id}`}
@@ -25,7 +23,7 @@ const ManageRoundups = () => {
           <View>
             <Card
               title="Upcoming deposit total"
-              tileTotal={`$${utils.formatMoney(
+              titleTotal={`$${utils.formatMoney(
                 Math.abs(
                   upcoming?.reduce(
                     (acc, curr) => acc + curr.transactionRoundupAmount,
@@ -37,7 +35,7 @@ const ManageRoundups = () => {
             />
             <Card
               title="All time total"
-              tileTotal={`$${utils.formatMoney(
+              titleTotal={`$${utils.formatMoney(
                 Math.abs(
                   upcoming?.reduce(
                     (acc, curr) => acc + curr.transactionRoundupAmount,
@@ -91,30 +89,31 @@ const ManageRoundups = () => {
   );
 };
 
-const RoundupList = ({list}) => {
+const RoundupList = ({ list }) => {
   return (
     <View>
-      {list && list.map((roundup) => (
-        <Card
-          key={roundup.id}
-          title={roundup.transaction.name}
-          tileTotal={`$${utils.formatMoney(
-            Math.abs(roundup.transactionRoundupAmount),
-            2
-          )}`}
-          subtitle={`$${utils.formatMoney(
-            Math.abs(roundup.transactionAmount),
-            2
-          )} → $${utils.formatMoney(
-            Math.abs(roundup.transactionAmount) +
+      {list &&
+        list.map((roundup) => (
+          <Card
+            key={roundup.id}
+            title={roundup.transaction.name}
+            titleTotal={`$${utils.formatMoney(
               Math.abs(roundup.transactionRoundupAmount),
-            2
-          )}`}
-          subtitleTotal={moment(roundup.transaction.date).format(
-            'MMM Do, YYYY'
-          )}
-        />
-      ))}
+              2
+            )}`}
+            subtitle={`$${utils.formatMoney(
+              Math.abs(roundup.transactionAmount),
+              2
+            )} → $${utils.formatMoney(
+              Math.abs(roundup.transactionAmount) +
+                Math.abs(roundup.transactionRoundupAmount),
+              2
+            )}`}
+            subtitleTotal={moment(roundup.transaction.date).format(
+              'MMM Do, YYYY'
+            )}
+          />
+        ))}
     </View>
   );
 };
@@ -123,12 +122,12 @@ export default ManageRoundups;
 
 export type CardProps = {
   title: string;
-  tileTotal: string;
+  titleTotal: string;
   subtitle?: string;
   subtitleTotal?: string;
 };
 
-const Card = ({ title, tileTotal, subtitle, subtitleTotal }: CardProps) => {
+const Card = ({ title, titleTotal, subtitle, subtitleTotal }: CardProps) => {
   return (
     <View
       style={{
@@ -146,7 +145,7 @@ const Card = ({ title, tileTotal, subtitle, subtitleTotal }: CardProps) => {
       >
         <Text style={{ ...styles.title, flex: 1 }}>{title}</Text>
 
-        <Text style={styles.subtitle}>{tileTotal}</Text>
+        <Text style={styles.subtitle}>{titleTotal}</Text>
       </View>
       {subtitle && (
         <View
@@ -155,9 +154,7 @@ const Card = ({ title, tileTotal, subtitle, subtitleTotal }: CardProps) => {
             marginTop: 10,
           }}
         >
-          <Text style={{ ...styles.subtitle, flex: 1 }}>
-            {subtitle}
-          </Text>
+          <Text style={{ ...styles.subtitle, flex: 1 }}>{subtitle}</Text>
           {subtitleTotal && (
             <Text style={styles.subtitle}>{subtitleTotal}</Text>
           )}
