@@ -1,12 +1,15 @@
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import Constants from 'expo-constants';
+import moment from 'moment';
 import React, { useContext, useEffect } from 'react';
 import { StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AuthenticatedUserContext } from '../../navigation/AuthenticatedUserProvider';
 import { setRoundups } from '../../redux/roundupsSlice';
+import { RootState } from '../../redux/store';
+import { utils } from '../../utils';
 import { COLORS, SIZES } from '../../utils/constants';
 
 const Funding = () => {
@@ -14,7 +17,9 @@ const Funding = () => {
   const dispatch = useDispatch();
 
   const { user } = useContext(AuthenticatedUserContext);
-
+  const { nextPaymentDate, upcomingDepositTotal } = useSelector(
+    (state: RootState) => state.roundups.roundups
+  );
   const fetchRoundups = async () => {
     const mwAccessToken = await user.getIdToken();
     axios
@@ -54,7 +59,7 @@ const Funding = () => {
             marginBottom: 10,
           }}
         >
-          <Text style={{ ...styles.title, flex: 1 }}>This month </Text>
+          <Text style={{ ...styles.title, flex: 1 }}>This week </Text>
 
           <Text style={styles.title}>Next deposit</Text>
         </View>
@@ -65,9 +70,13 @@ const Funding = () => {
             marginBottom: 20,
           }}
         >
-          <Text style={{ ...styles.subtitle, flex: 1 }}>$25.00 </Text>
+          <Text style={{ ...styles.subtitle, flex: 1 }}>
+            {`$${utils.formatMoney(upcomingDepositTotal, 2)}`}
+          </Text>
 
-          <Text style={styles.subtitle}>January 31</Text>
+          <Text style={styles.subtitle}>
+            {moment(nextPaymentDate).format('MMMM Do, YYYY')}
+          </Text>
         </View>
       </Card>
       <Card

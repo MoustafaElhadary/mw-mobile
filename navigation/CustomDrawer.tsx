@@ -4,8 +4,8 @@ import {
   DrawerContentScrollView
 } from '@react-navigation/drawer';
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
+import axios from 'axios';
 import Constants from 'expo-constants';
-import firebase from 'firebase';
 import React, { useContext, useEffect } from 'react';
 import {
   GestureResponderEvent,
@@ -92,18 +92,20 @@ const CustomDrawerContent = ({ navigation }: Props) => {
 
   const { user: authUser } = useContext(AuthenticatedUserContext);
   const user = useSelector((state: RootState) => state.user);
-  useEffect(() => {
-    firebase
-      .firestore()
-      .collection('users')
-      .doc(authUser.uid)
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          // console.log({ doc: doc.data() });
-          dispatch(setInitialUser(doc.data()));
-        }
+
+  const fetchMyAccount = async () => {
+    const mwAccessToken = await authUser.getIdToken();
+    axios
+      .post(`${Constants.manifest.extra.apiUrl}/me`, {
+        mwAccessToken,
+      })
+      .then(async (response) => {
+        dispatch(setInitialUser(response.data));
       });
+  };
+
+  useEffect(() => {
+    fetchMyAccount();
   }, []);
 
   return (
@@ -157,7 +159,7 @@ const CustomDrawerContent = ({ navigation }: Props) => {
             }}
           >
             <Text style={{ color: COLORS.white, ...FONTS.h3 }}>
-              {user.profile.firstName} {user.profile.lastName}
+              {user.profile?.firstName} {user.profile?.lastName}
             </Text>
             <Text style={{ color: COLORS.white, ...FONTS.body4 }}>
               View your profile

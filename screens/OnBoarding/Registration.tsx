@@ -11,7 +11,7 @@ import { Control, Controller, useForm } from 'react-hook-form';
 import { StyleSheet, TextInput, TextInputProps, View } from 'react-native';
 import {
   GooglePlacesAutocomplete,
-  GooglePlacesAutocompleteRef
+  GooglePlacesAutocompleteRef,
 } from 'react-native-google-places-autocomplete';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -27,6 +27,7 @@ import { AuthenticatedUserContext } from '../../navigation/AuthenticatedUserProv
 import { setRegistered, setStep } from '../../redux/registrationSlice';
 import { RootState } from '../../redux/store';
 import { COLORS, commonStyles, FONTS } from '../../utils/constants/theme';
+import PlaidScreen from '../Settings/PlaidScreen';
 interface RegistrationProps {
   navigation?: StackNavigationProp<any>;
 }
@@ -448,9 +449,7 @@ const GooglePlacesInput = () => {
           }
           setAddress(doc.data().address || '');
         }
-      })
-
-
+      });
   }, []);
   return (
     <>
@@ -598,75 +597,6 @@ const ConfirmDetails = () => {
   );
 };
 
-const PlaidScreen = ({
-  title,
-  type,
-  lastStep,
-}: {
-  title: string;
-  type: 'funding' | 'loan';
-  lastStep?: boolean;
-}) => {
-  const [data, setData] = React.useState(null);
-  const { user } = useContext(AuthenticatedUserContext);
-  const step = useSelector((state: RootState) => state.registration.step);
-  const dispatch = useDispatch();
-
-  const fetchData = async () => {
-    const { data } = await axios.post(
-      `${Constants.manifest.extra.apiUrl}/createLinkToken`,
-      {
-        fundingType: type,
-      }
-    );
-    setData(data);
-  };
-  useEffect(() => {
-    fetchData();
-  }, [type]);
-
-  const storeData = async (value) => {
-    try {
-      await AsyncStorage.setItem('@registered', value);
-      dispatch(setRegistered(true));
-    } catch (e) {
-      console.log({ e });
-    }
-  };
-
-  console.log({ lastStep, data, type });
-
-  return (
-    <>
-      <Text style={commonStyles.titleText}>{title}</Text>
-
-      {data && (
-        <PlaidLink
-          linkToken={data?.linkToken}
-          onEvent={(event) => {}}
-          onExit={(exit) => console.log(exit)}
-          onSuccess={async (success) => {
-            const mwAccessToken = await user.getIdToken();
-            axios
-              .post(`${Constants.manifest.extra.apiUrl}/tokenExchange`, {
-                publicToken: success.publicToken,
-                mwAccessToken,
-                fundingType: type,
-                lastStep,
-              })
-              .then(async (response) => {
-                if (lastStep) {
-                  await storeData('true');
-                } else {
-                  dispatch(setStep(step + 1));
-                }
-              });
-          }}
-        />
-      )}
-    </>
-  );
-};
 
 const styles = StyleSheet.create({
   container: {

@@ -1,5 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { AccountBase, Institution, LiabilitiesObject } from 'plaid';
 
+export type Account = AccountBase & {
+  institution: Institution;
+  item_id: string;
+};
 export const userSlice = createSlice({
   name: 'user',
   initialState: {
@@ -27,14 +32,23 @@ export const userSlice = createSlice({
         upcoming: [],
       },
     },
+    accounts: [] as Account[],
+    liabilities: {} as LiabilitiesObject,
   },
   reducers: {
     setInitialUser: (state, { payload }) => {
-      state.profile = payload;
+      console.log({payload})
+      state.profile = payload.profile;
+      state.accounts = payload.accounts;
+      state.liabilities = payload.liabilities;
+      
+    },
+    setAccounts: (state, { payload }) => {
+      state.accounts = payload;
     },
   },
 });
 
-export const { setInitialUser } = userSlice.actions;
+export const { setInitialUser, setAccounts } = userSlice.actions;
 
 export default userSlice.reducer;

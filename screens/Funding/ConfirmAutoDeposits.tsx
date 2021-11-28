@@ -1,16 +1,19 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import {
   RadioButtonOffIcon,
   RadioButtonOnIcon
 } from '../../components/common/icons';
 import Layout from '../../components/common/Layout';
+import { RootState } from '../../redux/store';
+import { Account } from '../../redux/userSlice';
 import { utils } from '../../utils';
 import { COLORS } from '../../utils/constants';
 
 const ConfirmAutoDeposits = () => {
-  const [selected, setSelected] = React.useState('');
+  const [selected, setSelected] = React.useState<Account>(null);
 
   const navigation = useNavigation();
   const route = useRoute();
@@ -18,7 +21,8 @@ const ConfirmAutoDeposits = () => {
     amount: number;
     frequency: string;
   };
-  console.log({ ro: route.params });
+  const { accounts } = useSelector((state: RootState) => state.user);
+
   return (
     <Layout
       title="Auto Deposit"
@@ -37,8 +41,8 @@ const ConfirmAutoDeposits = () => {
           width: '100%',
         }}
       >
-        <Card title="Amount" titleTotal={`$${utils.formatMoney(amount)}`} />
-        <Card title="Frequency" titleTotal={frequency} />
+        <Card title="Amount" rightText={`$${utils.formatMoney(amount)}`} />
+        <Card title="Frequency" rightText={frequency} />
         <View
           style={{
             backgroundColor: '#F8F8F7',
@@ -60,20 +64,21 @@ const ConfirmAutoDeposits = () => {
             From this account
           </Text>
         </View>
-        <Card
-          title="World bank"
-          titleTotal="****1234"
-          selected={'World bank' === selected}
-          onPress={() => setSelected('World bank')}
-          showRadio
-        />
-        <Card
-          title="PNC bank"
-          titleTotal="****3234"
-          selected={'PNC bank' === selected}
-          onPress={() => setSelected('PNC bank')}
-          showRadio
-        />
+
+        {accounts
+          .filter((account) => account.type === 'depository')
+          .map((account) => {
+            const name = `${account.institution.name} ${account.name}`;
+            return (
+              <Card
+                title={name}
+                rightText={`**** ${account.mask}`}
+                selected={account === selected}
+                onPress={() => setSelected(account)}
+                showRadio
+              />
+            );
+          })}
         <View
           style={{
             paddingHorizontal: 25,
@@ -115,7 +120,7 @@ const ConfirmAutoDeposits = () => {
       >
         <TouchableOpacity
           style={{
-            backgroundColor: selected === '' ? '#8C9F97' : '#068466',
+            backgroundColor: selected === null ? '#8C9F97' : '#068466',
             borderRadius: 30,
             paddingHorizontal: 20,
             paddingVertical: 10,
@@ -128,7 +133,7 @@ const ConfirmAutoDeposits = () => {
           onPress={() => {
             navigation.navigate('YouAreSet');
           }}
-          disabled={selected === ''}
+          disabled={selected === null}
         >
           <Text
             style={{
@@ -150,14 +155,14 @@ const ConfirmAutoDeposits = () => {
 
 export type CardProps = {
   title: string;
-  titleTotal: string;
+  rightText: string;
   selected?: boolean;
   showRadio?: boolean;
   onPress?: () => void;
 };
 const Card = ({
   title,
-  titleTotal,
+  rightText,
   onPress,
   selected,
   showRadio,
@@ -185,7 +190,7 @@ const Card = ({
       >
         <Text style={{ ...styles.subtitle, flex: 1 }}>{title}</Text>
 
-        <Text style={styles.title}>{titleTotal}</Text>
+        <Text style={styles.title}>{rightText}</Text>
         {showRadio && (
           <View style={{ marginLeft: 10 }}>
             {selected ? (

@@ -1,21 +1,21 @@
 const onboarding_screens = [
   {
     id: 1,
-    bannerImage: require('../../assets/images/p1.png'),
+    bannerImage: require('../../assets/images/mouth.png'),
     title: 'Get out of debt fast.',
     description:
       'From roundups to refinancing, We streamline every part of the debt paying process—so you can focus on your life, not your debt.',
   },
   {
     id: 2,
-    bannerImage: require('../../assets/images/p3.png'),
-    title: 'Payoff your debt',
+    bannerImage: require('../../assets/images/mouth.png'),
+    title: 'Focus on your life',
     description:
       'We take the change from your everyday purchases and use it to pay off your loans.',
   },
   {
     id: 3,
-    bannerImage: require('../../assets/images/p2.png'),
+    bannerImage: require('../../assets/images/mouth.png'),
     title: 'Unlock the power of people (coming soon)',
     description:
       'Receive matching contributions from friends, family or your employer.',

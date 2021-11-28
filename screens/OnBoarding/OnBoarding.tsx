@@ -2,8 +2,11 @@ import React from 'react';
 import { Animated, FlatList, Image, Text, View } from 'react-native';
 import TextButton from '../../components/TextButton';
 import { COLORS, constants, FONTS, SIZES } from '../../utils/constants';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const OnBoarding = ({ navigation }) => {
+  const insets = useSafeAreaInsets();
+
   const scrollX = React.useRef(new Animated.Value(0)).current;
   const flatListRef = React.useRef<
     FlatList<{
@@ -70,16 +73,40 @@ const OnBoarding = ({ navigation }) => {
       <View
         style={{
           alignItems: 'center',
+          paddingLeft: 20,
+
         }}
       >
         <Text
           style={{
-            ...FONTS.h1,
-            fontSize: 45,
-            paddingTop: 90,
+            color: '#234236',
+            fontFamily: 'Ageo',
+            fontSize: 30,
+            lineHeight: 40,
+            fontStyle: 'normal',
+            fontWeight: 'bold',
+            textAlign: 'left',
+            width: '100%',
+            marginLeft: 21,
+            paddingTop: 10,
           }}
         >
           MochaWallet
+        </Text>
+        <Text
+          style={{
+            color: '#398E71',
+            fontFamily: 'Ageo',
+            fontSize: 24,
+            lineHeight: 30,
+            fontStyle: 'normal',
+            fontWeight: 'bold',
+            textAlign: 'left',
+            width: '100%',
+            marginLeft: 21,
+          }}
+        >
+          Get out of debt fast.
         </Text>
       </View>
     );
@@ -166,17 +193,44 @@ const OnBoarding = ({ navigation }) => {
       style={{
         flex: 1,
         backgroundColor: COLORS.white,
+        // paddingBottom: insets.bottom,
+        paddingTop: insets.top,
       }}
     >
       {renderHeaderLogo()}
-
+      {/* Header */}
+      <View
+        style={{
+          flex: 3,
+        }}
+      >
+        <View
+          style={{
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            height: '100%',
+            width: '100%',
+          }}
+        >
+          <Image
+            source={require('../../assets/images/mouth.png')}
+            resizeMode="contain"
+            style={{
+              width: SIZES.width,
+              height: SIZES.width,
+              marginBottom: -SIZES.padding,
+            }}
+          />
+        </View>
+      </View>
       <Animated.FlatList
         ref={flatListRef}
         horizontal
         pagingEnabled
         data={constants.onboarding_screens}
         scrollEventThrottle={16}
-        snapToAlignment="center"
+        snapToAlignment="start"
         showsHorizontalScrollIndicator={false}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { x: scrollX } } }],
@@ -191,40 +245,13 @@ const OnBoarding = ({ navigation }) => {
                 width: SIZES.width,
               }}
             >
-              {/* Header */}
-              <View
-                style={{
-                  flex: 3,
-                }}
-              >
-                <View
-                  style={{
-                    flex: 1,
-                    alignItems: 'center',
-                    justifyContent: 'flex-end',
-                    height: index == 1 ? '92%' : '100%',
-                    width: '100%',
-                  }}
-                >
-                  <Image
-                    source={item.bannerImage}
-                    resizeMode="contain"
-                    style={{
-                      width: SIZES.width * 0.8,
-                      height: SIZES.width * 0.8,
-                      marginBottom: -SIZES.padding,
-                    }}
-                  />
-                </View>
-              </View>
-
               {/* Detail */}
               <View
                 style={{
                   flex: 1,
                   marginTop: 30,
                   alignItems: 'center',
-                  justifyContent: 'center',
+                  justifyContent: 'flex-start',
                   paddingHorizontal: SIZES.radius,
                 }}
               >

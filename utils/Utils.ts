@@ -79,6 +79,13 @@ const getNextMonday = () => {
   return nextMonday.format('MMMM Do, YYYY').toString();
 };
 
+const groupBy = (xs, key) =>{
+  return xs.reduce(function (rv, x) {
+    (rv[x[key]] = rv[x[key]] || []).push(x);
+    return rv;
+  }, {});
+}
+
 
 const utils = {
   isValidEmail,
@@ -88,7 +95,8 @@ const utils = {
   onlyUnique,
   formatter,
   formatMoney,
-  getNextMonday
+  getNextMonday,
+  groupBy
 };
 
 export default utils;

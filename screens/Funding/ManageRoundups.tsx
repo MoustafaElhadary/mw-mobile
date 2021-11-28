@@ -8,9 +8,15 @@ import { utils } from '../../utils';
 import { COLORS } from '../../utils/constants';
 
 const ManageRoundups = () => {
-  const roundups = useSelector((state: RootState) => state.roundups.roundups);
-  const upcoming = roundups.upcoming;
-  const previous = roundups.previous;
+  const {
+    upcoming,
+    previous,
+    nextPaymentDate,
+    upcomingDepositTotal,
+    allTimeTotal,
+    earliestUpcomingPaymentDate,
+  } = useSelector((state: RootState) => state.roundups.roundups);
+
   console.log({ upcoming });
 
   return (
@@ -23,31 +29,11 @@ const ManageRoundups = () => {
           <View>
             <Card
               title="Upcoming deposit total"
-              titleTotal={`$${utils.formatMoney(
-                Math.abs(
-                  upcoming?.reduce(
-                    (acc, curr) => acc + curr.transactionRoundupAmount,
-                    0
-                  )
-                ),
-                2
-              )}`}
+              titleTotal={`$${utils.formatMoney(upcomingDepositTotal, 2)}`}
             />
             <Card
               title="All time total"
-              titleTotal={`$${utils.formatMoney(
-                Math.abs(
-                  upcoming?.reduce(
-                    (acc, curr) => acc + curr.transactionRoundupAmount,
-                    0
-                  ) +
-                    previous?.reduce(
-                      (acc, curr) => acc + curr.transactionRoundupAmount,
-                      0
-                    )
-                ),
-                2
-              )}`}
+              titleTotal={`$${utils.formatMoney(allTimeTotal, 2)}`}
             />
             <View
               style={{
@@ -57,10 +43,8 @@ const ManageRoundups = () => {
               }}
             >
               <Text style={{ textAlign: 'left' }}>
-                {moment(upcoming?.slice(-1)[0].transaction.date).format(
-                  'MMMM Do, YYYY'
-                )}{' '}
-                - {utils.getNextMonday()}
+                {moment(earliestUpcomingPaymentDate).format('MMMM Do, YYYY')} -{' '}
+                {moment(nextPaymentDate).format('MMMM Do, YYYY')}
               </Text>
             </View>
             {upcoming && upcoming?.length > 0 && (
@@ -95,7 +79,7 @@ const RoundupList = ({ list }) => {
       {list &&
         list.map((roundup) => (
           <Card
-            key={roundup.id}
+            key={roundup.transaction.transaction_id}
             title={roundup.transaction.name}
             titleTotal={`$${utils.formatMoney(
               Math.abs(roundup.transactionRoundupAmount),

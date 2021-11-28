@@ -1,10 +1,28 @@
+import _ from 'lodash';
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import { DeleteIcon, EditIcon } from '../../components/common/icons';
 import Layout from '../../components/common/Layout';
+import { RootState } from '../../redux/store';
+import { Account } from '../../redux/userSlice';
 import { COLORS } from '../../utils/constants';
+import { Institution } from 'plaid';
 
 const FinancialAccounts = () => {
+  const { accounts } = useSelector((state: RootState) => state.user);
+
+  const fundingAccounts = _.groupBy(
+    accounts.filter((account) => account.type === 'depository'),
+    'item_id'
+  );
+  const loanAccounts = _.groupBy(
+    accounts.filter((account) => account.type === 'loan'),
+    'item_id'
+  );
+
+  console.log({ fundingAccounts, loanAccounts });
+
   return (
     <Layout
       title="Financial Accounts"
@@ -42,120 +60,26 @@ const FinancialAccounts = () => {
       >
         Funding Sources
       </Text>
+
       <View
         style={{
-          paddingHorizontal: 25,
-          paddingVertical: 14,
-          borderBottomColor: COLORS.lightGray1,
-          borderBottomWidth: 0.3,
-          borderTopColor: COLORS.lightGray1,
-          borderTopWidth: 0.3,
-          backgroundColor: 'white',
           width: '100%',
-          flexDirection: 'column',
         }}
       >
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginBottom: 24,
-          }}
-        >
-          <Text>Chase Logo</Text>
-          <DeleteIcon width="24" height="24" fill="#8C9F97" />
-        </View>
-        <View
-          style={{
-            backgroundColor: '#FBFBFB',
-            borderRadius: 10,
-            borderColor: '#F0EEEE',
-            borderWidth: 1,
-            flexDirection: 'column',
-          }}
-        >
-          <View
-            style={{
-              width: '100%',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              padding: 10,
-            }}
-          >
-            <View
-              style={{
-                flexDirection: 'column',
-              }}
-            >
-              <Text
-                style={{
-                  color: '#234236',
-                  fontFamily: 'PublicSans-SemiBold',
-                  fontSize: 13,
-                  lineHeight: 24,
-                }}
-              >
-                Chase sapphire reserve
-              </Text>
-              <Text
-                style={{
-                  color: '#8C9F97',
-                  fontFamily: 'PublicSans-SemiBold',
-                  fontSize: 12,
-                  lineHeight: 16,
-                }}
-              >
-                Credit | ***1234
-              </Text>
-            </View>
-            <TouchableOpacity onPress={() => {}}>
-              <EditIcon width="24" height="24" fill="#8C9F97" />
-            </TouchableOpacity>
-          </View>
-          <View
-            style={{
-              width: '100%',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              marginTop: 10,
-              borderTopColor: '#F0EEEE',
-              borderTopWidth: 1,
-              padding: 10,
-              marginBottom: 10,
-            }}
-          >
-            <View
-              style={{
-                flexDirection: 'column',
-              }}
-            >
-              <Text
-                style={{
-                  color: '#234236',
-                  fontFamily: 'PublicSans-SemiBold',
-                  fontSize: 13,
-                  lineHeight: 24,
-                }}
-              >
-                Chase spend account
-              </Text>
-              <Text
-                style={{
-                  color: '#8C9F97',
-                  fontFamily: 'PublicSans-SemiBold',
-                  fontSize: 12,
-                  lineHeight: 16,
-                }}
-              >
-                Checking | ***1234
-              </Text>
-            </View>
-            <TouchableOpacity onPress={() => {}}>
-              <EditIcon width="24" height="24" fill="#8C9F97" />
-            </TouchableOpacity>
-          </View>
-        </View>
+        {Object.keys(fundingAccounts).map((key) => {
+          const accounts = fundingAccounts[key];
+          const institution = accounts[0].institution;
+          return (
+            <AccountCard
+              key={JSON.stringify(accounts)}
+              institution={institution}
+              accounts={accounts}
+            />
+          );
+        })}
       </View>
+
+      {/* +Add a funding source */}
       <View
         style={{
           marginTop: 20,
@@ -207,76 +131,22 @@ const FinancialAccounts = () => {
       </Text>
       <View
         style={{
-          paddingHorizontal: 25,
-          paddingVertical: 14,
-          borderBottomColor: COLORS.lightGray1,
-          borderBottomWidth: 0.3,
-          borderTopColor: COLORS.lightGray1,
-          borderTopWidth: 0.3,
-          backgroundColor: 'white',
           width: '100%',
-          flexDirection: 'column',
         }}
       >
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginBottom: 24,
-          }}
-        >
-          <Text>Fedloan Logo</Text>
-          <DeleteIcon width="24" height="24" fill="#8C9F97" />
-        </View>
-        <View
-          style={{
-            backgroundColor: '#FBFBFB',
-            borderRadius: 10,
-            borderColor: '#F0EEEE',
-            borderWidth: 1,
-            flexDirection: 'column',
-          }}
-        >
-          <View
-            style={{
-              width: '100%',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              padding: 10,
-            }}
-          >
-            <View
-              style={{
-                flexDirection: 'column',
-              }}
-            >
-              <Text
-                style={{
-                  color: '#234236',
-                  fontFamily: 'PublicSans-SemiBold',
-                  fontSize: 13,
-                  lineHeight: 24,
-                }}
-              >
-                Student loan
-              </Text>
-              <Text
-                style={{
-                  color: '#8C9F97',
-                  fontFamily: 'PublicSans-SemiBold',
-                  fontSize: 12,
-                  lineHeight: 16,
-                }}
-              >
-                Loan | ***1234
-              </Text>
-            </View>
-            <TouchableOpacity onPress={() => {}}>
-              <EditIcon width="24" height="24" fill="#8C9F97" />
-            </TouchableOpacity>
-          </View>
-        </View>
+        {Object.keys(loanAccounts).map((key) => {
+          const accounts = loanAccounts[key];
+          const institution = accounts[0].institution;
+          return (
+            <AccountCard
+              key={JSON.stringify(accounts)}
+              institution={institution}
+              accounts={accounts}
+            />
+          );
+        })}
       </View>
+
       <View
         style={{
           marginTop: 20,
@@ -313,6 +183,118 @@ const FinancialAccounts = () => {
         </TouchableOpacity>
       </View>
     </Layout>
+  );
+};
+
+const AccountCard = ({
+  accounts,
+  institution,
+}: {
+  accounts: Account[];
+  institution: Institution;
+}) => {
+  return (
+    <View
+      style={{
+        paddingHorizontal: 25,
+        paddingVertical: 14,
+        borderBottomColor: COLORS.lightGray1,
+        borderBottomWidth: 0.3,
+        borderTopColor: COLORS.lightGray1,
+        borderTopWidth: 0.3,
+        backgroundColor: 'white',
+        width: '100%',
+        flexDirection: 'column',
+        marginTop: 10,
+      }}
+    >
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          marginBottom: 24,
+        }}
+      >
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+          }}
+        >
+          <Image
+            source={{
+              uri: `data:image/jpeg;base64,${institution.logo}`,
+            }}
+            style={{
+              width: 24,
+              height: 24,
+              resizeMode: 'contain',
+              marginRight: 10,
+            }}
+          />
+          <Text>{institution.name}</Text>
+        </View>
+        <DeleteIcon width="24" height="24" fill="#8C9F97" />
+      </View>
+      <View
+        style={{
+          backgroundColor: '#FBFBFB',
+          borderRadius: 10,
+          borderColor: '#F0EEEE',
+          borderWidth: 1,
+          flexDirection: 'column',
+          width: '100%',
+        }}
+      >
+        {accounts.map((account, index) => {
+          return (
+            <View
+              style={{
+                width: '100%',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginTop: index === 0 ? 0 : 10,
+                borderTopColor: '#F0EEEE',
+                borderTopWidth: index === 0 ? 0 : 1,
+                padding: 10,
+                marginBottom: index === 0 ? 0 : 10,
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: 'column',
+                }}
+              >
+                <Text
+                  style={{
+                    color: '#234236',
+                    fontFamily: 'PublicSans-SemiBold',
+                    fontSize: 13,
+                    lineHeight: 24,
+                  }}
+                >
+                  {account.name}
+                </Text>
+                <Text
+                  style={{
+                    color: '#8C9F97',
+                    fontFamily: 'PublicSans-SemiBold',
+                    fontSize: 12,
+                    lineHeight: 16,
+                  }}
+                >
+                  {account.type} | **** {account.mask}
+                </Text>
+              </View>
+              <TouchableOpacity onPress={() => {}}>
+                <EditIcon width="24" height="24" fill="#8C9F97" />
+              </TouchableOpacity>
+            </View>
+          );
+        })}
+      </View>
+    </View>
   );
 };
 

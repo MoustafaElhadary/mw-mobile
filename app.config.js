@@ -4,7 +4,7 @@ export default {
   expo: {
     name: 'MochaWallet',
     slug: 'MochaWallet',
-    version: '1.0.0',
+    version: '1.0.4',
     orientation: 'portrait',
     icon: 'assets/icon.png',
     splash: {
