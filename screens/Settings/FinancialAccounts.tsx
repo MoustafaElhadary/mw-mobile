@@ -21,8 +21,6 @@ const FinancialAccounts = () => {
     'item_id'
   );
 
-  console.log({ fundingAccounts, loanAccounts });
-
   return (
     <Layout
       title="Financial Accounts"

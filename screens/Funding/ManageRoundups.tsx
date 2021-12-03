@@ -17,7 +17,6 @@ const ManageRoundups = () => {
     earliestUpcomingPaymentDate,
   } = useSelector((state: RootState) => state.roundups.roundups);
 
-  console.log({ upcoming });
 
   return (
     <Layout title="Manage Roundups">

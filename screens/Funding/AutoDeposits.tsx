@@ -1,22 +1,93 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import moment from 'moment';
+import React, { useEffect } from 'react';
 import {
   GestureResponderEvent,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
+import { useSelector } from 'react-redux';
 import { BackspaceIcon } from '../../components/common/icons';
 import Layout from '../../components/common/Layout';
+import { RootState } from '../../redux/store';
+import { utils } from '../../utils';
 
 const AutoDeposits = () => {
   const [amount, setAmount] = React.useState(600);
-  const [frequency, setFrequency] = React.useState('Weekly');
+  const [frequency, setFrequency] = React.useState<
+    'Weekly' | 'Bi-weekly' | 'Monthly'
+  >('Weekly');
   const navigation = useNavigation();
+  const studentLoan = useSelector((state: RootState) => state.user.studentLoan);
+
+  const [savingAmount, setSavingAmount] = React.useState(0);
+  const [timeSaving, setTimeSaving] = React.useState('');
+
+  const calculateSavings = () => {
+    const multiplier =
+      frequency === 'Weekly' ? 4 : frequency === 'Bi-weekly' ? 2 : 1;
+
+    const studentLoanAverageInterestRate = studentLoan.interest.apr || 0;
+    const studentLoanBalance = studentLoan.balance || 0;
+
+    const loanTermInMonths = moment(
+      new Date(
+        studentLoan.loans[0].loan_status.end_date ||
+          studentLoan.loans[0].expected_payoff_date
+      )
+    ).diff(new Date(), 'month', true);
+
+    const monthlyInterest = studentLoanAverageInterestRate / 100 / 12;
+
+    // formula to calculate monthly payment is MonthlyPayment = (LoanAmount * MonthlyInterestRate) / (1 - (1 + MonthlyInterestRate)^(-LoanTermInMonths))
+    const monthlyPayment =
+      (monthlyInterest * studentLoanBalance) /
+      (1 - Math.pow(1 + monthlyInterest, -1 * loanTermInMonths));
+
+    //TODO: fetch from DB (this should be calculated on load addition)
+    const initialAssumedInterestPaid =
+      monthlyPayment * loanTermInMonths - studentLoanBalance;
+
+    //TODO: fetch monthly extra payments from DB (average roundups from last month + employer match + family match)
+    //calculate number of payments with extra payments
+    const newPayment = monthlyPayment + amount * multiplier;
+
+    // formula to calculate new number of months after extra payments is numberOfMonths = (-1 * log(1 - (monthly interest * LoanAmount) / newPayment )) / log(1 + MonthlyInterestRate)
+    const newLoanTermInMonths =
+      (-1 * Math.log(1 - (monthlyInterest * studentLoanBalance) / newPayment)) /
+      Math.log(1 + monthlyInterest);
+
+    const newAssumedInterestPaid =
+      newPayment * newLoanTermInMonths - studentLoanBalance;
+
+    const interestSavings = initialAssumedInterestPaid - newAssumedInterestPaid;
+
+    const monthsSaved = loanTermInMonths - newLoanTermInMonths;
+
+    var duration = moment.duration(monthsSaved, 'months');
+
+    const timeSavedString = `${duration.years()} years, ${Math.round(
+      duration.months()
+    )} months`;
+
+    setSavingAmount(interestSavings);
+    setTimeSaving(timeSavedString);
+  };
+
+  useEffect(() => {
+    calculateSavings();
+  }, [amount, frequency]);
 
   const handleAmountChange = (value: number) => {
-    setAmount(amount * 10 + value);
+    const newAmount = amount * 10 + value;
+
+    if (newAmount > 5000) {
+      setAmount(5000);
+    } else {
+      setAmount(newAmount);
+    }
   };
 
   const handleAmountBackspace = () => {
@@ -32,6 +103,7 @@ const AutoDeposits = () => {
         justifyContent: 'flex-start',
         alignItems: 'center',
         alignContent: 'center',
+        flex: 1,
       }}
       headerStyle={{
         backgroundColor: '#fff',
@@ -43,6 +115,10 @@ const AutoDeposits = () => {
           fontFamily: 'Ageo',
           fontSize: 48,
           paddingVertical: 40,
+          alignItems: 'center',
+          alignContent: 'center',
+          justifyContent: 'center',
+          textAlign: 'center',
         }}
       >
         {`$${amount}`}
@@ -84,9 +160,10 @@ const AutoDeposits = () => {
           fontSize: 18,
           paddingTop: 40,
           lineHeight: 24,
+          textAlign: 'center',
         }}
       >
-        Projected savings: $38,230
+        Projected savings: {`$${utils.formatMoney(savingAmount)}`}
       </Text>
       <Text
         style={{
@@ -94,9 +171,10 @@ const AutoDeposits = () => {
           fontFamily: 'PublicSans-SemiBold',
           fontSize: 13,
           lineHeight: 24,
+          textAlign: 'center',
         }}
       >
-        Time saved: 3 years 4 months
+        Time saved: {timeSaving}
       </Text>
 
       <View
@@ -274,7 +352,7 @@ const AutoDeposits = () => {
           onPress={() => {
             navigation.navigate('ConfirmAutoDeposits', {
               amount,
-              frequency
+              frequency,
             });
           }}
         >

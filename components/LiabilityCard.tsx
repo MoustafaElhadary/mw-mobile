@@ -5,12 +5,13 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import { utils } from '../utils';
 import { COLORS, FONTS, SIZES } from '../utils/constants';
 
 export type HorizontalFoodCardType = {
   first: boolean;
   last: boolean;
-  item: any;
+  item: { amount?: number; type?: string; apr?: number, id: string };
   onPress: (event: GestureResponderEvent) => void;
 };
 
@@ -49,7 +50,7 @@ const LiabilityCard = ({ item, onPress, first, last }) => {
             marginBottom: SIZES.padding * 0.4,
           }}
         >
-          {item.amount}
+          {`$${utils.formatMoney(item?.amount)}`}
         </Text>
         <Text
           style={{
@@ -61,7 +62,7 @@ const LiabilityCard = ({ item, onPress, first, last }) => {
             fontWeight: '400',
           }}
         >
-          Average APR: {item.apr.toFixed(2)}%
+          Average APR: {item?.apr?.toFixed(2)}%
         </Text>
       </View>
 

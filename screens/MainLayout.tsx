@@ -1,5 +1,5 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   FlatList,
   Image,
@@ -20,7 +20,6 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from '../components/Header';
-import { AuthenticatedUserContext } from '../navigation/AuthenticatedUserProvider';
 import { RootState } from '../redux/store';
 import { setSelectedTab } from '../redux/tabSlice';
 import { COLORS, constants, FONTS, icons, SIZES } from '../utils/constants';
@@ -96,14 +95,6 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
   const dispatch = useDispatch();
   // Reanimated Shared Value
 
-  const { user } = useContext(AuthenticatedUserContext);
-  const handleSignOut = async () => {
-    try {
-      await auth.signOut();
-    } catch (error) {
-      console.log(error);
-    }
-  };
   const homeTabFlex = useSharedValue(1);
   const homeTabColor = useSharedValue<string | number>(COLORS.primary);
   const depositsTabFlex = useSharedValue(1);

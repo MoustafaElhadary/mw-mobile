@@ -1,15 +1,20 @@
 import axios from 'axios';
 import Constants from 'expo-constants';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import LiabilityCard from '../../components/LiabilityCard';
 import { AuthenticatedUserContext } from '../../navigation/AuthenticatedUserProvider';
+import { RootState } from '../../redux/store';
+import { setStudentLoan } from '../../redux/userSlice';
 import { utils } from '../../utils';
 import { COLORS } from '../../utils/constants';
 
 const Home = () => {
+  const dispatch = useDispatch();
+
   const { user } = useContext(AuthenticatedUserContext);
-  const [data, setData] = useState(null);
+  const studentLoan = useSelector((state: RootState) => state.user.studentLoan);
 
   const fetchLoans = async () => {
     const mwAccessToken = await user.getIdToken();
@@ -18,7 +23,7 @@ const Home = () => {
         mwAccessToken,
       })
       .then(async (response) => {
-        setData(response.data);
+        dispatch(setStudentLoan(response.data));
       });
   };
 
@@ -26,39 +31,35 @@ const Home = () => {
     fetchLoans();
   }, []);
 
-  const loans = [];
+  console.log({ studentLoan });
 
-  if (data) {
-    if (data?.student.balance > 0) {
-      loans.push({
-        id: '1',
-        type: 'Student',
-        amount: utils.formatMoney(data?.student.balance, 2),
-        apr: data?.student.averageInterestRate,
-      });
-    }
-  }
-
-  function renderRecommendedSection() {
+  function renderStudentLoanSection() {
     return (
       <View style={{ marginTop: 20 }}>
         <FlatList
-          data={loans}
+          data={[]}
           keyExtractor={(item) => `${item.id}`}
           horizontal
           showsHorizontalScrollIndicator={false}
-          renderItem={({ item, index }) => (
+          ListHeaderComponent={
             <LiabilityCard
-              item={item}
+              item={{
+                apr: studentLoan?.interest?.apr,
+                type: 'Student',
+                amount: studentLoan?.balance,
+                id: 'studentLoan',
+              }}
               onPress={() => console.log('LiabilityCard')}
-              first={index == 0}
-              last={index == loans.length - 1}
+              first={true}
+              last={true}
             />
-          )}
+          }
+          renderItem={() => <View />}
         />
       </View>
     );
   }
+
   return (
     <View
       style={{
@@ -83,7 +84,6 @@ const Home = () => {
                 borderBottomWidth: 1,
               }}
             >
-            
               <Text style={styles.header}> Amount paid with MochaWallet</Text>
               <Text style={{ ...styles.content, paddingBottom: 16 }}>
                 $16,839
@@ -91,16 +91,22 @@ const Home = () => {
 
               <Text style={styles.header}> Amount left</Text>
               <Text style={{ ...styles.content, paddingBottom: 16 }}>
-                {utils.formatMoney(data?.amountLeft || 0, 2)}
+                ${utils.formatMoney(studentLoan?.balance)}
               </Text>
 
               <Text style={styles.header}> Savings</Text>
-              <Text style={styles.content}> 💰 $16,839</Text>
-              <Text style={styles.content}> 🕐 $16,839</Text>
+              <Text style={styles.content}>
+                {' '}
+                💰 ${utils.formatMoney(studentLoan?.interest?.interestSavings)}
+              </Text>
+              <Text style={styles.content}>
+                {' '}
+                🕐 {studentLoan?.interest?.timeSavedString}
+              </Text>
             </View>
 
             {/* Recommended */}
-            {renderRecommendedSection()}
+            {renderStudentLoanSection()}
           </View>
         }
         renderItem={() => {
