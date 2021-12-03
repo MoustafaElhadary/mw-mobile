@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import Layout from '../../components/common/Layout';
 import { RootState } from '../../redux/store';
@@ -21,54 +21,39 @@ const ManageRoundups = () => {
 
   return (
     <Layout title="Manage Roundups">
-      <FlatList
-        data={[]}
-        keyExtractor={(item) => `${item.id}`}
-        showsVerticalScrollIndicator={false}
-        ListHeaderComponent={
-          <View>
-            <Card
-              title="Upcoming deposit total"
-              titleTotal={`$${utils.formatMoney(upcomingDepositTotal, 2)}`}
-            />
-            <Card
-              title="All time total"
-              titleTotal={`$${utils.formatMoney(allTimeTotal, 2)}`}
-            />
-            <View
-              style={{
-                backgroundColor: '#F8F8F7',
-                paddingHorizontal: 25,
-                paddingVertical: 14,
-              }}
-            >
-              <Text style={{ textAlign: 'left' }}>
-                {moment(earliestUpcomingPaymentDate).format('MMMM Do, YYYY')} -{' '}
-                {moment(nextPaymentDate).format('MMMM Do, YYYY')}
-              </Text>
-            </View>
-            {upcoming && upcoming?.length > 0 && (
-              <RoundupList list={upcoming} />
-            )}
-            <View
-              style={{
-                backgroundColor: '#F8F8F7',
-                paddingHorizontal: 25,
-                paddingVertical: 14,
-              }}
-            >
-              <Text style={{ textAlign: 'left' }}>Past roundups </Text>
-            </View>
-            {previous && previous?.length > 0 && (
-              <RoundupList list={previous} />
-            )}
-          </View>
-        }
-        renderItem={() => {
-          return <View />;
-        }}
-        ListFooterComponent={<View style={{ height: 40 }} />}
-      />
+      <View>
+        <Card
+          title="Upcoming deposit total"
+          titleTotal={`$${utils.formatMoney(upcomingDepositTotal, 2)}`}
+        />
+        <Card
+          title="All time total"
+          titleTotal={`$${utils.formatMoney(allTimeTotal, 2)}`}
+        />
+        <View
+          style={{
+            backgroundColor: '#F8F8F7',
+            paddingHorizontal: 25,
+            paddingVertical: 14,
+          }}
+        >
+          <Text style={{ textAlign: 'left' }}>
+            {moment(earliestUpcomingPaymentDate).format('MMMM Do, YYYY')} -{' '}
+            {moment(nextPaymentDate).format('MMMM Do, YYYY')}
+          </Text>
+        </View>
+        {upcoming && upcoming?.length > 0 && <RoundupList list={upcoming} />}
+        <View
+          style={{
+            backgroundColor: '#F8F8F7',
+            paddingHorizontal: 25,
+            paddingVertical: 14,
+          }}
+        >
+          <Text style={{ textAlign: 'left' }}>Past roundups </Text>
+        </View>
+        {previous && previous?.length > 0 && <RoundupList list={previous} />}
+      </View>
     </Layout>
   );
 };
@@ -151,13 +136,13 @@ const Card = ({ title, titleTotal, subtitle, subtitleTotal }: CardProps) => {
 const styles = StyleSheet.create({
   PageTitle: {},
   header: {
-    color: '#234236',
+    color: COLORS.primary,
     fontFamily: 'Ageo',
     fontSize: 24,
     lineHeight: 30,
   },
   title: {
-    color: '#234236',
+    color: COLORS.primary,
     fontFamily: 'PublicSans-SemiBold',
     fontSize: 12,
     lineHeight: 16,

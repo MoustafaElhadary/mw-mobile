@@ -5,6 +5,7 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 import LiabilityCard from '../../components/LiabilityCard';
 import { AuthenticatedUserContext } from '../../navigation/AuthenticatedUserProvider';
 import { utils } from '../../utils';
+import { COLORS } from '../../utils/constants';
 
 const Home = () => {
   const { user } = useContext(AuthenticatedUserContext);
@@ -21,8 +22,6 @@ const Home = () => {
       });
   };
 
-  
-
   useEffect(() => {
     fetchLoans();
   }, []);
@@ -34,17 +33,8 @@ const Home = () => {
       loans.push({
         id: '1',
         type: 'Student',
-        amount: utils.formatter.format(data?.student.balance),
+        amount: utils.formatMoney(data?.student.balance, 2),
         apr: data?.student.averageInterestRate,
-      });
-    }
-
-    if (data?.mortgages?.balance > 0) {
-      loans.push({
-        id: '2',
-        type: 'mortgages',
-        amount: utils.formatter.format(data?.mortgages?.balance),
-        apr: data?.mortgages?.averageInterestRate,
       });
     }
   }
@@ -93,11 +83,7 @@ const Home = () => {
                 borderBottomWidth: 1,
               }}
             >
-              <Text style={styles.header}> Total loan amount</Text>
-              <Text style={{ ...styles.content, paddingBottom: 16 }}>
-                {utils.formatter.format(data?.totalOriginalAmount || 0)}
-              </Text>
-
+            
               <Text style={styles.header}> Amount paid with MochaWallet</Text>
               <Text style={{ ...styles.content, paddingBottom: 16 }}>
                 $16,839
@@ -105,7 +91,7 @@ const Home = () => {
 
               <Text style={styles.header}> Amount left</Text>
               <Text style={{ ...styles.content, paddingBottom: 16 }}>
-                {utils.formatter.format(data?.amountLeft || 0)}
+                {utils.formatMoney(data?.amountLeft || 0, 2)}
               </Text>
 
               <Text style={styles.header}> Savings</Text>
@@ -130,7 +116,7 @@ export default Home;
 
 const styles = StyleSheet.create({
   header: {
-    color: '#234236',
+    color: COLORS.primary,
     fontFamily: 'Ageo',
     fontSize: 22,
     lineHeight: 32,

@@ -6,7 +6,7 @@ import ConfettiCannon from 'react-native-confetti-cannon';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
 import { setSelectedTab } from '../../redux/tabSlice';
-import { constants, images } from '../../utils/constants';
+import { COLORS, constants, images } from '../../utils/constants';
 
 const YouAreSet = () => {
   const insets = useSafeAreaInsets();
@@ -105,7 +105,7 @@ export default YouAreSet;
 
 const styles = StyleSheet.create({
   header: {
-    color: '#234236',
+    color: COLORS.primary,
     fontFamily: 'Ageo',
     fontSize: 30,
     lineHeight: 40,

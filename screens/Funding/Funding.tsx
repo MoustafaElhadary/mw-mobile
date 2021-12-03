@@ -93,7 +93,7 @@ const Funding = () => {
         >
           <Text
             style={{
-              color: '#234236',
+              color: COLORS.primary,
               fontFamily: 'PublicSans-SemiBold',
               fontSize: 15,
               lineHeight: 20,
@@ -167,7 +167,7 @@ export default Funding;
 const styles = StyleSheet.create({
   header: {
     flex: 1,
-    color: '#234236',
+    color: COLORS.primary,
     fontFamily: 'Ageo',
     fontSize: 18,
     lineHeight: 24,
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
   },
   title: {
-    color: '#234236',
+    color: COLORS.primary,
     fontFamily: 'PublicSans-SemiBold',
     fontSize: 12,
     lineHeight: 16,

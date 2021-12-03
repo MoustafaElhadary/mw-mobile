@@ -36,7 +36,7 @@ const Deposits = () => {
           paddingLeft: 20,
           paddingTop: 32,
           paddingBottom: 18,
-          color: '#234236',
+          color: COLORS.primary,
           fontFamily: 'Ageo',
           fontSize: 18,
           lineHeight: 24,
@@ -55,7 +55,7 @@ const Deposits = () => {
           paddingLeft: 20,
           paddingTop: 32,
           paddingBottom: 18,
-          color: '#234236',
+          color: COLORS.primary,
           fontFamily: 'Ageo',
           fontSize: 18,
           lineHeight: 24,
@@ -198,13 +198,13 @@ const UpcomingCard = ({
 const styles = StyleSheet.create({
   PageTitle: {},
   header: {
-    color: '#234236',
+    color: COLORS.primary,
     fontFamily: 'Ageo',
     fontSize: 24,
     lineHeight: 30,
   },
   heavy: {
-    color: '#234236',
+    color: COLORS.primary,
     fontFamily: 'PublicSans-SemiBold',
     fontSize: 12,
     // lineHeight: 16,

@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   field: {
-    color: '#234236',
+    color: COLORS.primary,
     fontFamily: 'PublicSans-SemiBold',
     fontSize: 12,
     lineHeight: 16,

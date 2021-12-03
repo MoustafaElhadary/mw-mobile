@@ -1,13 +1,13 @@
 import _ from 'lodash';
+import { Institution } from 'plaid';
 import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { useSelector } from 'react-redux';
-import { DeleteIcon, EditIcon } from '../../components/common/icons';
+import { CloseIcon } from '../../components/common/icons';
 import Layout from '../../components/common/Layout';
 import { RootState } from '../../redux/store';
 import { Account } from '../../redux/userSlice';
 import { COLORS } from '../../utils/constants';
-import { Institution } from 'plaid';
 
 const FinancialAccounts = () => {
   const { accounts } = useSelector((state: RootState) => state.user);
@@ -52,7 +52,7 @@ const FinancialAccounts = () => {
           paddingLeft: 20,
           paddingTop: 32,
           paddingBottom: 18,
-          color: '#234236',
+          color: COLORS.primary,
           fontFamily: 'Ageo',
           fontSize: 18,
           lineHeight: 24,
@@ -121,7 +121,7 @@ const FinancialAccounts = () => {
           paddingLeft: 20,
           paddingTop: 32,
           paddingBottom: 18,
-          color: '#234236',
+          color: COLORS.primary,
           fontFamily: 'Ageo',
           fontSize: 18,
           lineHeight: 24,
@@ -235,7 +235,7 @@ const AccountCard = ({
           />
           <Text>{institution.name}</Text>
         </View>
-        <DeleteIcon width="24" height="24" fill="#8C9F97" />
+        <CloseIcon width="24" height="24" fill="#8C9F97" />
       </View>
       <View
         style={{
@@ -268,7 +268,7 @@ const AccountCard = ({
               >
                 <Text
                   style={{
-                    color: '#234236',
+                    color: COLORS.primary,
                     fontFamily: 'PublicSans-SemiBold',
                     fontSize: 13,
                     lineHeight: 24,
@@ -287,9 +287,6 @@ const AccountCard = ({
                   {account.type} | **** {account.mask}
                 </Text>
               </View>
-              <TouchableOpacity onPress={() => {}}>
-                <EditIcon width="24" height="24" fill="#8C9F97" />
-              </TouchableOpacity>
             </View>
           );
         })}

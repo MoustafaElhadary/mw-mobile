@@ -1,8 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Text } from '@ui-kitten/components';
-import axios from 'axios';
 import Constants from 'expo-constants';
 import firebase from 'firebase';
 import moment from 'moment';
@@ -11,7 +9,7 @@ import { Control, Controller, useForm } from 'react-hook-form';
 import { StyleSheet, TextInput, TextInputProps, View } from 'react-native';
 import {
   GooglePlacesAutocomplete,
-  GooglePlacesAutocompleteRef,
+  GooglePlacesAutocompleteRef
 } from 'react-native-google-places-autocomplete';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -20,7 +18,6 @@ import * as yup from 'yup';
 import { CloseButton } from '../../components/common/buttons';
 import DismissKeyboardView from '../../components/common/DismissKeyboardView';
 import { CheckmarkIcon } from '../../components/common/icons';
-import PlaidLink from '../../components/common/PlaidWebview';
 import { ContinueButton } from '../../components/common/SignUpButtons';
 import TextButton from '../../components/TextButton';
 import { AuthenticatedUserContext } from '../../navigation/AuthenticatedUserProvider';
@@ -409,6 +406,7 @@ const MWTextInput = ({
               style={[styles.input, secondaryInputStyle]}
               onFocus={(): void => onFocus()}
               onBlur={(): void => setInputFocused(false)}
+              placeholderTextColor="#8C9F97"
               {...otherProps}
             />
             {isDate && (
@@ -597,7 +595,6 @@ const ConfirmDetails = () => {
   );
 };
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -622,7 +619,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   input: {
-    color: '#234236',
+    color: COLORS.primary,
     fontFamily: 'Ageo',
     fontSize: 16,
     fontWeight: '700',

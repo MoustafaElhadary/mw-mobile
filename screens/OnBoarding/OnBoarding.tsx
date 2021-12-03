@@ -1,8 +1,8 @@
 import React from 'react';
 import { Animated, FlatList, Image, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import TextButton from '../../components/TextButton';
 import { COLORS, constants, FONTS, SIZES } from '../../utils/constants';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const OnBoarding = ({ navigation }) => {
   const insets = useSafeAreaInsets();
@@ -79,7 +79,7 @@ const OnBoarding = ({ navigation }) => {
       >
         <Text
           style={{
-            color: '#234236',
+            color: COLORS.primary,
             fontFamily: 'Ageo',
             fontSize: 30,
             lineHeight: 40,

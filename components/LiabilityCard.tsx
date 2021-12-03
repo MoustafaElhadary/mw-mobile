@@ -3,7 +3,7 @@ import {
   GestureResponderEvent,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import { COLORS, FONTS, SIZES } from '../utils/constants';
 
@@ -46,7 +46,7 @@ const LiabilityCard = ({ item, onPress, first, last }) => {
             fontStyle: 'normal',
             fontWeight: '400',
 
-          marginBottom: SIZES.padding * 0.4,
+            marginBottom: SIZES.padding * 0.4,
           }}
         >
           {item.amount}
@@ -61,7 +61,7 @@ const LiabilityCard = ({ item, onPress, first, last }) => {
             fontWeight: '400',
           }}
         >
-          Average APR: {item.apr}%
+          Average APR: {item.apr.toFixed(2)}%
         </Text>
       </View>
 
@@ -75,7 +75,9 @@ const LiabilityCard = ({ item, onPress, first, last }) => {
           right: SIZES.radius,
         }}
       >
-        <Text style={{ ...FONTS.body5, color: COLORS.darkGray2 }}>{item.type}</Text>
+        <Text style={{ ...FONTS.body5, color: COLORS.darkGray2 }}>
+          {item.type}
+        </Text>
       </View>
     </TouchableOpacity>
   );

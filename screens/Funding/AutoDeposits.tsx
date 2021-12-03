@@ -1,15 +1,14 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {
-    GestureResponderEvent,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
+  GestureResponderEvent,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import { BackspaceIcon } from '../../components/common/icons';
 import Layout from '../../components/common/Layout';
-import { utils } from '../../utils';
 
 const AutoDeposits = () => {
   const [amount, setAmount] = React.useState(600);
@@ -46,7 +45,7 @@ const AutoDeposits = () => {
           paddingVertical: 40,
         }}
       >
-        {`$${utils.formatMoney(amount)}`}
+        {`$${amount}`}
       </Text>
 
       <View

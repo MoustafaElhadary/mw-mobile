@@ -46,6 +46,7 @@ const SignUp = ({ navigation }) => {
                 email: email,
                 phone: phone,
                 registered: false,
+                dateCreated: new Date(),
                 payments: {
                   receiving: {
                     previous: [],
